@@ -6,7 +6,7 @@ retract v4.8.0
 
 require google.golang.org/protobuf v1.36.5 // indirect
 
-require golang.org/x/net v0.35.0
+require golang.org/x/net v0.36.0
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.8.2
@@ -51,7 +51,7 @@ require (
 	github.com/transip/gotransip/v6 v6.26.0
 	github.com/urfave/cli/v2 v2.27.5
 	github.com/xddxdd/ottoext v0.0.0-20221109171055-210517fa4419
-	golang.org/x/crypto v0.33.0 // indirect
+	golang.org/x/crypto v0.35.0 // indirect
 	golang.org/x/oauth2 v0.26.0
 	google.golang.org/api v0.222.0
 	gopkg.in/ns1/ns1-go.v2 v2.13.0
