@@ -6,7 +6,7 @@ retract v4.8.0
 
 require google.golang.org/protobuf v1.36.5 // indirect
 
-require golang.org/x/net v0.35.0
+require golang.org/x/net v0.38.0
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.8.2
@@ -51,7 +51,7 @@ require (
 	github.com/transip/gotransip/v6 v6.26.0
 	github.com/urfave/cli/v2 v2.27.5
 	github.com/xddxdd/ottoext v0.0.0-20221109171055-210517fa4419
-	golang.org/x/crypto v0.33.0 // indirect
+	golang.org/x/crypto v0.36.0 // indirect
 	golang.org/x/oauth2 v0.26.0
 	google.golang.org/api v0.222.0
 	gopkg.in/ns1/ns1-go.v2 v2.13.0
@@ -74,7 +74,7 @@ require (
 	github.com/oracle/oci-go-sdk/v65 v65.83.2
 	github.com/vultr/govultr/v2 v2.17.2
 	golang.org/x/exp v0.0.0-20250218142911-aa4b98e5adaa
-	golang.org/x/text v0.22.0
+	golang.org/x/text v0.23.0
 	golang.org/x/time v0.10.0
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -156,8 +156,8 @@ require (
 	go.opentelemetry.io/otel/metric v1.34.0 // indirect
 	go.opentelemetry.io/otel/trace v1.34.0 // indirect
 	golang.org/x/mod v0.23.0 // indirect
-	golang.org/x/sync v0.11.0 // indirect
-	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/sync v0.12.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/tools v0.30.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250212204824-5a70512c5d8b // indirect
 	google.golang.org/grpc v1.70.0 // indirect
