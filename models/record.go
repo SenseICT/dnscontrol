@@ -84,6 +84,7 @@ import (
 // This is the subdomain path, if any, imported from the configuration. If
 // present at the time of canonicalization it is inserted between the
 // Name and origin when constructing a canonical (FQDN) target.
+// (the SubDomain is not used in processing the label itself. That was done in helpers.js)
 //
 // Idioms:
 //
@@ -297,7 +298,7 @@ func (rc *RecordConfig) SetLabel(short, origin string) {
 	}
 	if strings.HasSuffix(short, ".") {
 		if short != "**current-domain**" {
-			panic(fmt.Errorf("short (%s) is not supposed to end with a dot", origin))
+			panic(fmt.Errorf("short (%s) is not supposed to end with a dot", short))
 		}
 	}
 
@@ -443,6 +444,8 @@ func (rc *RecordConfig) ToRR() dns.RR {
 		rr.(*dns.NAPTR).Replacement = rc.GetTargetField()
 	case dns.TypeNS:
 		rr.(*dns.NS).Ns = rc.GetTargetField()
+	case dns.TypeOPENPGPKEY:
+		rr.(*dns.OPENPGPKEY).PublicKey = rc.GetTargetField()
 	case dns.TypePTR:
 		rr.(*dns.PTR).Ptr = rc.GetTargetField()
 	case dns.TypeSOA:
@@ -528,6 +531,10 @@ func (rc *RecordConfig) Key() RecordKey {
 
 // GetSVCBValue returns the SVCB Key/Values as a list of Key/Values.
 func (rc *RecordConfig) GetSVCBValue() []dns.SVCBKeyValue {
+	if !strings.Contains(rc.SvcParams, "IGNORE+DNSCONTROL") {
+		rc.SvcParams = strings.ReplaceAll(rc.SvcParams, "ech=IGNORE", "ech=IGNORE+DNSCONTROL+++")
+	}
+
 	record, err := dns.NewRR(fmt.Sprintf("%s %s %d %s %s", rc.NameFQDN, rc.Type, rc.SvcPriority, rc.target, rc.SvcParams))
 	if err != nil {
 		log.Fatalf("could not parse SVCB record: %s", err)
@@ -610,11 +617,11 @@ func Downcase(recs []*RecordConfig) {
 		r.Name = strings.ToLower(r.Name)
 		r.NameFQDN = strings.ToLower(r.NameFQDN)
 		switch r.Type { // #rtype_variations
-		case "AKAMAICDN", "ALIAS", "AAAA", "ANAME", "CNAME", "DNAME", "DS", "DNSKEY", "MX", "NS", "NAPTR", "PTR", "SRV", "TLSA":
+		case "AKAMAICDN", "ALIAS", "AAAA", "ANAME", "CNAME", "DNAME", "DS", "DNSKEY", "MX", "NS", "NAPTR", "OPENPGPKEY", "PTR", "SRV", "TLSA", "AZURE_ALIAS":
 			// Target is case insensitive. Downcase it.
 			r.target = strings.ToLower(r.target)
 			// BUGFIX(tlim): isn't ALIAS in the wrong case statement?
-		case "A", "CAA", "CLOUDFLAREAPI_SINGLE_REDIRECT", "CF_REDIRECT", "CF_TEMP_REDIRECT", "CF_WORKER_ROUTE", "DHCID", "IMPORT_TRANSFORM", "LOC", "SSHFP", "TXT":
+		case "A", "CAA", "CLOUDFLAREAPI_SINGLE_REDIRECT", "CF_REDIRECT", "CF_TEMP_REDIRECT", "CF_WORKER_ROUTE", "DHCID", "IMPORT_TRANSFORM", "LOC", "SSHFP", "TXT", "ADGUARDHOME_A_PASSTHROUGH", "ADGUARDHOME_AAAA_PASSTHROUGH":
 			// Do nothing. (IP address or case sensitive target)
 		case "SOA":
 			if r.target != "DEFAULT_NOT_SET." {
@@ -638,7 +645,7 @@ func CanonicalizeTargets(recs []*RecordConfig, origin string) {
 		case "ALIAS", "ANAME", "CNAME", "DNAME", "DS", "DNSKEY", "MX", "NS", "NAPTR", "PTR", "SRV":
 			// Target is a hostname that might be a shortname. Turn it into a FQDN.
 			r.target = dnsutil.AddOrigin(r.target, originFQDN)
-		case "A", "AKAMAICDN", "CAA", "DHCID", "CLOUDFLAREAPI_SINGLE_REDIRECT", "CF_REDIRECT", "CF_TEMP_REDIRECT", "CF_WORKER_ROUTE", "HTTPS", "IMPORT_TRANSFORM", "LOC", "SSHFP", "SVCB", "TLSA", "TXT":
+		case "A", "AKAMAICDN", "CAA", "DHCID", "CLOUDFLAREAPI_SINGLE_REDIRECT", "CF_REDIRECT", "CF_TEMP_REDIRECT", "CF_WORKER_ROUTE", "HTTPS", "IMPORT_TRANSFORM", "LOC", "OPENPGPKEY", "SSHFP", "SVCB", "TLSA", "TXT", "ADGUARDHOME_A_PASSTHROUGH", "ADGUARDHOME_AAAA_PASSTHROUGH":
 			// Do nothing.
 		case "SOA":
 			if r.target != "DEFAULT_NOT_SET." {

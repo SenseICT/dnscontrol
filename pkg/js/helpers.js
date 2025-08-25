@@ -12,6 +12,13 @@
 // debugging/developing this code, it may be faster to specify the
 // -dev file to have helpers.js read from the file instead.
 
+// If this javascript interpreter doesn't have a .endsWith() function on strings, add one.
+if (typeof String.prototype.endsWith !== 'function') {
+    String.prototype.endsWith = function (suffix) {
+        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+    };
+}
+
 var conf = {
     registrars: [],
     dns_providers: [],
@@ -189,10 +196,17 @@ function D_EXTEND(name) {
             ' was not declared yet and therefore cannot be updated. Use D() before.'
         );
     }
+
+    // Handle weird REV() case.
+    if (name.indexOf('/') !== -1) {
+        name = name.substring(name.indexOf('.') + 1);
+    }
+
     domain.obj.subdomain = name.substr(
         0,
         name.length - domain.obj.name.length - 1
     );
+
     for (var i = 1; i < arguments.length; i++) {
         var m = arguments[i];
         processDargs(m, domain.obj);
@@ -518,6 +532,9 @@ var NAPTR = recordBuilder('NAPTR', {
         record.target = args.target;
     },
 });
+
+// OPENPGPKEY(name,target, recordModifiers...)
+var OPENPGPKEY = recordBuilder('OPENPGPKEY');
 
 // SOA(name,ns,mbox,refresh,retry,expire,minimum, recordModifiers...)
 var SOA = recordBuilder('SOA', {
@@ -1242,22 +1259,39 @@ function recordBuilder(type, opts) {
             opts.transform(record, parsedArgs, modifiers);
 
             // Handle D_EXTEND() with subdomains.
+            // Fix the labels.  (Fixing targets is done in pkg/normalize/validate.go)
             if (
                 d.subdomain &&
                 record.type != 'CF_SINGLE_REDIRECT' &&
                 record.type != 'CF_REDIRECT' &&
                 record.type != 'CF_TEMP_REDIRECT' &&
-                record.type != 'CF_WORKER_ROUTE'
+                record.type != 'CF_WORKER_ROUTE' &&
+                record.type != 'ADGUARDHOME_A_PASSTHROUGH' &&
+                record.type != 'ADGUARDHOME_AAAA_PASSTHROUGH'
             ) {
-                fqdn = [d.subdomain, d.name].join('.');
-
                 record.subdomain = d.subdomain;
+
+                // @ sub dom                  ->   sub sub
+                // one two dom                ->   one.two
+                // 4.3.2.1.in-addr.arpa 4.3   ->   4.3 2.1.in-addr.arpa
+                // 1.2.3.4  sub               ->   1.2.3.4 sub
+
                 if (record.name == '@') {
-                    record.subdomain = d.subdomain;
                     record.name = d.subdomain;
-                } else if (fqdn != record.name && record.type != 'PTR') {
-                    record.subdomain = d.subdomain;
-                    record.name += '.' + d.subdomain;
+                } else if (record.name.match(/^\d+\.\d+\.\d+\.\d+$/)) {
+                    // leave it alone
+                } else if (d.name.endsWith('.ip6.arpa')) {
+                    record.name = d.subdomain;
+                    d.subdomain = undefined;
+                } else if (record.name.endsWith('.in-addr.arpa')) {
+                    if (record.name.endsWith(d.subdomain)) {
+                        record.name = record.name.slice(
+                            0,
+                            -d.subdomain.length - 1
+                        );
+                    }
+                } else {
+                    record.name = record.name + '.' + d.subdomain;
                 }
             }
 
@@ -1401,12 +1435,18 @@ var CF_WORKER_ROUTE = recordBuilder('CF_WORKER_ROUTE', {
     },
 });
 
+var ADGUARDHOME_A_PASSTHROUGH = recordBuilder('ADGUARDHOME_A_PASSTHROUGH');
+
+var ADGUARDHOME_AAAA_PASSTHROUGH = recordBuilder(
+    'ADGUARDHOME_AAAA_PASSTHROUGH'
+);
+
 var URL = recordBuilder('URL');
 var URL301 = recordBuilder('URL301');
 var FRAME = recordBuilder('FRAME');
 var CLOUDNS_WR = recordBuilder('CLOUDNS_WR');
 var PORKBUN_URLFWD = recordBuilder('PORKBUN_URLFWD');
-
+var BUNNY_DNS_RDR = recordBuilder('BUNNY_DNS_RDR');
 // LOC_BUILDER_DD takes an object:
 // label: The DNS label for the LOC record. (default: '@')
 // x: Decimal X coordinate.
@@ -1649,8 +1689,8 @@ function SPF_BUILDER(value) {
 // label: The DNS label for the CAA record. (default: '@')
 // iodef: The contact mail address. (optional)
 // iodef_critical: Boolean if sending report is required/critical. If not supported, certificate should be refused. (optional)
-// issue: List of CAs which are allowed to issue certificates for the domain (creates one record for each).
-// issuewild: Allowed CAs which can issue wildcard certificates for this domain. (creates one record for each)
+// issue: List of CAs which are allowed to issue certificates for the domain (creates one record for each), or the string 'none'.
+// issuewild: List of allowed CAs which can issue wildcard certificates for this domain, or the string 'none'. (creates one record for each)
 // ttl: The time for TTL, integer or string. (default: not defined, using DefaultTTL)
 
 function CAA_BUILDER(value) {
@@ -1707,6 +1747,75 @@ function CAA_BUILDER(value) {
             );
     }
 
+    return r;
+}
+
+// DKIM_BUILDER takes an object:
+// label: The DNS label for the DKIM record ([selector]._domainkey prefix is added; default: '@')
+// selector: Selector used for the label. e.g. s1 or mail
+// pubkey: Public key (p) to be used for DKIM.
+// keytype: Key type (k). Defaults to 'rsa' if missing (optional)
+// flags: Which types (t) of flags to activate, ie. 'y' and/or 's'. Array, defaults to 's' (optional)
+// hashtypes: Acceptable hash algorithma (h) (optional)
+// servicetypes: Record-applicable service types (optional)
+// note: Note field fo admins. Avoid if possible to keep record length short. (optional)
+// ttl: The time for TTL, integer or string. (default: not defined, using DefaultTTL)
+
+function DKIM_BUILDER(value) {
+    if (!value) {
+        value = {};
+    }
+    kvs = [];
+
+    if (!value.selector) {
+        throw 'DKIM_BUILDER selector cannot be empty';
+    }
+
+    if (!value.pubkey) {
+        throw 'DKIM_BUILDER pubkey cannot be empty';
+    }
+
+    // build the label
+    if (!value.label) {
+        value.label = '@';
+    }
+
+    if (value.label !== '@') {
+        value.label = value.selector + '._domainkey' + '.' + value.label;
+    } else {
+        value.label = value.selector + '._domainkey';
+    }
+
+    kvs.push('v=DKIM1');
+    if (value.keytype) {
+        kvs.push('k=' + value.keytype);
+    }
+
+    if (value.servicetypes) {
+        kvs.push('s=' + value.servicetypes);
+    }
+
+    if (value.flags && value.flags.length > 0) {
+        kvs.push('t=' + value.flags.join(':'));
+    }
+
+    if (value.hashtypes && value.hashtypes.length > 0) {
+        kvs.push('h=' + value.hashtypes.join(':'));
+    }
+
+    if (value.note) {
+        kvs.push('n=' + value.note);
+    }
+
+    kvs.push('p=' + value.pubkey);
+
+    var DKIM_TTL = function () {};
+    if (value.ttl) {
+        DKIM_TTL = TTL(value.ttl);
+    }
+
+    r = []; // The list of records to return.
+    r.push(TXT(value.label, kvs.join('\; '), DKIM_TTL));
     return r;
 }
 

@@ -20,7 +20,7 @@ jobs:
       uses: docker/setup-qemu-action@v3
 
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         fetch-depth: 0
 # Why "fetch-depth: 0"?  To generate the release notes, we need the
@@ -43,7 +43,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: ^1.23
+        go-version: ^1.24
 
 # Stringer is needed because .goreleaser includes "go generate ./..."
     - name: Install stringer

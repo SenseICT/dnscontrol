@@ -7,7 +7,7 @@ import (
 
 	"github.com/StackExchange/dnscontrol/v4/models"
 	"github.com/StackExchange/dnscontrol/v4/pkg/diff"
-	"github.com/StackExchange/dnscontrol/v4/pkg/zoneCache"
+	"github.com/StackExchange/dnscontrol/v4/pkg/zonecache"
 	"github.com/StackExchange/dnscontrol/v4/providers"
 )
 
@@ -15,8 +15,9 @@ var features = providers.DocumentationNotes{
 	// The default for unlisted capabilities is 'Cannot'.
 	// See providers/capabilities.go for the entire list of capabilities.
 	providers.CanAutoDNSSEC:          providers.Cannot(),
-	providers.CanGetZones:            providers.Can(),
 	providers.CanConcur:              providers.Can(),
+	providers.CanGetZones:            providers.Can(),
+	providers.CanOnlyDiff1Features:   providers.Can(),
 	providers.CanUseAlias:            providers.Cannot(),
 	providers.CanUseCAA:              providers.Can(),
 	providers.CanUseDS:               providers.Can(),
@@ -52,7 +53,7 @@ func New(settings map[string]string, _ json.RawMessage) (providers.DNSServicePro
 	}
 
 	api := &hetznerProvider{apiKey: apiKey}
-	api.zoneCache = zoneCache.New(api.fetchAllZones)
+	api.zoneCache = zonecache.New(api.fetchAllZones)
 	return api, nil
 }
 

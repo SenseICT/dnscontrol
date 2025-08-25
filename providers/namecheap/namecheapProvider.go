@@ -29,8 +29,9 @@ type namecheapProvider struct {
 var features = providers.DocumentationNotes{
 	// The default for unlisted capabilities is 'Cannot'.
 	// See providers/capabilities.go for the entire list of capabilities.
-	providers.CanGetZones:            providers.Can(),
 	providers.CanConcur:              providers.Can(),
+	providers.CanGetZones:            providers.Can(),
+	providers.CanOnlyDiff1Features:   providers.Can(), // If you remove this, also update not() statements in integrationTest/integration_test.go
 	providers.CanUseAlias:            providers.Can(),
 	providers.CanUseCAA:              providers.Can(),
 	providers.CanUseLOC:              providers.Cannot(),
@@ -301,6 +302,8 @@ func toRecords(result *nc.DomainDNSGetHostsResult, origin string) ([]*models.Rec
 		switch dnsHost.Type {
 		case "MX":
 			err = record.SetTargetMX(uint16(dnsHost.MXPref), dnsHost.Address)
+		case "FRAME", "URL", "URL301":
+			err = record.SetTarget(dnsHost.Address)
 		default:
 			err = record.PopulateFromString(dnsHost.Type, dnsHost.Address, origin)
 		}

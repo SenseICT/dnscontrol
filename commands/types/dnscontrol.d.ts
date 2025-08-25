@@ -221,6 +221,44 @@ declare function A(name: string, address: string | number, ...modifiers: RecordM
 declare function AAAA(name: string, address: string, ...modifiers: RecordModifier[]): DomainModifier;
 
 /**
+ * `ADGUARDHOME_AAAA_PASSTHROUGH` represents the literal 'A'. AdGuardHome uses this to passthrough
+ * the original values of a record type.
+ *
+ * The second argument to this record type must be empty.
+ *
+ * See [this](https://github.com/AdguardTeam/Adguardhome/wiki/Configuration) page for
+ * more information.
+ *
+ * ```javascript
+ * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
+ *   ADGUARDHOME_AAAA_PASSTHROUGH("foo", ""),
+ * );
+ * ```
+ *
+ * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific//adguardhome_aaaa_passthrough
+ */
+declare function ADGUARDHOME_AAAA_PASSTHROUGH(source: string, destination: string): DomainModifier;
+
+/**
+ * `ADGUARDHOME_A_PASSTHROUGH` represents the literal 'A'. AdGuardHome uses this to passthrough
+ * the original values of a record type.
+ *
+ * The second argument to this record type must be empty.
+ *
+ * See [this](https://github.com/AdguardTeam/Adguardhome/wiki/Configuration) page for
+ * more information.
+ *
+ * ```javascript
+ * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
+ *   ADGUARDHOME_A_PASSTHROUGH("foo", ""),
+ * );
+ * ```
+ *
+ * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific//adguardhome_a_passthrough
+ */
+declare function ADGUARDHOME_A_PASSTHROUGH(source: string, destination: string): DomainModifier;
+
+/**
  * AKAMAICDN is a proprietary record type that is used to configure [Zone Apex Mapping](https://www.akamai.com/blog/security/edge-dns--zone-apex-mapping---dnssec).
  * The AKAMAICDN target must be preconfigured in the Akamai network.
  *
@@ -469,7 +507,7 @@ declare function CAA(name: string, tag: "issue" | "issuewild" | "iodef", value: 
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/caa_builder
  */
-declare function CAA_BUILDER(opts: { label?: string; iodef: string; iodef_critical?: boolean; issue: string[]; issue_critical?: boolean; issuewild: string[]; issuewild_critical?: boolean; ttl?: Duration }): DomainModifier;
+declare function CAA_BUILDER(opts: { label?: string; iodef: string; iodef_critical?: boolean; issue: string[]|string; issue_critical?: boolean; issuewild: string[]|string; issuewild_critical?: boolean; ttl?: Duration }): DomainModifier;
 
 /**
  * WARNING: Cloudflare is removing this feature and replacing it with a new
@@ -508,8 +546,8 @@ declare function CAA_BUILDER(opts: { label?: string; iodef: string; iodef_critic
 declare function CF_REDIRECT(source: string, destination: string, ...modifiers: RecordModifier[]): DomainModifier;
 
 /**
- * `CF_SINGLE_REDIRECT` is a Cloudflare-specific feature for creating HTTP 301
- * (permanent) or 302 (temporary) redirects.
+ * `CF_SINGLE_REDIRECT` is a Cloudflare-specific feature for creating HTTP redirects.  301, 302, 303, 307, 308 are supported.
+ * Typically one uses 302 (temporary) or (less likely) 301 (permanent).
  *
  * This feature manages dynamic "Single Redirects". (Single Redirects can be
  * static or dynamic but DNSControl only maintains dynamic redirects).
@@ -518,16 +556,16 @@ declare function CF_REDIRECT(source: string, destination: string, ...modifiers: 
  *
  * ```javascript
  * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
- *   CF_SINGLE_REDIRECT("name", 301, "when", "then"),
- *   CF_SINGLE_REDIRECT('redirect www.example.com', 301, 'http.host eq "www.example.com"', 'concat("https://otherplace.com", http.request.uri.path)'),
- *   CF_SINGLE_REDIRECT('redirect yyy.example.com', 301, 'http.host eq "yyy.example.com"', 'concat("https://survey.stackoverflow.co", "")'),
+ *   CF_SINGLE_REDIRECT("name", 302, "when", "then"),
+ *   CF_SINGLE_REDIRECT('redirect www.example.com', 302, 'http.host eq "www.example.com"', 'concat("https://otherplace.com", http.request.uri.path)'),
+ *   CF_SINGLE_REDIRECT('redirect yyy.example.com', 302, 'http.host eq "yyy.example.com"', 'concat("https://survey.stackoverflow.co", "")'),
  * );
  * ```
  *
  * The fields are:
  *
  * * name: The name (basically a comment, but it must be unique)
- * * code: Either 301 (permanent) or 302 (temporary) redirects. May be a number or string.
+ * * code: Any of 301, 302, 303, 307, 308. May be a number or string.
  * * when: What Cloudflare sometimes calls the "rule expression".
  * * then: The replacement expression.
  *
@@ -624,7 +662,7 @@ declare function CNAME(name: string, target: string, ...modifiers: RecordModifie
  *
  * Modifier arguments are processed according to type as follows:
  *
- * - A function argument will be called with the domain object as it's only argument. Most of the [built-in modifier functions](https://docs.dnscontrol.org/language-reference/domain-modifiers-modifiers) return such functions.
+ * - A function argument will be called with the domain object as it's only argument. Most of the [built-in modifier functions](https://docs.dnscontrol.org/language-reference/domain-modifiers) return such functions.
  * - An object argument will be merged into the domain's metadata collection.
  * - An array argument will have all of it's members evaluated recursively. This allows you to combine multiple common records or modifiers into a variable that can
  *    be used like a macro in multiple domains.
@@ -632,7 +670,7 @@ declare function CNAME(name: string, target: string, ...modifiers: RecordModifie
  * ```javascript
  * // simple domain
  * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
- *   A("@","1.2.3.4"),
+ *   A("@","1.2.3.4"),           // "@" means the apex domain. In this case, "example.com" itself.
  *   CNAME("test", "foo.example2.com."),
  * );
  *
@@ -645,12 +683,17 @@ declare function CNAME(name: string, target: string, ...modifiers: RecordModifie
  *     MX("@", 10, "alt4.aspmx.l.google.com."),
  * ]
  *
- * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
+ * D("other-example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
  *   A("@","1.2.3.4"),
  *   CNAME("test", "foo.example2.com."),
  *   GOOGLE_APPS_DOMAIN_MX,
  * );
  * ```
+ *
+ * **What is "@"?** The label `@` is a special name that means the domain itself,
+ * otherwise known as the domain's apex, the bare domain, or the naked domain.
+ * In other words, if you want to put a DNS record at the apex of a domain, use an `"@"` for the label, not an empty string (`""`).
+ * In the above example, `example.com` has an `A` record with the value `"1.2.3.4"` at the apex of the domain.
  *
  * # Split Horizon DNS
  *
@@ -780,6 +823,74 @@ declare function DHCID(name: string, digest: string, ...modifiers: RecordModifie
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/disable_ignore_safety_check
  */
 declare const DISABLE_IGNORE_SAFETY_CHECK: DomainModifier;
+
+/**
+ * DNSControl contains a `DKIM_BUILDER` which can be used to simply create
+ * DKIM policies for your domains.
+ *
+ * ## Example
+ *
+ * ### Simple example
+ *
+ * ```javascript
+ * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
+ *   DKIM_BUILDER({
+ *     selector: "s1",
+ *     pubkey: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDC5/z4L"
+ *   }),
+ * );
+ * ```
+ *
+ * This yield the following record:
+ *
+ * ```text
+ * s1._domainkey   IN  TXT "v=DKIM1; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDC5/z4L"
+ * ```
+ *
+ * ### Advanced example
+ *
+ * ```javascript
+ * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
+ *   DKIM_BUILDER({
+ *     label: "alerts",
+ *     selector: "k2",
+ *     pubkey: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDC5/z4L",
+ *     flags: ['y'],
+ *     hashtypes: ['sha256'],
+ *     keytype: 'rsa',
+ *     servicetypes: ['email'],
+ *     ttl: 150
+ *   }),
+ * );
+ * ```
+ *
+ * This yields the following record:
+ *
+ * ```text
+ *
+ * k2._domainkey.alerts    IN  TXT "v=DKIM1; k=rsa; s=email; t=y; h=sha256; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDC5/z4L" ttl=150
+ *
+ * ```
+ *
+ * ### Parameters
+ *
+ * * `label:` The DNS label for the DKIM record (`[selector]._domainkey` prefix is added; default: `'@'`)
+ * * `selector:` Selector used for the label. e.g. `s1` or `mail`
+ * * `pubkey:` Public key `p` to be used for DKIM.
+ * * `keytype:` Key type `k`. Defaults to `'rsa'` if omitted (optional)
+ * * `flags:` Which types `t` of flags to activate, ie. 'y' and/or 's'. Array, defaults to 's' (optional)
+ * * `hashtypes:` Acceptable hash algorithms `h` (optional)
+ * * `servicetypes:` Record-applicable service types (optional)
+ * * `note:` Note field `n` for admins. Avoid if possible to keep record length short. (optional)
+ * * `ttl:` Input for `TTL` method (optional)
+ *
+ * ### Caveats
+ *
+ * * DKIM (TXT) records are automatically split using `AUTOSPLIT`.
+ *
+ * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/dkim_builder
+ */
+declare function DKIM_BUILDER(opts: { label?: string; selector: string; pubkey: string; flags?: string[]; hashtypes?: string[]; keytype?: string; servicetypes?: string[]; note?: string; ttl?: Duration }): DomainModifier;
 
 /**
  * DNSControl contains a `DMARC_BUILDER` which can be used to simply create
@@ -1119,7 +1230,7 @@ declare function DefaultTTL(ttl: Duration): DomainModifier;
  * Using a different number, ie: `DnsProvider("name",2)`, means "fetch all nameservers from this provider,
  * but limit it to this many.
  *
- * See [this page](../../nameservers.md) for a detailed explanation of how DNSControl handles nameservers and NS records.
+ * See [this page](../../advanced-features/nameservers.md) for a detailed explanation of how DNSControl handles nameservers and NS records.
  *
  * If a domain (`D()`) does not include any `DnsProvider()` functions,
  * the DNS records will not be modified. In fact, if you want to control
@@ -1131,7 +1242,13 @@ declare function DefaultTTL(ttl: Duration): DomainModifier;
 declare function DnsProvider(name: string, nsCount?: number): DomainModifier;
 
 /**
- * Documentation needed.
+ * This is provider specific type of record and not a DNS standard. It may behave differently for each provider that handles it.
+ *
+ * ### Namecheap
+ *
+ * This is a URL Redirect record with a type of "Masked", it creates a framed HTML page to the target.
+ *
+ * You can read more at the [Namecheap documentation](https://www.namecheap.com/support/knowledgebase/article.aspx/385/2237/how-to-set-up-a-url-redirect-for-a-domain/).
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/frame
  */
@@ -1174,6 +1291,8 @@ declare function HASH(algorithm: "SHA1" | "SHA256" | "SHA512", value: string): s
  * The params may be configured to specify the `alpn`, `ipv4hint`, `ipv6hint`, `ech` or `port` setting. Several params may be joined by a space. Not existing params may be specified as an empty string `""`
  *
  * Modifiers can be any number of [record modifiers](https://docs.dnscontrol.org/language-reference/record-modifiers) or JSON objects, which will be merged into the record's metadata.
+ *
+ * If you set the parameter `ech` to the special value `IGNORE`, DNSControl will ignore the contents of that parameter when updating a zone.
  *
  * ```javascript
  * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
@@ -1491,7 +1610,7 @@ declare function HTTPS(name: string, priority: number, target: string, params: s
  * as a last resort. Even then, test extensively.
  *
  * * There is no locking.  If the external system and DNSControl make updates at the exact same time, the results are undefined.
- * * IGNORE` works fine with records inserted into a `D()` via `D_EXTEND()`. The matching is done on the resulting FQDN of the label or target.
+ * * `IGNORE` works fine with records inserted into a `D()` via `D_EXTEND()`. The matching is done on the resulting FQDN of the label or target.
  * * `targetSpec` does not match fields other than the primary target.  For example, `MX` records have a target hostname plus a priority. There is no way to match the priority.
  * * The BIND provider can not ignore records it doesn't know about.  If it does not have access to an existing zonefile, it will create a zonefile from scratch. That new zonefile will not have any external records.  It will seem like they were not ignored, but in reality BIND didn't have visibility to them so that they could be ignored.
  *
@@ -1926,7 +2045,7 @@ declare function MX(name: string, priority: number, target: string, ...modifiers
  * in the current zone and accepts a label. [`NS()`](NS.md) is for downward
  * delegations. `NAMESERVER()` is for informing upstream delegations.
  *
- * For more information, refer to [this page](../../nameservers.md).
+ * For more information, refer to [this page](../../advanced-features/nameservers.md).
  *
  * ```javascript
  * D("example.com", REG_MY_PROVIDER,
@@ -2302,13 +2421,13 @@ declare function NS(name: string, target: string, ...modifiers: RecordModifier[]
  *
  * * `name` must match the name of an entry in `creds.json`.
  * * `type` specifies a valid DNS provider type identifier listed on the [provider page](../../provider/index.md).
- *   * Starting with [v3.16](../../v316.md), the type is optional. If it is absent, the `TYPE` field in `creds.json` is used instead. You can leave it out. (Thanks to JavaScript magic, you can leave it out even when there are more fields).
+ *   * Starting with [v3.16](../../release/v316.md), the type is optional. If it is absent, the `TYPE` field in `creds.json` is used instead. You can leave it out. (Thanks to JavaScript magic, you can leave it out even when there are more fields).
  *   * Starting with v4.0, specifying the type may be an error. Please add the `TYPE` field to `creds.json` and remove this parameter from `dnsconfig.js` to prepare.
  * * `meta` is a way to send additional parameters to the provider.  It is optional and only certain providers use it.  See the [individual provider docs](../../provider/index.md) for details.
  *
  * This function will return an opaque string that should be assigned to a variable name for use in [D](D.md) directives.
  *
- * Prior to [v3.16](../../v316.md):
+ * Prior to [v3.16](../../release/v316.md):
  *
  * ```javascript
  * var REG_MYNDC = NewRegistrar("mynamedotcom", "NAMEDOTCOM");
@@ -2319,7 +2438,7 @@ declare function NS(name: string, target: string, ...modifiers: RecordModifier[]
  * );
  * ```
  *
- * In [v3.16](../../v316.md) and later:
+ * In [v3.16](../../release/v316.md) and later:
  *
  * ```javascript
  * var REG_MYNDC = NewRegistrar("mynamedotcom");
@@ -2341,13 +2460,13 @@ declare function NewDnsProvider(name: string, type?: string, meta?: object): str
  *
  * * `name` must match the name of an entry in `creds.json`.
  * * `type` specifies a valid DNS provider type identifier listed on the [provider page](../../provider/index.md).
- *   * Starting with [v3.16](../../v316.md), the type is optional. If it is absent, the `TYPE` field in `creds.json` is used instead. You can leave it out. (Thanks to JavaScript magic, you can leave it out even when there are more fields).
+ *   * Starting with [v3.16](../../release/v316.md), the type is optional. If it is absent, the `TYPE` field in `creds.json` is used instead. You can leave it out. (Thanks to JavaScript magic, you can leave it out even when there are more fields).
  *   * Starting with v4.0, specifying the type may be an error. Please add the `TYPE` field to `creds.json` and remove this parameter from `dnsconfig.js` to prepare.
  * * `meta` is a way to send additional parameters to the provider.  It is optional and only certain providers use it.  See the [individual provider docs](../../provider/index.md) for details.
  *
  * This function will return an opaque string that should be assigned to a variable name for use in [D](D.md) directives.
  *
- * Prior to [v3.16](../../v316.md):
+ * Prior to [v3.16](../../release/v316.md):
  *
  * ```javascript
  * var REG_MYNDC = NewRegistrar("mynamedotcom", "NAMEDOTCOM");
@@ -2358,7 +2477,7 @@ declare function NewDnsProvider(name: string, type?: string, meta?: object): str
  * );
  * ```
  *
- * In [v3.16](../../v316.md) and later:
+ * In [v3.16](../../release/v316.md) and later:
  *
  * ```javascript
  * var REG_MYNDC = NewRegistrar("mynamedotcom");
@@ -2372,6 +2491,22 @@ declare function NewDnsProvider(name: string, type?: string, meta?: object): str
  * @see https://docs.dnscontrol.org/language-reference/top-level-functions/newregistrar
  */
 declare function NewRegistrar(name: string, type?: string, meta?: object): string;
+
+/**
+ * OPENPGPKEY adds a OPENPGPKEY record to the domain.
+ *
+ * So far, no transformation is applied to the parameters. The data will be passed to the DNS server as-is.
+ * Reference RFC 7929 for details.
+ *
+ * ```javascript
+ * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
+ *   OPENPGPKEY("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15._openpgpkey", "9901a204447450b7110400d9bef554b145128ccc90d9f52df14bb878626e3db32112d47fbc5ee9cc5ffcbbd06bee487a580481674d9d31e368a85ccf4d4ef3bfa3e23fdde238bc32d8c40d39204b912f8cb1c47a7f34ba64bf3598dafe0f080e17facb678b6e700b0163d677960471d265a197e5ee9d53d71e1911f47f518a0e303abaf3c01b188e37d7bf00a0b90d4f43af944202fc49356a35a367955633cd4503ff7dfa21fb70a201ffb4aa7a755fc560ffd5a4b1d7b7015e7b4bdc0a1e45c1c28fd2f628f4d21f07a091da0d29c98b070566e178c5974554e509a5153a16b271df835e8c8a97715cc4beb5383d05fdf7a0d9412a1fb9f572c195d8c0c696a5ec179bab29d3d8701446e7aca79565ecdd6ec3ceef4937cb248564a75ddb4115adc10400a8f820174b32c99c5ac6ee483c0184fed24fa44d2fd4c9dc00af9ed048b51cfdb95747ab1e35df933382b08f8223da934bfcba59cb356b0d2f4158d647ab76d09c444fadf5e92b95d65f4aae667f33835226170c6625db872a6b72cb13638cf4754941730f5117a4f7c262044bea453839f95b806a0bd98a668073ba2d0fce1ab4326f70656e53555345204275696c642053657276696365203c6275696c6473657276696365406f70656e737573652e6f72673e8864041311020024021b03060b09080703020315020303160201021e01021780050253674e3b050921bf0084000a09103b3011b76b9d65234a5b00a095c38bcfaa29f80adefc0cf9ba2abf3a3e9b516b009e367296e1a96af211f8cded2493f7f6ac09de41"),
+ * );
+ * ```
+ *
+ * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/openpgpkey
+ */
+declare function OPENPGPKEY(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
 
 /**
  * `PANIC` terminates the script and therefore DNSControl with an exit code of 1. This should be used if your script cannot gather enough information to generate records, for example when a HTTP request failed.
@@ -2710,7 +2845,7 @@ declare function REV(address: string): string;
  * v4 defaults to RFC 2317.  In v5.0 the default will change to RFC 4183.
  * `REVCOMPAT()` is provided for those that wish to retain the old behavior.
  *
- * For more information, see [Opinion #9](../../opinions.md#opinion-9-rfc-4183-is-better-than-rfc-2317).
+ * For more information, see [Opinion #9](../../advanced-features/opinions.md#opinion-9-rfc-4183-is-better-than-rfc-2317).
  *
  * # Transition plan
  *
@@ -2732,13 +2867,9 @@ declare function REVCOMPAT(rfc: string): string;
  *
  * ```javascript
  * D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
- *   SOA("@", "ns3.example.com.", "hostmaster@example.com", 3600, 600, 604800, 1440),
+ *   SOA("@", "ns3.example.com.", "hostmaster.example.com.", 3600, 600, 604800, 1440),
  * );
  * ```
- *
- * If you accidentally include an `@` in the email field DNSControl will quietly
- * change it to a `.`. This way you can specify a human-readable email address
- * when you are making it easier for spammers how to find you.
  *
  * ## Notes
  * * The serial number is managed automatically.  It isn't even a field in `SOA()`.
@@ -3175,7 +3306,7 @@ declare function TTL(ttl: Duration): RecordModifier;
  *       TXT("@", "598611146-3338560"),
  *       TXT("listserve", "google-site-verification=12345"),
  *       TXT("multiple", ["one", "two", "three"]),  // Multiple strings
- *       TXT("quoted", "any "quotes" and escapes? ugh; no worries!"),
+ *       TXT("quoted", 'any "quotes" and escapes? ugh; no worries!'),
  *       TXT("_domainkey", "t=y; o=-;"), // Escapes are done for you automatically.
  *       TXT("long", "X".repeat(300)), // Long strings are split automatically.
  *     );
@@ -3260,18 +3391,30 @@ declare function TTL(ttl: Duration): RecordModifier;
 declare function TXT(name: string, contents: string, ...modifiers: RecordModifier[]): DomainModifier;
 
 /**
- * Documentation needed.
+ * This is provider specific type of record and not a DNS standard. It may behave differently for each provider that handles it.
+ *
+ * ### Namecheap
+ *
+ * This is a URL Redirect record with a type of "Unmasked", it creates a 302 redirect to the target.
+ *
+ * You can read more at the [Namecheap documentation](https://www.namecheap.com/support/knowledgebase/article.aspx/385/2237/how-to-set-up-a-url-redirect-for-a-domain/)
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/url
  */
 declare function URL(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
 
 /**
- * Documentation needed.
+ * This is provider specific type of record and not a DNS standard. It may behave differently for each provider that handles it.
+ *
+ * ### Namecheap
+ *
+ * This is a URL Redirect record with a type of "Permanent", it creates a 301 redirect to the target.
+ *
+ * You can read more at the [Namecheap documentation](https://www.namecheap.com/support/knowledgebase/article.aspx/385/2237/how-to-set-up-a-url-redirect-for-a-domain/).
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/url301
  */
-declare function URL301(name: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function URL301(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
 
 /**
  * `getConfiguredDomains` getConfiguredDomains is a helper function that returns the domain names
@@ -3372,4 +3515,4 @@ declare function getConfiguredDomains(): string[];
  *
  * @see https://docs.dnscontrol.org/language-reference/top-level-functions/require_glob
  */
-declare function require_glob(path: string, recursive: boolean): void;
+declare function require_glob(path: string, recursive?: boolean): void;
