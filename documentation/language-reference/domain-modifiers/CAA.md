@@ -7,17 +7,21 @@ parameters:
   - modifiers...
 parameter_types:
   name: string
-  tag: '"issue" | "issuewild" | "iodef"'
+  tag: '"issue" | "issuewild" | "iodef" | "contactemail" | "contactphone" | "issuemail" | "issuevmc"'
   value: string
   "modifiers...": RecordModifier[]
 ---
 
-`CAA()` adds a CAA record to a domain. The name should be the relative label for the record. Use `@` for the domain apex.
+`CAA` adds a [Certification Authority Authorization record](https://www.rfc-editor.org/rfc/rfc8659) to a domain. The name should be the relative label for the record. Use `@` for the domain apex.
 
 Tag can be one of
 1. `"issue"`
 2. `"issuewild"`
 3. `"iodef"`
+4. `"contactemail"`
+5. `"contactphone"`
+6. `"issuemail"`
+7. `"issuevmc"`
 
 Value is a string. The format of the contents is different depending on the tag. DNSControl will handle any escaping or quoting required, similar to TXT records. For example use `CAA("@", "issue", "letsencrypt.org")` rather than `CAA("@", "issue", "\"letsencrypt.org\"")`.
 

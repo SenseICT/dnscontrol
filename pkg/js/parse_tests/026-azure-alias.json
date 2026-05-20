@@ -4,7 +4,8 @@
     {
       "dnsProviders": {},
       "meta": {
-        "dnscontrol_tag": "",
+        "dnscontrol_nameraw": "foo.com",
+        "dnscontrol_nameunicode": "foo.com",
         "dnscontrol_uniquename": "foo.com"
       },
       "name": "foo.com",
@@ -13,6 +14,7 @@
           "azure_alias": {
             "type": "AAAA"
           },
+          "filepos": "[line:3:5]",
           "meta": {
             "orig_custom_type": "AZURE_ALIAS"
           },
@@ -25,6 +27,7 @@
           "azure_alias": {
             "type": "A"
           },
+          "filepos": "[line:2:5]",
           "meta": {
             "orig_custom_type": "AZURE_ALIAS"
           },
@@ -37,6 +40,7 @@
           "azure_alias": {
             "type": "CNAME"
           },
+          "filepos": "[line:4:5]",
           "meta": {
             "orig_custom_type": "AZURE_ALIAS"
           },
@@ -46,7 +50,8 @@
           "type": "AZURE_ALIAS"
         }
       ],
-      "registrar": "none"
+      "registrar": "none",
+      "uniquename": "foo.com"
     }
   ],
   "registrars": []

@@ -4,12 +4,14 @@
     {
       "dnsProviders": {},
       "meta": {
-        "dnscontrol_tag": "",
+        "dnscontrol_nameraw": "example.com",
+        "dnscontrol_nameunicode": "example.com",
         "dnscontrol_uniquename": "example.com"
       },
       "name": "example.com",
       "records": [
         {
+          "filepos": "[line:2:5]",
           "name": "normal",
           "target": "1.1.1.1",
           "ttl": 300,
@@ -18,12 +20,14 @@
       ],
       "recordsabsent": [
         {
+          "filepos": "[line:3:5]",
           "name": "helper",
           "target": "2.2.2.2",
           "type": "A"
         }
       ],
-      "registrar": "none"
+      "registrar": "none",
+      "uniquename": "example.com"
     }
   ],
   "registrars": []

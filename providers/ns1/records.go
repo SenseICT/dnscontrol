@@ -7,16 +7,18 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/StackExchange/dnscontrol/v4/models"
-	"github.com/StackExchange/dnscontrol/v4/pkg/diff2"
-	"github.com/StackExchange/dnscontrol/v4/pkg/printer"
+	"github.com/DNSControl/dnscontrol/v4/models"
+	"github.com/DNSControl/dnscontrol/v4/pkg/diff2"
+	"github.com/DNSControl/dnscontrol/v4/pkg/printer"
 	"gopkg.in/ns1/ns1-go.v2/rest"
 	"gopkg.in/ns1/ns1-go.v2/rest/model/dns"
 	"gopkg.in/ns1/ns1-go.v2/rest/model/filter"
 )
 
 // GetZoneRecords gets the records of a zone and returns them in RecordConfig format.
-func (n *nsone) GetZoneRecords(domain string, meta map[string]string) (models.Records, error) {
+func (n *nsone) GetZoneRecords(dc *models.DomainConfig) (models.Records, error) {
+	domain := dc.Name
+
 	z, _, err := n.Zones.Get(domain, true)
 	if err != nil && errors.Is(err, rest.ErrZoneMissing) {
 		// if we get here, zone wasn't created, but we ended up continuing regardless.
@@ -126,11 +128,12 @@ func buildRecord(recs models.Records, domain string, id string) *dns.Record {
 		Filters: []*filter.Filter{}, // Work through a bug in the NS1 API library that causes 400 Input validation failed (Value None for field '<obj>.filters' is not of type array)
 	}
 	for _, r := range recs {
-		if r.Type == "MX" {
+		switch r.Type {
+		case "MX":
 			rec.AddAnswer(&dns.Answer{Rdata: strings.Fields(fmt.Sprintf("%d %v", r.MxPreference, r.GetTargetField()))})
-		} else if r.Type == "TXT" {
+		case "TXT":
 			rec.AddAnswer(&dns.Answer{Rdata: []string{r.GetTargetTXTJoined()}})
-		} else if r.Type == "CAA" {
+		case "CAA":
 			rec.AddAnswer(&dns.Answer{
 				Rdata: []string{
 					strconv.FormatUint(uint64(r.CaaFlag), 10),
@@ -138,9 +141,9 @@ func buildRecord(recs models.Records, domain string, id string) *dns.Record {
 					r.GetTargetField(),
 				},
 			})
-		} else if r.Type == "SRV" {
+		case "SRV":
 			rec.AddAnswer(&dns.Answer{Rdata: strings.Fields(fmt.Sprintf("%d %d %d %v", r.SrvPriority, r.SrvWeight, r.SrvPort, r.GetTargetField()))})
-		} else if r.Type == "NAPTR" {
+		case "NAPTR":
 			rec.AddAnswer(&dns.Answer{Rdata: []string{
 				strconv.Itoa(int(r.NaptrOrder)),
 				strconv.Itoa(int(r.NaptrPreference)),
@@ -149,27 +152,27 @@ func buildRecord(recs models.Records, domain string, id string) *dns.Record {
 				r.NaptrRegexp,
 				r.GetTargetField(),
 			}})
-		} else if r.Type == "DS" {
+		case "DS":
 			rec.AddAnswer(&dns.Answer{Rdata: []string{
 				strconv.Itoa(int(r.DsKeyTag)),
 				strconv.Itoa(int(r.DsAlgorithm)),
 				strconv.Itoa(int(r.DsDigestType)),
 				r.DsDigest,
 			}})
-		} else if r.Type == "SVCB" || r.Type == "HTTPS" {
+		case "SVCB", "HTTPS":
 			rec.AddAnswer(&dns.Answer{Rdata: []string{
 				strconv.Itoa(int(r.SvcPriority)),
 				r.GetTargetField(),
 				r.SvcParams,
 			}})
-		} else if r.Type == "TLSA" {
+		case "TLSA":
 			rec.AddAnswer(&dns.Answer{Rdata: []string{
 				strconv.Itoa(int(r.TlsaUsage)),
 				strconv.Itoa(int(r.TlsaSelector)),
 				strconv.Itoa(int(r.TlsaMatchingType)),
 				r.GetTargetField(),
 			}})
-		} else {
+		default:
 			rec.AddAnswer(&dns.Answer{Rdata: strings.Fields(r.GetTargetField())})
 		}
 	}
@@ -200,6 +203,14 @@ func convert(zr *dns.ZoneRecord, domain string) ([]*models.RecordConfig, error) 
 			xAns := strings.SplitN(ans, " ", 3)
 			if err := rec.SetTargetCAAStrings(xAns[0], xAns[1], xAns[2]); err != nil {
 				return nil, fmt.Errorf("unparsable %s record received from ns1: %w", rtype, err)
+			}
+		case "NAPTR":
+			// NB(tlim): This is a stupid hack.  NS1 doesn't quote a missing
+			// parameter properly. Therefore we look for 2 spaces and assume there is
+			// a missing item.
+			ans = strings.ReplaceAll(ans, "  ", ` "" `)
+			if err := rec.PopulateFromString(rtype, ans, domain); err != nil {
+				return nil, fmt.Errorf("unparsable record received from ns1: %w", err)
 			}
 		case "REDIRECT":
 			// NS1 returns REDIRECTs as records, but there is only one and dummy answer:

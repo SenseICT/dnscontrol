@@ -55,7 +55,7 @@ type Nameserver struct {
 // that refer to the .Name field directly.  All new code should use
 // ToNameservers/ToNameserversStripTD and NameserversToStrings to make
 // future refactoring easier.  See
-// https://github.com/StackExchange/dnscontrol/issues/577
+// https://github.com/DNSControl/dnscontrol/issues/577
 
 func (n *Nameserver) String() string {
 	return n.Name
@@ -91,7 +91,7 @@ func ToNameserversStripTD(nss []string) ([]*Nameserver, error) {
 	return nservers, nil
 }
 
-// NameserversToStrings constructs a list of strings from *Nameserver structs
+// NameserversToStrings constructs a list of strings from *Nameserver structs.
 func NameserversToStrings(nss []*Nameserver) (s []string) {
 	for _, ns := range nss {
 		s = append(s, ns.Name)
@@ -105,17 +105,11 @@ type Correction struct {
 	Msg string
 }
 
-// DomainContainingFQDN finds the best domain from the dns config for the given record fqdn.
-// It will chose the domain whose name is the longest suffix match for the fqdn.
-func (config *DNSConfig) DomainContainingFQDN(fqdn string) *DomainConfig {
-	fqdn = strings.TrimSuffix(fqdn, ".")
-	longestLength := 0
-	var d *DomainConfig
-	for _, dom := range config.Domains {
-		if (dom.Name == fqdn || strings.HasSuffix(fqdn, "."+dom.Name)) && len(dom.Name) > longestLength {
-			longestLength = len(dom.Name)
-			d = dom
-		}
+// PostProcess performs and post-processing required after running dnsconfig.js and loading the result.
+func (config *DNSConfig) PostProcess() error {
+	for _, domain := range config.Domains {
+		domain.PostProcess()
+		// No need to call FixLegacyDC here. These records were created from dnsconfig.js, not from a provider.
 	}
-	return d
+	return nil
 }

@@ -19,7 +19,7 @@ import (
 	"github.com/google/shlex"
 )
 
-// LoadProviderConfigs will open or execute the specified file name, and parse its contents. It will replace environment variables it finds if any value matches $[A-Za-z_-0-9]+
+// LoadProviderConfigs will open or execute the specified file name, and parse its contents. It will replace environment variables it finds if any value matches $[A-Za-z_-0-9]+.
 func LoadProviderConfigs(fname string) (map[string]map[string]string, error) {
 	results := map[string]map[string]string{}
 
@@ -38,6 +38,10 @@ func LoadProviderConfigs(fname string) (map[string]map[string]string, error) {
 		dat, err = readCredsFile(fname)
 		if err != nil {
 			return nil, err
+		}
+		// Empty file? Add an empty json object.
+		if len(strings.TrimSpace(string(dat))) == 0 {
+			dat = []byte(`{}`)
 		}
 	}
 
@@ -76,7 +80,7 @@ func isExecutable(filename string) bool {
 func readCredsFile(filename string) ([]byte, error) {
 	dat, err := utfutil.ReadFile(filename, utfutil.POSIX)
 	if err != nil {
-		// no creds file is ok. Bind requires nothing for example. Individual providers will error if things not found.
+		// no creds file is ok. `bind` requires nothing for example. Individual providers will error if things not found.
 		if os.IsNotExist(err) {
 			fmt.Printf("INFO: Config file %q does not exist. Skipping.\n", filename)
 			return []byte{}, nil

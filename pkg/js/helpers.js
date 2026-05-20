@@ -331,6 +331,28 @@ var AAAA = recordBuilder('AAAA');
 // AKAMAICDN(name, target, recordModifiers...)
 var AKAMAICDN = recordBuilder('AKAMAICDN');
 
+// AKAMAITLC(name, answer_type, target, recordModifiers...)
+var AKAMAITLC = recordBuilder('AKAMAITLC', {
+    args: [
+        ['name', _.isString],
+        [
+            'answer_type',
+            function (value) {
+                return (
+                    _.isString(value) &&
+                    ['DUAL', 'A', 'AAAA'].indexOf(value) !== -1
+                );
+            },
+        ],
+        ['target', _.isString],
+    ],
+    transform: function (record, args, modifier) {
+        record.name = args.name;
+        record.answer_type = args.answer_type;
+        record.target = args.target;
+    },
+});
+
 // ALIAS(name,target, recordModifiers...)
 var ALIAS = recordBuilder('ALIAS');
 
@@ -407,6 +429,37 @@ function R53_EVALUATE_TARGET_HEALTH(enabled) {
     };
 }
 
+// R53_WEIGHT(weight, set_identifier) configures Route 53 weighted routing.
+// weight: integer 0-255, set_identifier: unique string within the weighted group.
+function R53_WEIGHT(weight, set_identifier) {
+    if (!_.isNumber(weight) || weight < 0 || weight > 255) {
+        throw 'R53_WEIGHT: weight must be a number between 0 and 255';
+    }
+    if (!_.isString(set_identifier) || set_identifier === '') {
+        throw 'R53_WEIGHT: set_identifier must be a non-empty string';
+    }
+    return function (r) {
+        if (!_.isObject(r.meta)) {
+            r.meta = {};
+        }
+        r.meta['r53_weight'] = weight.toString();
+        r.meta['r53_set_identifier'] = set_identifier;
+    };
+}
+
+// R53_HEALTH_CHECK_ID(health_check_id) associates a Route 53 health check with the record.
+function R53_HEALTH_CHECK_ID(health_check_id) {
+    if (!_.isString(health_check_id) || health_check_id === '') {
+        throw 'R53_HEALTH_CHECK_ID: health_check_id must be a non-empty string';
+    }
+    return function (r) {
+        if (!_.isObject(r.meta)) {
+            r.meta = {};
+        }
+        r.meta['r53_health_check_id'] = health_check_id;
+    };
+}
+
 function validateR53AliasType(value) {
     if (!_.isString(value)) {
         return false;
@@ -447,25 +500,6 @@ var CAA = recordBuilder('CAA', {
 
 // CNAME(name,target, recordModifiers...)
 var CNAME = recordBuilder('CNAME');
-
-// DS(name, keytag, algorithm, digestype, digest)
-var DS = recordBuilder('DS', {
-    args: [
-        ['name', _.isString],
-        ['keytag', _.isNumber],
-        ['algorithm', _.isNumber],
-        ['digesttype', _.isNumber],
-        ['digest', _.isString],
-    ],
-    transform: function (record, args, modifiers) {
-        record.name = args.name;
-        record.dskeytag = args.keytag;
-        record.dsalgorithm = args.algorithm;
-        record.dsdigesttype = args.digesttype;
-        record.dsdigest = args.digest;
-        record.target = args.target;
-    },
-});
 
 // DHCID(name,target, recordModifiers...)
 var DHCID = recordBuilder('DHCID');
@@ -535,6 +569,24 @@ var NAPTR = recordBuilder('NAPTR', {
 
 // OPENPGPKEY(name,target, recordModifiers...)
 var OPENPGPKEY = recordBuilder('OPENPGPKEY');
+
+// name, usage, selector, matchingtype, certificate
+var SMIMEA = recordBuilder('SMIMEA', {
+    args: [
+        ['name', _.isString],
+        ['usage', _.isNumber],
+        ['selector', _.isNumber],
+        ['matchingtype', _.isNumber],
+        ['target', _.isString], // recordBuilder needs a "target" argument
+    ],
+    transform: function (record, args, modifiers) {
+        record.name = args.name + '._smimecert';
+        record.smimeausage = args.usage;
+        record.smimeaselector = args.selector;
+        record.smimeamatchingtype = args.matchingtype;
+        record.target = args.target;
+    },
+});
 
 // SOA(name,ns,mbox,refresh,retry,expire,minimum, recordModifiers...)
 var SOA = recordBuilder('SOA', {
@@ -642,6 +694,23 @@ var TXT = recordBuilder('TXT', {
     transform: function (record, args, modifiers) {
         record.name = args.name;
         // Store the strings from the user verbatim.
+        if (_.isString(args.target)) {
+            record.target = args.target;
+        } else {
+            record.target = args.target.join('');
+        }
+    },
+});
+
+var LUA = recordBuilder('LUA', {
+    args: [
+        ['name', _.isString],
+        ['rtype', _.isString],
+        ['target', isStringOrArray],
+    ],
+    transform: function (record, args, modifiers) {
+        record.name = args.name;
+        record.luartype = args.rtype.toUpperCase();
         if (_.isString(args.target)) {
             record.target = args.target;
         } else {
@@ -836,8 +905,8 @@ function locStringBuilder(record, args) {
 // Renders LOC type internal properties from D˚M'S" parameters.
 // Change anything here at your peril.
 function locDMSBuilder(record, args) {
-    LOCEquator = 1 << 31; // RFC 1876, Section 2.
-    LOCPrimeMeridian = 1 << 31; // RFC 1876, Section 2.
+    LOCEquator = Math.pow(2, 31); // RFC 1876, Section 2.
+    LOCPrimeMeridian = Math.pow(2, 31); // RFC 1876, Section 2.
     LOCHours = 60 * 1000;
     LOCDegrees = 60 * LOCHours;
     LOCAltitudeBase = 100000;
@@ -1114,6 +1183,29 @@ function NO_PURGE(d) {
     d.KeepUnknown = true;
 }
 
+// IGNORE_EXTERNAL_DNS(prefix)
+// When enabled, DNSControl will automatically detect TXT records created by
+// Kubernetes external-dns and ignore both the TXT records and the corresponding
+// DNS records they manage. External-dns creates TXT records with content like:
+// "heritage=external-dns,external-dns/owner=<owner-id>,external-dns/resource=<resource>"
+// This allows DNSControl to coexist with external-dns in the same zone.
+//
+// Optional prefix parameter: If your external-dns is configured with a custom
+// --txt-prefix (e.g., "extdns-"), pass it here to detect those records.
+// Without a prefix, it detects the default format ("%{record_type}-" prefixes like "a-", "cname-").
+//
+// Usage:
+//   IGNORE_EXTERNAL_DNS()           // Use default detection (a-, cname-, etc.)
+//   IGNORE_EXTERNAL_DNS("extdns-") // Custom prefix
+function IGNORE_EXTERNAL_DNS(prefix) {
+    return function (d) {
+        d.ignore_external_dns = true;
+        if (prefix) {
+            d.external_dns_prefix = prefix;
+        }
+    };
+}
+
 // ENSURE_ABSENT_REC()
 // Usage: A("foo", "1.2.3.4", ENSURE_ABSENT_REC())
 function ENSURE_ABSENT_REC() {
@@ -1248,11 +1340,21 @@ function recordBuilder(type, opts) {
             modifiers.push(arguments[i]);
         }
 
+        // Record which line called this record type.
+        // NB(tlim): Hopefully we can find a better way to do this in the
+        // future. Right now we're faking that there was an error just to parse
+        // out the line number. That's inefficient but I can't find anything better.
+        // This will certainly break if we change to a different Javascript interpreter.
+        // Hopefully any other interpreter will have a better way to do this.
+        var positionLines = new Error().stack.split('\n');
+        var position = positionLines[positionLines.length - 2];
+
         return function (d) {
             var record = {
                 type: type,
                 meta: {},
                 ttl: d.defaultTTL,
+                filepos: position,
             };
 
             opts.applyModifier(record, modifiers);
@@ -1263,11 +1365,12 @@ function recordBuilder(type, opts) {
             if (
                 d.subdomain &&
                 record.type != 'CF_SINGLE_REDIRECT' &&
-                record.type != 'CF_REDIRECT' &&
-                record.type != 'CF_TEMP_REDIRECT' &&
                 record.type != 'CF_WORKER_ROUTE' &&
                 record.type != 'ADGUARDHOME_A_PASSTHROUGH' &&
-                record.type != 'ADGUARDHOME_AAAA_PASSTHROUGH'
+                record.type != 'ADGUARDHOME_AAAA_PASSTHROUGH' &&
+                record.type != 'MIKROTIK_FWD' &&
+                record.type != 'MIKROTIK_NXDOMAIN' &&
+                record.type != 'MIKROTIK_FORWARDER'
             ) {
                 record.subdomain = d.subdomain;
 
@@ -1383,6 +1486,8 @@ function num2dot(num) {
 var CF_PROXY_OFF = { cloudflare_proxy: 'off' }; // Proxy disabled.
 var CF_PROXY_ON = { cloudflare_proxy: 'on' }; // Proxy enabled.
 var CF_PROXY_FULL = { cloudflare_proxy: 'full' }; // Proxy+Railgun enabled.
+var CF_CNAME_FLATTEN_OFF = { cloudflare_cname_flatten: 'off' }; // CNAME flattening disabled (default).
+var CF_CNAME_FLATTEN_ON = { cloudflare_cname_flatten: 'on' }; // CNAME flattening enabled (paid plans only).
 // Per-domain meta settings:
 // Proxy default off for entire domain (the default):
 var CF_PROXY_DEFAULT_OFF = { cloudflare_proxy_default: 'off' };
@@ -1392,6 +1497,51 @@ var CF_PROXY_DEFAULT_ON = { cloudflare_proxy_default: 'on' };
 var CF_UNIVERSALSSL_OFF = { cloudflare_universalssl: 'off' };
 // UniversalSSL on for entire domain:
 var CF_UNIVERSALSSL_ON = { cloudflare_universalssl: 'on' };
+// Per-record comment (works on all plans):
+function CF_COMMENT(comment) {
+    return { cloudflare_comment: comment };
+}
+// Per-record tags (requires paid plan):
+function CF_TAGS() {
+    return { cloudflare_tags: Array.prototype.slice.call(arguments).join(',') };
+}
+// Enable comment management for domain (opt-in to sync comments):
+var CF_MANAGE_COMMENTS = { cloudflare_manage_comments: 'true' };
+// Enable tag management for domain (opt-in to sync tags, requires paid plan):
+var CF_MANAGE_TAGS = { cloudflare_manage_tags: 'true' };
+
+// Hurricane Electric DNS (HEDNS) aliases:
+
+// Enable Dynamic DNS on a record (preserves existing DDNS key):
+var HEDNS_DYNAMIC_ON = { hedns_dynamic: 'on' };
+// Disable Dynamic DNS on a record (WARNING: clears the associated DDNS key):
+var HEDNS_DYNAMIC_OFF = { hedns_dynamic: 'off' };
+// Set a specific DDNS key on a dynamic record (implies HEDNS_DYNAMIC_ON):
+function HEDNS_DDNS_KEY(key) {
+    return { hedns_dynamic: 'on', hedns_ddns_key: key };
+}
+
+// Gidinet aliases:
+
+// GIDINET_PREMIUM_NS(): Emit NAMESERVER records for Gidinet premium DNS
+// (dns1..dns5.gidinet.com). Use together with DnsProvider(DNS_GIDINET, 0)
+// so the free-tier defaults from GetNameservers are skipped.
+//
+// Usage:
+//   D("premium.example", REG_GIDINET,
+//     DnsProvider(DNS_GIDINET, 0),
+//     GIDINET_PREMIUM_NS(),
+//     A("www", "1.2.3.4"),
+//   );
+function GIDINET_PREMIUM_NS() {
+    return [
+        NAMESERVER('dns1.gidinet.com.'),
+        NAMESERVER('dns2.gidinet.com.'),
+        NAMESERVER('dns3.gidinet.com.'),
+        NAMESERVER('dns4.gidinet.com.'),
+        NAMESERVER('dns5.gidinet.com.'),
+    ];
+}
 
 // CUSTOM, PROVIDER SPECIFIC RECORD TYPES
 
@@ -1401,28 +1551,6 @@ function _validateCloudflareRedirect(value) {
     }
     return value.indexOf(',') === -1;
 }
-
-var CF_REDIRECT = recordBuilder('CF_REDIRECT', {
-    args: [
-        ['source', _validateCloudflareRedirect],
-        ['destination', _validateCloudflareRedirect],
-    ],
-    transform: function (record, args, modifiers) {
-        record.name = '@';
-        record.target = args.source + ',' + args.destination;
-    },
-});
-
-var CF_TEMP_REDIRECT = recordBuilder('CF_TEMP_REDIRECT', {
-    args: [
-        ['source', _validateCloudflareRedirect],
-        ['destination', _validateCloudflareRedirect],
-    ],
-    transform: function (record, args, modifiers) {
-        record.name = '@';
-        record.target = args.source + ',' + args.destination;
-    },
-});
 
 var CF_WORKER_ROUTE = recordBuilder('CF_WORKER_ROUTE', {
     args: [
@@ -1445,8 +1573,38 @@ var URL = recordBuilder('URL');
 var URL301 = recordBuilder('URL301');
 var FRAME = recordBuilder('FRAME');
 var CLOUDNS_WR = recordBuilder('CLOUDNS_WR');
+/**
+ * @deprecated Please use URL or URL301 instead
+ */
 var PORKBUN_URLFWD = recordBuilder('PORKBUN_URLFWD');
 var BUNNY_DNS_RDR = recordBuilder('BUNNY_DNS_RDR');
+
+// MIKROTIK_FWD(name, target, modifiers...)
+// RouterOS conditional DNS forwarding entry.
+var MIKROTIK_FWD = recordBuilder('MIKROTIK_FWD');
+
+// MIKROTIK_NXDOMAIN(name, modifiers...)
+// RouterOS NXDOMAIN entry — returns NXDOMAIN for matching queries (DNS blackholing).
+var MIKROTIK_NXDOMAIN = recordBuilder('MIKROTIK_NXDOMAIN', {
+    args: [['name', _.isString]],
+    transform: function (record, args, modifiers) {
+        record.name = args.name;
+        record.target = 'NXDOMAIN';
+    },
+});
+
+// MIKROTIK_FORWARDER(name, dns_servers, modifiers...)
+// RouterOS named DNS forwarder (/ip/dns/forwarders).
+// Use in the synthetic zone "_forwarders.mikrotik".
+var MIKROTIK_FORWARDER = recordBuilder('MIKROTIK_FORWARDER');
+
+var BUNNY_DNS_PZ = recordBuilder('BUNNY_DNS_PZ', {
+    args: [['name', _.isString], ['pullZoneId']],
+    transform: function (record, args, modifiers) {
+        record.name = args.name;
+        record.target = String(args.pullZoneId);
+    },
+});
 // LOC_BUILDER_DD takes an object:
 // label: The DNS label for the LOC record. (default: '@')
 // x: Decimal X coordinate.
@@ -1691,6 +1849,12 @@ function SPF_BUILDER(value) {
 // iodef_critical: Boolean if sending report is required/critical. If not supported, certificate should be refused. (optional)
 // issue: List of CAs which are allowed to issue certificates for the domain (creates one record for each), or the string 'none'.
 // issuewild: List of allowed CAs which can issue wildcard certificates for this domain, or the string 'none'. (creates one record for each)
+// issuevmc: List of allowed CAs which can issue VMC certificates for this domain, or the string 'none'. (creates one record for each)
+// issuemail: List of allowed CAs which can issue email certificates for this domain, or the string 'none'. (creates one record for each)
+// issue_critical: Boolean if issue entries are critical. If not supported, certificate should be refused. (optional)
+// issuewild_critical: Boolean if issuewild entries are critical. If not supported, certificate should be refused. (optional)
+// issuevmc_critical: Boolean if issuevmc entries are critical. If not supported, certificate should be refused. (optional)
+// issuemail_critical: Boolean if issuemail entries are critical. If not supported, certificate should be refused. (optional)
 // ttl: The time for TTL, integer or string. (default: not defined, using DefaultTTL)
 
 function CAA_BUILDER(value) {
@@ -1700,15 +1864,24 @@ function CAA_BUILDER(value) {
 
     if (value.issue && value.issue == 'none') value.issue = [';'];
     if (value.issuewild && value.issuewild == 'none') value.issuewild = [';'];
+    if (value.issuevmc && value.issuevmc == 'none') value.issuevmc = [';'];
+    if (value.issuemail && value.issuemail == 'none') value.issuemail = [';'];
 
     if (
-        (!value.issue && !value.issuewild) ||
+        (!value.issue &&
+            !value.issuewild &&
+            !value.issuevmc &&
+            !value.issuemail) ||
         (value.issue &&
             value.issue.length == 0 &&
             value.issuewild &&
-            value.issuewild.length == 0)
+            value.issuewild.length == 0 &&
+            value.issuevmc &&
+            value.issuevmc.length == 0 &&
+            value.issuemail &&
+            value.issuemail.length == 0)
     ) {
-        throw 'CAA_BUILDER requires at least one entry at issue or issuewild';
+        throw 'CAA_BUILDER requires at least one entry at issue, issuewild, issuevmc or issuemail';
     }
 
     var CAA_TTL = function () {};
@@ -1747,76 +1920,240 @@ function CAA_BUILDER(value) {
             );
     }
 
+    if (value.issuevmc) {
+        var flag = function () {};
+        if (value.issuevmc_critical) {
+            flag = CAA_CRITICAL;
+        }
+        for (var i = 0, len = value.issuevmc.length; i < len; i++)
+            r.push(
+                CAA(value.label, 'issuevmc', value.issuevmc[i], flag, CAA_TTL)
+            );
+    }
+
+    if (value.issuemail) {
+        var flag = function () {};
+        if (value.issuemail_critical) {
+            flag = CAA_CRITICAL;
+        }
+        for (var i = 0, len = value.issuemail.length; i < len; i++)
+            r.push(
+                CAA(value.label, 'issuemail', value.issuemail[i], flag, CAA_TTL)
+            );
+    }
+
     return r;
 }
 
-// DKIM_BUILDER takes an object:
-// label: The DNS label for the DKIM record ([selector]._domainkey prefix is added; default: '@')
-// selector: Selector used for the label. e.g. s1 or mail
-// pubkey: Public key (p) to be used for DKIM.
-// keytype: Key type (k). Defaults to 'rsa' if missing (optional)
-// flags: Which types (t) of flags to activate, ie. 'y' and/or 's'. Array, defaults to 's' (optional)
-// hashtypes: Acceptable hash algorithma (h) (optional)
-// servicetypes: Record-applicable service types (optional)
-// note: Note field fo admins. Avoid if possible to keep record length short. (optional)
-// ttl: The time for TTL, integer or string. (default: not defined, using DefaultTTL)
+/**
+ * Encodes a string into DKIM-specific quoted-printable format.
+ *
+ * This function converts characters that are outside the range of printable ASCII
+ * characters, semicolons, DEL, or above ASCII 127 into their quoted-printable
+ * hex representation, prefixed by '='. This encoding is used in DKIM signatures
+ * to handle characters safely.
+ *
+ * @param {string} str - The input string to encode.
+ * @returns {string} The DKIM quoted-printable encoded string.
+ */
+function _encodeDKIMQuotedPrintable(str) {
+    var hexChars = '0123456789ABCDEF'.split('');
+    var result = '';
+
+    for (var i = 0; i < str.length; i++) {
+        var charCode = str.charCodeAt(i);
+        if (
+            charCode < 0x21 ||
+            charCode === 0x3b ||
+            charCode === 0x3d ||
+            charCode === 0x7f ||
+            charCode > 0x7f
+        ) {
+            result +=
+                '=' + hexChars[(charCode >>> 4) & 15] + hexChars[charCode & 15];
+        } else {
+            result += str.charAt(i);
+        }
+    }
+    return result;
+}
+
+/**
+ * Builds a DKIM DNS TXT record according to RFC 6376 its updates
+ * @param {Object} value - Configuration object for the DKIM record.
+ * @param {string} value.selector - The selector subdividing the namespace for the domain. **(Required)**
+ * @param {string} [value.pubkey] - The base64-encoded public key (RSA or Ed25519).
+ *   May be empty for key revocation or non-sending domains.
+ * @param {string} [value.label='@'] - The DNS label for the DKIM record (`[selector]._domainkey` prefix is added).
+ * @param {string} [value.version='DKIM1'] - The DKIM version (`v=` tag). Currently, only `"DKIM1"` is supported.
+ * @param {string|string[]} [value.hashtypes] - Acceptable hash algorithms for signing (`h=` tag).
+ *   - Supported values for RSA: `'sha1'`, `'sha256'`
+ *   - Supported values for Ed25519: `'sha256'`
+ * @param {string} [value.keytype='rsa'] - Key algorithm type (`k=` tag).
+ *   - Supported values: `'rsa'`, `'ed25519'`
+ * @param {string|string[]} [value.servicetypes] - Service types using this key (`s=` tag).
+ *   - Supported values: `'*'`, `'email'`
+ *   - `'*'` allows all services; `'email'` restricts usage to email only.
+ * @param {string|string[]} [value.flags] - Flags modifying selector interpretation (`t=` tag).
+ *   - Supported values: `'y'` (testing mode), `'s'` (subdomain restriction)
+ * @param {string} [value.note] - Human-readable note for the record (`n=` tag).
+ * @param {number} [value.ttl] - DNS TTL value in seconds.
+ *
+ * @throws {Error} If a required field is missing or a value is invalid.
+ * @returns {Object} DNS TXT record entries for DKIM
+ */
 
 function DKIM_BUILDER(value) {
-    if (!value) {
-        value = {};
-    }
-    kvs = [];
+    value = value || {};
 
-    if (!value.selector) {
+    // ========================================
+    // PHASE 1: NORMALIZATION
+    // ========================================
+
+    // Apply defaults using _.defaults()
+    value = _.defaults(value, {
+        version: 'DKIM1',
+        pubkey: '',
+        label: '@',
+    });
+
+    // Normalize string|array fields to always be arrays
+    if (!_.isEmpty(value.hashtypes)) {
+        value.hashtypes = _.isString(value.hashtypes)
+            ? [value.hashtypes]
+            : value.hashtypes;
+    }
+
+    if (!_.isEmpty(value.servicetypes)) {
+        value.servicetypes = _.isString(value.servicetypes)
+            ? [value.servicetypes]
+            : value.servicetypes;
+    }
+
+    if (!_.isEmpty(value.flags)) {
+        value.flags = _.isString(value.flags) ? [value.flags] : value.flags;
+    }
+
+    // ========================================
+    // PHASE 2: VALIDATION (Fail Fast)
+    // ========================================
+
+    // Static allowed values
+    var ALLOWED_VERSIONS = ['DKIM1'];
+    var ALLOWED_KEYTYPES = ['rsa', 'ed25519'];
+    var ALLOWED_HASHTYPES = {
+        rsa: ['sha1', 'sha256'],
+        ed25519: ['sha256'],
+    };
+    var ALLOWED_SERVICETYPES = ['*', 'email'];
+    var ALLOWED_FLAGS = ['y', 's'];
+
+    // Required fields
+    if (_.isEmpty(value.selector)) {
         throw 'DKIM_BUILDER selector cannot be empty';
     }
 
-    if (!value.pubkey) {
-        throw 'DKIM_BUILDER pubkey cannot be empty';
+    // Version validation
+    if (!_.contains(ALLOWED_VERSIONS, value.version)) {
+        throw (
+            'DKIM_BUILDER version must be one of: ' +
+            ALLOWED_VERSIONS.join(', ')
+        );
     }
 
-    // build the label
-    if (!value.label) {
-        value.label = '@';
+    // Keytype validation
+    if (
+        !_.isEmpty(value.keytype) &&
+        !_.contains(ALLOWED_KEYTYPES, value.keytype)
+    ) {
+        throw (
+            'DKIM_BUILDER keytype must be one of: ' +
+            ALLOWED_KEYTYPES.join(', ') +
+            ', ' +
+            value.keytype +
+            ' given'
+        );
     }
 
-    if (value.label !== '@') {
-        value.label = value.selector + '._domainkey' + '.' + value.label;
-    } else {
-        value.label = value.selector + '._domainkey';
+    // Hashtypes validation (now always an array after normalization)
+    if (!_.isEmpty(value.hashtypes)) {
+        var allowedHashtypes = ALLOWED_HASHTYPES[value.keytype || 'rsa'];
+        var invalidHashtypes = _.difference(value.hashtypes, allowedHashtypes);
+        if (invalidHashtypes.length > 0) {
+            throw (
+                'DKIM_BUILDER hashtypes for ' +
+                value.keytype +
+                ' must be one of: ' +
+                allowedHashtypes.join(', ')
+            );
+        }
     }
 
-    kvs.push('v=DKIM1');
+    // Servicetypes validation (now always an array after normalization)
+    if (!_.isEmpty(value.servicetypes)) {
+        var invalidServicetypes = _.difference(
+            value.servicetypes,
+            ALLOWED_SERVICETYPES
+        );
+        if (invalidServicetypes.length > 0) {
+            throw (
+                'DKIM_BUILDER servicetypes must be one of: ' +
+                ALLOWED_SERVICETYPES.join(', ')
+            );
+        }
+    }
+
+    // Flags validation (now always an array after normalization)
+    if (!_.isEmpty(value.flags)) {
+        var invalidFlags = _.difference(value.flags, ALLOWED_FLAGS);
+        if (invalidFlags.length > 0) {
+            throw (
+                'DKIM_BUILDER flags must be one of: ' + ALLOWED_FLAGS.join(', ')
+            );
+        }
+    }
+
+    // ========================================
+    // PHASE 3: BUILD OUTPUT
+    // ========================================
+
+    // Build record RFC 6376 order: v=, h=, k=, n=, p=, s=, t=
+    var record = [];
+
+    record.push('v=' + value.version);
+
+    if (value.hashtypes) {
+        record.push('h=' + value.hashtypes.join(':'));
+    }
+
     if (value.keytype) {
-        kvs.push('k=' + value.keytype);
+        record.push('k=' + value.keytype);
     }
+
+    if (!_.isEmpty(value.note)) {
+        record.push('n=' + _encodeDKIMQuotedPrintable(value.note));
+    }
+
+    record.push('p=' + value.pubkey);
 
     if (value.servicetypes) {
-        kvs.push('s=' + value.servicetypes);
+        record.push('s=' + value.servicetypes.join(':'));
     }
 
-    if (value.flags && value.flags.length > 0) {
-        kvs.push('t=' + value.flags.join(':'));
+    if (value.flags) {
+        record.push('t=' + value.flags.join(':'));
     }
 
-    if (value.hashtypes && value.hashtypes.length > 0) {
-        kvs.push('h=' + value.hashtypes.join(':'));
+    // Build label
+    var fullLabel = value.selector + '._domainkey';
+    if (value.label !== '@') {
+        fullLabel += '.' + value.label;
     }
 
-    if (value.note) {
-        kvs.push('n=' + value.note);
-    }
+    // Handle TTL
+    var DKIM_TTL = value.ttl ? TTL(value.ttl) : function () {};
 
-    kvs.push('p=' + value.pubkey);
-
-    var DKIM_TTL = function () {};
-    if (value.ttl) {
-        DKIM_TTL = TTL(value.ttl);
-    }
-
-    r = []; // The list of records to return.
-    r.push(TXT(value.label, kvs.join('\; '), DKIM_TTL));
-    return r;
+    return TXT(fullLabel, record.join('; '), DKIM_TTL);
 }
 
 // DMARC_BUILDER takes an object:
@@ -2198,9 +2535,20 @@ function rawrecordBuilder(type) {
             rawArgs.push(arguments[i]);
         }
 
+        // Record which line called this record type.
+        // NB(tlim): Hopefully we can find a better way to do this in the
+        // future. Right now we're faking that there was an error just to parse
+        // out the line number. That's inefficient but I can't find anything better.
+        // This will certainly break if we change to a different Javascript interpreter.
+        // Hopefully any other interpreter will have a better way to do this.
+        var positionLines = new Error().stack.split('\n');
+        var position = positionLines[positionLines.length - 2];
+
         return function (d) {
             var record = {
                 type: type,
+                filepos: position,
+                ttl: d.defaultTTL,
             };
 
             // Process the args: Functions are executed, objects are assumed to
@@ -2237,5 +2585,8 @@ function rawrecordBuilder(type) {
 
 // PLEASE KEEP THIS LIST ALPHABETICAL!
 
-// CLOUDFLAREAPI:
+var CF_REDIRECT = rawrecordBuilder('CF_REDIRECT');
 var CF_SINGLE_REDIRECT = rawrecordBuilder('CLOUDFLAREAPI_SINGLE_REDIRECT');
+var CF_TEMP_REDIRECT = rawrecordBuilder('CF_TEMP_REDIRECT');
+var DS = rawrecordBuilder('DS');
+var RP = rawrecordBuilder('RP');

@@ -3,16 +3,22 @@ package powerdns
 import (
 	"context"
 
-	"github.com/StackExchange/dnscontrol/v4/models"
+	"github.com/DNSControl/dnscontrol/v4/models"
 	"github.com/mittwald/go-powerdns/apis/cryptokeys"
 	"github.com/mittwald/go-powerdns/pdnshttp"
 )
 
 // getDNSSECCorrections returns corrections that update a domain's DNSSEC state.
 func (dsp *powerdnsProvider) getDNSSECCorrections(dc *models.DomainConfig) ([]*models.Correction, error) {
-	zoneCryptokeys, getErr := dsp.client.Cryptokeys().ListCryptokeys(context.Background(), dsp.ServerName, dc.Name)
+	// Ignore if AutoDNSSEC is not set
+	if dc.AutoDNSSEC == "" {
+		return nil, nil
+	}
+
+	domainVariant := dsp.zoneName(dc.Name, dc.Tag)
+	zoneCryptokeys, getErr := dsp.client.Cryptokeys().ListCryptokeys(context.Background(), dsp.ServerName, domainVariant)
 	if getErr != nil {
-		if _, ok := getErr.(pdnshttp.ErrNotFound); ok {
+		if pdnshttp.IsNotFound(getErr) {
 			// Zone doesn't exist, this is okay as no corrections are needed
 			return nil, nil
 		}
@@ -39,7 +45,7 @@ func (dsp *powerdnsProvider) getDNSSECCorrections(dc *models.DomainConfig) ([]*m
 			{
 				Msg: "Disable DNSSEC",
 				F: func() error {
-					return dsp.client.Cryptokeys().DeleteCryptokey(context.Background(), dsp.ServerName, dc.Name, keyID)
+					return dsp.client.Cryptokeys().DeleteCryptokey(context.Background(), dsp.ServerName, domainVariant, keyID)
 				},
 			},
 		}, nil
@@ -51,7 +57,7 @@ func (dsp *powerdnsProvider) getDNSSECCorrections(dc *models.DomainConfig) ([]*m
 			{
 				Msg: "Enable DNSSEC",
 				F: func() (err error) {
-					_, err = dsp.client.Cryptokeys().CreateCryptokey(context.Background(), dsp.ServerName, dc.Name, cryptokeys.Cryptokey{
+					_, err = dsp.client.Cryptokeys().CreateCryptokey(context.Background(), dsp.ServerName, domainVariant, cryptokeys.Cryptokey{
 						KeyType:   "csk",
 						Active:    true,
 						Published: true,

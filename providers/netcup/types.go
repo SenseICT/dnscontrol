@@ -6,13 +6,13 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/StackExchange/dnscontrol/v4/models"
-	"github.com/miekg/dns/dnsutil"
+	"github.com/DNSControl/dnscontrol/v4/models"
+	dnsutilv1 "github.com/miekg/dns/dnsutil"
 )
 
 type request struct {
-	Action string      `json:"action"`
-	Param  interface{} `json:"param"`
+	Action string `json:"action"`
+	Param  any    `json:"param"`
 }
 
 type paramLogin struct {
@@ -94,7 +94,7 @@ func toRecordConfig(domain string, r *record) *models.RecordConfig {
 	case "TXT":
 		_ = rc.SetTargetTXT(r.Destination)
 	case "NS", "ALIAS", "CNAME", "MX":
-		_ = rc.SetTarget(dnsutil.AddOrigin(addTailingDot(r.Destination), domain))
+		_ = rc.SetTarget(dnsutilv1.AddOrigin(addTailingDot(r.Destination), domain))
 	case "SRV":
 		parts := strings.Split(r.Destination, " ")
 		priority, _ := strconv.ParseUint(parts[0], 10, 16)
@@ -110,6 +110,15 @@ func toRecordConfig(domain string, r *record) *models.RecordConfig {
 		rc.CaaFlag = uint8(caaFlag)
 		rc.CaaTag = parts[1]
 		_ = rc.SetTarget(strings.Trim(parts[2], "\""))
+	case "TLSA":
+		parts := strings.Split(r.Destination, " ")
+		tlsaUsage, _ := strconv.ParseUint(parts[0], 10, 8)
+		tlsaSelector, _ := strconv.ParseUint(parts[1], 10, 8)
+		tlsaMatchingType, _ := strconv.ParseUint(parts[2], 10, 8)
+		rc.TlsaUsage = uint8(tlsaUsage)
+		rc.TlsaSelector = uint8(tlsaSelector)
+		rc.TlsaMatchingType = uint8(tlsaMatchingType)
+		_ = rc.SetTarget(parts[3])
 	default:
 		_ = rc.SetTarget(r.Destination)
 	}
@@ -142,7 +151,7 @@ func fromRecordConfig(in *models.RecordConfig) *record {
 	case "SSHFP":
 		rc.Destination = strconv.Itoa(int(in.SshfpAlgorithm)) + " " + strconv.Itoa(int(in.SshfpFingerprint))
 	case "TLSA":
-		rc.Destination = strconv.Itoa(int(in.TlsaUsage)) + " " + strconv.Itoa(int(in.TlsaSelector)) + " " + strconv.Itoa(int(in.TlsaMatchingType))
+		rc.Destination = strconv.Itoa(int(in.TlsaUsage)) + " " + strconv.Itoa(int(in.TlsaSelector)) + " " + strconv.Itoa(int(in.TlsaMatchingType)) + " " + in.GetTargetField()
 	default:
 		msg := fmt.Sprintf("ClouDNS.toReq rtype %v unimplemented", rc.Type)
 		panic(msg)

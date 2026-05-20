@@ -90,7 +90,7 @@ func TestRecordConfig_Copy(t *testing.T) {
 		TlsaMatchingType uint8
 		R53Alias         map[string]string
 		AzureAlias       map[string]string
-		Original         interface{}
+		Original         any
 	}
 	tests := []struct {
 		name    string
@@ -136,7 +136,7 @@ func TestRecordConfig_Copy(t *testing.T) {
 				TlsaMatchingType: 3,
 				R53Alias:         map[string]string{"a": "eh", "b": "bee"},
 				AzureAlias:       map[string]string{"az": "az", "ure": "your"},
-				// Original         interface{},
+				// Original         any,
 			},
 			want: &RecordConfig{
 				Type:             "type",
@@ -174,7 +174,7 @@ func TestRecordConfig_Copy(t *testing.T) {
 				TlsaMatchingType: 3,
 				R53Alias:         map[string]string{"a": "eh", "b": "bee"},
 				AzureAlias:       map[string]string{"az": "az", "ure": "your"},
-				// Original         interface{},
+				// Original         any,
 			},
 		},
 	}
@@ -225,6 +225,37 @@ func TestRecordConfig_Copy(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("RecordConfig.Copy() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+func TestFixPosition(t *testing.T) {
+	tests := []struct {
+		name string
+		pos  any
+		want string
+	}{
+		{
+			name: "empty string",
+			pos:  "",
+			want: "",
+		},
+		{
+			name: "anonymous position",
+			pos:  "at <anonymous>:2904:5",
+			want: "[line:2904:5]",
+		},
+		{
+			name: "random string",
+			pos:  "alsdjfsljd",
+			want: "[alsdjfsljd]",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := FixPosition(tt.pos.(string))
+			if got != tt.want {
+				t.Errorf("fixPosition() = %v, want %v", got, tt.want)
 			}
 		})
 	}

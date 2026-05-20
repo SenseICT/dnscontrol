@@ -8,6 +8,10 @@ parameters:
   - issue_critical
   - issuewild
   - issuewild_critical
+  - issuevmc
+  - issuevmc_critical
+  - issuemail
+  - issuemail_critical
   - ttl
 parameters_object: true
 parameter_types:
@@ -18,11 +22,16 @@ parameter_types:
   issue_critical: boolean?
   issuewild: string[]|string
   issuewild_critical: boolean?
+  issuevmc: string[]|string
+  issuevmc_critical: boolean?
+  issuemail: string[]|string
+  issuemail_critical: boolean?
   ttl: Duration?
 ---
 
-DNSControl contains a `CAA_BUILDER` which can be used to simply create
-[`CAA()`](../domain-modifiers/CAA.md) records for your domains. Instead of creating each [`CAA()`](../domain-modifiers/CAA.md) record
+`CAA_BUILDER` adds a [Certification Authority Authorization record](https://www.rfc-editor.org/rfc/rfc8659) to a domain.
+
+`CAA_BUILDER` eases the creation of [`CAA`](CAA.md) records. Instead of creating each [`CAA`](CAA.md) record
 individually, you can simply configure your report mail address, the
 authorized certificate authorities and the builder cares about the rest.
 
@@ -47,7 +56,7 @@ D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
 ```
 {% endcode %}
 
-`CAA_BUILDER()` builds multiple records:
+`CAA_BUILDER` builds multiple records:
 
 {% code title="dnsconfig.js" %}
 ```javascript
@@ -92,7 +101,7 @@ D("example.com", REG_MY_PROVIDER, DnsProvider(DSP_MY_PROVIDER),
 ```
 {% endcode %}
 
-`CAA_BUILDER()` then builds (the same) multiple records - all with CAA_CRITICAL flag set:
+`CAA_BUILDER` then builds (the same) multiple records - all with CAA_CRITICAL flag set:
 
 {% code title="dnsconfig.js" %}
 ```javascript
@@ -123,4 +132,8 @@ which in turns yield the following records:
 * `issue_critical:` This can be `true` or `false`. If enabled and CA does not support this record, then certificate issue will be refused. (Optional. Default: `false`)
 * `issuewild:` An array of CAs which are allowed to issue wildcard certificates. (Can be simply `"none"` to refuse issuing wildcard certificates for all CAs)
 * `issuewild_critical:` This can be `true` or `false`. If enabled and CA does not support this record, then certificate issue will be refused. (Optional. Default: `false`)
+* `issuevmc:` An array of CAs which are allowed to issue VMC certificates. (Use `"none"` to refuse all CAs)
+* `issuevmc_critical:` This can be `true` or `false`. If enabled and CA does not support this record, then certificate issue will be refused. (Optional. Default: `false`)
+* `issuemail:` An array of CAs which are allowed to issue email certificates. (Use `"none"` to refuse all CAs)
+* `issuemail_critical:` This can be `true` or `false`. If enabled and CA does not support this record, then certificate issue will be refused. (Optional. Default: `false`)
 * `ttl:` Input for `TTL` method (optional)

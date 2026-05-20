@@ -4,7 +4,8 @@
     {
       "dnsProviders": {},
       "meta": {
-        "dnscontrol_tag": "",
+        "dnscontrol_nameraw": "foo.com",
+        "dnscontrol_nameunicode": "foo.com",
         "dnscontrol_uniquename": "foo.com"
       },
       "name": "foo.com",
@@ -12,6 +13,7 @@
         {
           "caaflag": 128,
           "caatag": "iodef",
+          "filepos": "[line:12:5]",
           "name": "@",
           "target": "https://example.com",
           "ttl": 300,
@@ -20,6 +22,7 @@
         {
           "caaflag": 128,
           "caatag": "iodef",
+          "filepos": "[line:8:5]",
           "name": "@",
           "target": "mailto:test@example.com",
           "ttl": 300,
@@ -27,6 +30,7 @@
         },
         {
           "caatag": "iodef",
+          "filepos": "[line:10:5]",
           "name": "@",
           "target": "http://example.com",
           "ttl": 300,
@@ -34,6 +38,7 @@
         },
         {
           "caatag": "issue",
+          "filepos": "[line:3:5]",
           "name": "@",
           "target": "letsencrypt.org",
           "ttl": 300,
@@ -41,13 +46,15 @@
         },
         {
           "caatag": "issuewild",
+          "filepos": "[line:5:5]",
           "name": "@",
           "target": ";",
           "ttl": 300,
           "type": "CAA"
         }
       ],
-      "registrar": "none"
+      "registrar": "none",
+      "uniquename": "foo.com"
     }
   ],
   "registrars": []

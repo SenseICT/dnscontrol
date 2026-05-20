@@ -4,7 +4,8 @@
     {
       "dnsProviders": {},
       "meta": {
-        "dnscontrol_tag": "",
+        "dnscontrol_nameraw": "foo.com",
+        "dnscontrol_nameunicode": "foo.com",
         "dnscontrol_uniquename": "foo.com"
       },
       "name": "foo.com",
@@ -14,13 +15,15 @@
           "dnskeyflags": 257,
           "dnskeyprotocol": 3,
           "dnskeypublickey": "AABBCCDD",
+          "filepos": "[line:2:5]",
           "name": "@",
           "target": "",
           "ttl": 300,
           "type": "DNSKEY"
         }
       ],
-      "registrar": "none"
+      "registrar": "none",
+      "uniquename": "foo.com"
     }
   ],
   "registrars": []

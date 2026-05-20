@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/StackExchange/dnscontrol/v4/models"
-	"github.com/StackExchange/dnscontrol/v4/pkg/diff2"
+	"github.com/DNSControl/dnscontrol/v4/models"
+	"github.com/DNSControl/dnscontrol/v4/pkg/diff2"
 	"github.com/fatih/color"
 	"github.com/mittwald/go-powerdns/apis/zones"
 )
@@ -58,12 +58,14 @@ func (dsp *powerdnsProvider) getDiff2DomainCorrections(dc *models.DomainConfig, 
 		}
 	}
 
+	domainVariant := dsp.zoneName(dc.Name, dc.Tag)
+
 	// only append a Correction if there are any, otherwise causes an error when sending an empty rrset
 	if len(rrDeleteSets) > 0 {
 		corrections = append(corrections, &models.Correction{
 			Msg: strings.Join(deleteMsgs, "\n"),
 			F: func() error {
-				return dsp.client.Zones().RemoveRecordSetsFromZone(context.Background(), dsp.ServerName, canonical(dc.Name), rrDeleteSets)
+				return dsp.client.Zones().RemoveRecordSetsFromZone(context.Background(), dsp.ServerName, domainVariant, rrDeleteSets)
 			},
 		})
 	}
@@ -71,18 +73,18 @@ func (dsp *powerdnsProvider) getDiff2DomainCorrections(dc *models.DomainConfig, 
 		corrections = append(corrections, &models.Correction{
 			Msg: strings.Join(changeMsgs, "\n"),
 			F: func() error {
-				return dsp.client.Zones().AddRecordSetsToZone(context.Background(), dsp.ServerName, canonical(dc.Name), rrChangeSets)
+				return dsp.client.Zones().AddRecordSetsToZone(context.Background(), dsp.ServerName, domainVariant, rrChangeSets)
 			},
 		})
 	}
 	return corrections, actualChangeCount, nil
 }
 
-// buildRecordList returns a list of records for the PowerDNS resource record set from a change
+// buildRecordList returns a list of records for the PowerDNS resource record set from a change.
 func buildRecordList(change diff2.Change) (records []zones.Record) {
 	for _, recordContent := range change.New {
 		record := zones.Record{
-			Content: recordContent.GetTargetCombined(),
+			Content: powerDNSTargetCombined(recordContent),
 		}
 		if recordContent.Type == "HTTPS" || recordContent.Type == "SVCB" {
 			// PowerDNS API will return HTTP 422 error if record content contains double quotes.

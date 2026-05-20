@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/StackExchange/dnscontrol/v4/pkg/printer"
+	"github.com/DNSControl/dnscontrol/v4/pkg/printer"
 	"github.com/failsafe-go/failsafe-go"
 	"github.com/failsafe-go/failsafe-go/failsafehttp"
 	"github.com/failsafe-go/failsafe-go/retrypolicy"
@@ -76,7 +76,7 @@ func (c *porkbunProvider) post(endpoint string, params requestParams) ([]byte, e
 		return []byte{}, err
 	}
 
-	retryPolicy := failsafehttp.RetryPolicyBuilder().
+	retryPolicy := failsafehttp.NewRetryPolicyBuilder().
 		WithMaxAttempts(c.maxAttempts).
 		// Exponential backoff between 1.2 and 10 seconds.
 		// We start at 1.2 to allow for 100ms of jitter. Porkbun doesn't like

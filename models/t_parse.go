@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	"net"
+	"net/netip"
 )
 
 // PopulateFromStringFunc populates a RecordConfig by parsing a common RFC1035-like format.
@@ -61,18 +61,18 @@ func (rc *RecordConfig) PopulateFromStringFunc(rtype, contents, origin string, t
 
 	switch rc.Type = rtype; rtype { // #rtype_variations
 	case "A":
-		ip := net.ParseIP(contents)
-		if ip == nil || ip.To4() == nil {
+		ip, err := netip.ParseAddr(contents)
+		if err != nil || !ip.Is4() {
 			return fmt.Errorf("invalid IP in A record: %s", contents)
 		}
 		return rc.SetTargetIP(ip) // Reformat to canonical form.
 	case "AAAA":
-		ip := net.ParseIP(contents)
-		if ip == nil || ip.To16() == nil {
+		ip, err := netip.ParseAddr(contents)
+		if err != nil || !ip.Is6() {
 			return fmt.Errorf("invalid IP in AAAA record: %s", contents)
 		}
 		return rc.SetTargetIP(ip) // Reformat to canonical form.
-	case "AKAMAICDN", "ALIAS", "ANAME", "CNAME", "NS", "PTR":
+	case "AKAMAICDN", "AKAMAITLC", "ALIAS", "ANAME", "CNAME", "NS", "PTR":
 		return rc.SetTarget(contents)
 	case "CAA":
 		return rc.SetTargetCAAString(contents)
@@ -92,6 +92,8 @@ func (rc *RecordConfig) PopulateFromStringFunc(rtype, contents, origin string, t
 		return rc.SetTargetNAPTRString(contents)
 	case "OPENPGPKEY":
 		return rc.SetTarget(contents)
+	case "SMIMEA":
+		return rc.SetTargetSMIMEAString(contents)
 	case "SOA":
 		return rc.SetTargetSOAString(contents)
 	case "SPF", "TXT":
@@ -103,6 +105,21 @@ func (rc *RecordConfig) PopulateFromStringFunc(rtype, contents, origin string, t
 			return fmt.Errorf("invalid TXT record: %s", contents)
 		}
 		return rc.SetTargetTXT(t)
+	case "LUA":
+		luaType, payload := ParseLuaContent(contents)
+		rc.LuaRType = luaType
+		if txtFn != nil {
+			value, err := txtFn(payload)
+			if err != nil {
+				return fmt.Errorf("invalid LUA record: %s", contents)
+			}
+			return rc.SetTargetTXT(value)
+		}
+		value, err := DecodeLuaPayload(payload)
+		if err != nil {
+			return fmt.Errorf("invalid LUA record: %s", contents)
+		}
+		return rc.SetTargetTXT(value)
 	case "SRV":
 		return rc.SetTargetSRVString(contents)
 	case "SSHFP":
@@ -153,18 +170,18 @@ func (rc *RecordConfig) PopulateFromString(rtype, contents, origin string) error
 	}
 	switch rc.Type = rtype; rtype { // #rtype_variations
 	case "A":
-		ip := net.ParseIP(contents)
-		if ip == nil || ip.To4() == nil {
+		ip, err := netip.ParseAddr(contents)
+		if err != nil || !ip.Is4() {
 			return fmt.Errorf("invalid IP in A record: %s", contents)
 		}
 		return rc.SetTargetIP(ip) // Reformat to canonical form.
 	case "AAAA":
-		ip := net.ParseIP(contents)
-		if ip == nil || ip.To16() == nil {
+		ip, err := netip.ParseAddr(contents)
+		if err != nil || !ip.Is6() {
 			return fmt.Errorf("invalid IP in AAAA record: %s", contents)
 		}
 		return rc.SetTargetIP(ip) // Reformat to canonical form.
-	case "AKAMAICDN", "ALIAS", "ANAME", "CNAME", "NS", "PTR":
+	case "AKAMAICDN", "AKAMAITLC", "ALIAS", "ANAME", "CNAME", "NS", "PTR":
 		return rc.SetTarget(contents)
 	case "CAA":
 		return rc.SetTargetCAAString(contents)
@@ -184,10 +201,20 @@ func (rc *RecordConfig) PopulateFromString(rtype, contents, origin string) error
 		return rc.SetTargetNAPTRString(contents)
 	case "OPENPGPKEY":
 		return rc.SetTarget(contents)
+	case "SMIMEA":
+		return rc.SetTargetSMIMEAString(contents)
 	case "SOA":
 		return rc.SetTargetSOAString(contents)
 	case "SPF", "TXT":
 		return rc.SetTargetTXTs(ParseQuotedTxt(contents))
+	case "LUA":
+		luaType, payload := ParseLuaContent(contents)
+		rc.LuaRType = luaType
+		value, err := DecodeLuaPayload(payload)
+		if err != nil {
+			return fmt.Errorf("invalid LUA record: %s", contents)
+		}
+		return rc.SetTargetTXT(value)
 	case "SRV":
 		return rc.SetTargetSRVString(contents)
 	case "SSHFP":

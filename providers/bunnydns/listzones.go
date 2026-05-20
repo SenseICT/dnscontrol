@@ -1,6 +1,6 @@
 package bunnydns
 
-import "github.com/StackExchange/dnscontrol/v4/pkg/printer"
+import "github.com/DNSControl/dnscontrol/v4/pkg/printer"
 
 func (b *bunnydnsProvider) ListZones() ([]string, error) {
 	zones, err := b.getAllZones()
@@ -16,7 +16,7 @@ func (b *bunnydnsProvider) ListZones() ([]string, error) {
 	return zoneNames, nil
 }
 
-func (b *bunnydnsProvider) EnsureZoneExists(domain string) error {
+func (b *bunnydnsProvider) EnsureZoneExists(domain string, metadata map[string]string) error {
 	_, err := b.findZoneByDomain(domain)
 	if err == nil {
 		return nil

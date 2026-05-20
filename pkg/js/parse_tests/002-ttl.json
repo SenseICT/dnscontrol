@@ -11,19 +11,22 @@
         "Cloudflare": -1
       },
       "meta": {
-        "dnscontrol_tag": "",
+        "dnscontrol_nameraw": "foo.com",
+        "dnscontrol_nameunicode": "foo.com",
         "dnscontrol_uniquename": "foo.com"
       },
       "name": "foo.com",
       "records": [
         {
+          "filepos": "[line:5:5]",
           "name": "@",
           "target": "1.2.3.4",
           "ttl": 42,
           "type": "A"
         }
       ],
-      "registrar": "Third-Party"
+      "registrar": "Third-Party",
+      "uniquename": "foo.com"
     }
   ],
   "registrars": [

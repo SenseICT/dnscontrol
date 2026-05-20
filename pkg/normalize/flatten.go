@@ -1,24 +1,24 @@
 package normalize
 
 import (
+	"cmp"
 	"fmt"
-	"sort"
+	"slices"
 	"strconv"
 	"strings"
 
-	"github.com/StackExchange/dnscontrol/v4/models"
-	"github.com/StackExchange/dnscontrol/v4/pkg/spflib"
-	"golang.org/x/exp/constraints"
+	"github.com/DNSControl/dnscontrol/v4/models"
+	"github.com/DNSControl/dnscontrol/v4/pkg/spflib"
 )
 
-func sortedKeys[K constraints.Ordered, V any](m map[K]V) []K {
+func sortedKeys[K cmp.Ordered, V any](m map[K]V) []K {
 	keys := make([]K, len(m))
 	i := 0
 	for k := range m {
 		keys[i] = k
 		i++
 	}
-	sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
+	slices.Sort(keys)
 	return keys
 }
 
@@ -117,7 +117,8 @@ func flattenSPFs(cfg *models.DNSConfig) []error {
 		if len(changed) > 0 {
 			if err := cache.Save("spfcache.updated.json"); err != nil {
 				errs = append(errs, err)
-			} else {
+			} else if cache.IsCachePreserved() {
+				// Only warn if we loaded an existing cache file. The file is still created, which helps people enable this feature.
 				errs = append(errs, Warning{fmt.Errorf("%d spf record lookups are out of date with cache (%s).\nWrote changes to spfcache.updated.json. Please rename and commit:\n    $ mv spfcache.updated.json spfcache.json\n    $ git commit -m 'Update spfcache.json' spfcache.json", len(changed), strings.Join(changed, ","))})
 			}
 		}

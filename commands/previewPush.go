@@ -5,17 +5,18 @@ import (
 	"os"
 	"strings"
 
-	"github.com/StackExchange/dnscontrol/v4/models"
-	"github.com/StackExchange/dnscontrol/v4/pkg/notifications"
-	"github.com/StackExchange/dnscontrol/v4/providers"
+	"github.com/DNSControl/dnscontrol/v4/models"
+	"github.com/DNSControl/dnscontrol/v4/pkg/notifications"
+	"github.com/DNSControl/dnscontrol/v4/pkg/providers"
 )
 
 // ReportItem is a record of corrections for a particular domain/provider/registrar.
 type ReportItem struct {
-	Domain      string `json:"domain"`
-	Corrections int    `json:"corrections"`
-	Provider    string `json:"provider,omitempty"`
-	Registrar   string `json:"registrar,omitempty"`
+	Domain            string   `json:"domain"`
+	Corrections       int      `json:"corrections"`
+	CorrectionDetails []string `json:"correction_details,omitempty"`
+	Provider          string   `json:"provider,omitempty"`
+	Registrar         string   `json:"registrar,omitempty"`
 }
 
 // InitializeProviders takes (fully processed) configuration and instantiates all providers and returns them.
@@ -119,10 +120,10 @@ func populateProviderTypes(cfg *models.DNSConfig, providerConfigs map[string]map
 	// should clean that up someday.
 	for _, domain := range cfg.Domains { // For each domain..
 		for _, provider := range domain.DNSProviderInstances { // For each provider...
-			pName := provider.ProviderBase.Name
-			pType := provider.ProviderBase.ProviderType
+			pName := provider.Name
+			pType := provider.ProviderType
 			nt, warnMsg, err := refineProviderType(pName, pType, providerConfigs[pName], "NewDnsProvider")
-			provider.ProviderBase.ProviderType = nt
+			provider.ProviderType = nt
 			if warnMsg != "" {
 				msgs = append(msgs, warnMsg)
 			}

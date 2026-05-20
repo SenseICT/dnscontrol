@@ -1,8 +1,10 @@
 package hetzner
 
 import (
-	"github.com/StackExchange/dnscontrol/v4/models"
-	"github.com/StackExchange/dnscontrol/v4/pkg/txtutil"
+	"strings"
+
+	"github.com/DNSControl/dnscontrol/v4/models"
+	"github.com/DNSControl/dnscontrol/v4/pkg/txtutil"
 )
 
 type bulkCreateRecordsRequest struct {
@@ -89,7 +91,12 @@ func toRecordConfig(domain string, r *record) (*models.RecordConfig, error) {
 		TTL:      *r.TTL,
 		Original: r,
 	}
-	rc.SetLabel(r.Name, domain)
+	if strings.HasSuffix(r.Name, "."+domain+".") {
+		// Records created through other tools or the browser UI can contain FQDN labels.
+		rc.SetLabelFromFQDN(r.Name, domain)
+	} else {
+		rc.SetLabel(r.Name, domain)
+	}
 
 	// HACK: Hetzner is inserting a trailing space after multiple, quoted values.
 	// NOTE: The actual DNS answer does not contain the space.

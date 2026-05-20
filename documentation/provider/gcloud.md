@@ -73,7 +73,7 @@ D("example.com", REG_NAMECOM, DnsProvider(DSP_GCLOUD),
 ## Activation
 1. Go to your app-engine console and select the appropriate project.
 2. Go to "API Manager > Credentials", and create a new "Service Account Key"
-   ![Create new Service Accoun](../assets/gcloud/create-credentials-service-account-key.png)
+   ![Create new Service Account](../assets/gcloud/create-credentials-service-account-key.png)
 3. Choose an existing user, or create a new one. The user requires the "DNS Administrator" role.
 4. Download the JSON key and copy it into your `creds.json` under the name of your gcloud provider.
 
@@ -113,13 +113,44 @@ D("example.tld", REG_NAMECOM, DnsProvider(DSP_GCLOUD),
 ```
 {% endcode %}
 
-> `visiblity` and `networks` only applies on `create-domains` at the moment. Neither setting is enforced by the provider after a zone is created.  Additional work is required to support modifications to `networks` visibility during `push`, however the API will not permit `visibility` to be modified on an existing zone.
+> `visibility` and `networks` only applies on `create-domains` at the moment. Neither setting is enforced by the provider after a zone is created.  Additional work is required to support modifications to `networks` visibility during `push`, however the API will not permit `visibility` to be modified on an existing zone.
 
 > `networks` may be specified using the network name if the VPC network exists in `project_id`
 
 > multiple network urls may be specified in `networks`
 
 > split horizon zones using the `GCLOUD` provider are currently only supported when the providers' credentials target separate `project_id` values
+
+## DNSSEC
+
+DNSSEC can be enabled using one of two different methods. Either you can toggle it with AUTODNSSEC_ON/AUTODNSSEC_OFF or if you want more control over internal settings you can use a Metadata-field on the zone called `DnssecConfig` with a JSON-string matching the [ManagedZoneDnsSecConfig struct](https://pkg.go.dev/google.golang.org/api/dns/v1#ManagedZoneDnsSecConfig) from the Google Cloud DNS API.
+
+Example:
+
+{% code title="dnsconfig.js" %}
+```javascript
+D("example.com", REG_NONE, DnsProvider(GCLOUD),
+  {
+    DnssecConfig: JSON.stringify(
+    {
+      "state": "on",
+      "nonExistence": "nsec3",
+      "defaultKeySpecs": [
+        {
+          "algorithm": "ecdsap256sha256",
+          "keyLength": 256,
+          "keyType": "keySigning"
+        },
+        {
+          "algorithm": "ecdsap256sha256",
+          "keyLength": 256,
+          "keyType": "zoneSigning"
+        }
+      ]
+    }),
+  },
+```
+{% endcode %}
 
 # Debugging credentials
 

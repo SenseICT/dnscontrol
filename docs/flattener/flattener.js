@@ -7427,7 +7427,7 @@ $packages["io"] = (function() {
 	return $pkg;
 })();
 $packages["unicode"] = (function() {
-	var $pkg = {}, $init, RangeTable, Range16, Range32, CaseRange, d, foldPair, sliceType, sliceType$1, sliceType$2, sliceType$3, arrayType, _L, _Nd, _White_Space, _CaseRanges, properties, asciiFold, caseOrbit, is16, is32, isExcludingLatin, To, ToUpper, ToLower, SimpleFold, IsLetter, IsSpace, to, IsDigit;
+	var $pkg = {}, $init, RangeTable, Range16, Range32, CaseRange, d, foldPair, sliceType, sliceType$1, sliceType$2, arrayType, sliceType$3, _L, _Nd, _White_Space, _CaseRanges, properties, asciiFold, caseOrbit, is16, is32, isExcludingLatin, To, ToUpper, ToLower, SimpleFold, IsLetter, IsSpace, to, IsDigit;
 	RangeTable = $pkg.RangeTable = $newType(0, $kindStruct, "unicode.RangeTable", true, "unicode", true, function(R16_, R32_, LatinOffset_) {
 		this.$val = this;
 		if (arguments.length === 0) {
@@ -7489,9 +7489,9 @@ $packages["unicode"] = (function() {
 	});
 	sliceType = $sliceType(Range16);
 	sliceType$1 = $sliceType(Range32);
-	sliceType$2 = $sliceType(foldPair);
-	sliceType$3 = $sliceType(CaseRange);
+	sliceType$2 = $sliceType(CaseRange);
 	arrayType = $arrayType($Int32, 3);
+	sliceType$3 = $sliceType(foldPair);
 	is16 = function(ranges, r) {
 		var _i, _q, _r, _r$1, _ref, hi, i, lo, m, r, range_, range_$1, ranges;
 		if (ranges.$length <= 18 || r <= 255) {
@@ -7722,11 +7722,11 @@ $packages["unicode"] = (function() {
 		$pkg.Letter = _L;
 		_White_Space = new RangeTable.ptr(new sliceType([new Range16.ptr(9, 13, 1), new Range16.ptr(32, 133, 101), new Range16.ptr(160, 5760, 5600), new Range16.ptr(8192, 8202, 1), new Range16.ptr(8232, 8233, 1), new Range16.ptr(8239, 8287, 48), new Range16.ptr(12288, 12288, 1)]), sliceType$1.nil, 2);
 		$pkg.White_Space = _White_Space;
-		caseOrbit = new sliceType$2([new foldPair.ptr(75, 107), new foldPair.ptr(83, 115), new foldPair.ptr(107, 8490), new foldPair.ptr(115, 383), new foldPair.ptr(181, 924), new foldPair.ptr(197, 229), new foldPair.ptr(223, 7838), new foldPair.ptr(229, 8491), new foldPair.ptr(304, 304), new foldPair.ptr(305, 305), new foldPair.ptr(383, 83), new foldPair.ptr(452, 453), new foldPair.ptr(453, 454), new foldPair.ptr(454, 452), new foldPair.ptr(455, 456), new foldPair.ptr(456, 457), new foldPair.ptr(457, 455), new foldPair.ptr(458, 459), new foldPair.ptr(459, 460), new foldPair.ptr(460, 458), new foldPair.ptr(497, 498), new foldPair.ptr(498, 499), new foldPair.ptr(499, 497), new foldPair.ptr(837, 921), new foldPair.ptr(914, 946), new foldPair.ptr(917, 949), new foldPair.ptr(920, 952), new foldPair.ptr(921, 953), new foldPair.ptr(922, 954), new foldPair.ptr(924, 956), new foldPair.ptr(928, 960), new foldPair.ptr(929, 961), new foldPair.ptr(931, 962), new foldPair.ptr(934, 966), new foldPair.ptr(937, 969), new foldPair.ptr(946, 976), new foldPair.ptr(949, 1013), new foldPair.ptr(952, 977), new foldPair.ptr(953, 8126), new foldPair.ptr(954, 1008), new foldPair.ptr(956, 181), new foldPair.ptr(960, 982), new foldPair.ptr(961, 1009), new foldPair.ptr(962, 963), new foldPair.ptr(963, 931), new foldPair.ptr(966, 981), new foldPair.ptr(969, 8486), new foldPair.ptr(976, 914), new foldPair.ptr(977, 1012), new foldPair.ptr(981, 934), new foldPair.ptr(982, 928), new foldPair.ptr(1008, 922), new foldPair.ptr(1009, 929), new foldPair.ptr(1012, 920), new foldPair.ptr(1013, 917), new foldPair.ptr(1042, 1074), new foldPair.ptr(1044, 1076), new foldPair.ptr(1054, 1086), new foldPair.ptr(1057, 1089), new foldPair.ptr(1058, 1090), new foldPair.ptr(1066, 1098), new foldPair.ptr(1074, 7296), new foldPair.ptr(1076, 7297), new foldPair.ptr(1086, 7298), new foldPair.ptr(1089, 7299), new foldPair.ptr(1090, 7300), new foldPair.ptr(1098, 7302), new foldPair.ptr(1122, 1123), new foldPair.ptr(1123, 7303), new foldPair.ptr(7296, 1042), new foldPair.ptr(7297, 1044), new foldPair.ptr(7298, 1054), new foldPair.ptr(7299, 1057), new foldPair.ptr(7300, 7301), new foldPair.ptr(7301, 1058), new foldPair.ptr(7302, 1066), new foldPair.ptr(7303, 1122), new foldPair.ptr(7304, 42570), new foldPair.ptr(7776, 7777), new foldPair.ptr(7777, 7835), new foldPair.ptr(7835, 7776), new foldPair.ptr(7838, 223), new foldPair.ptr(8126, 837), new foldPair.ptr(8486, 937), new foldPair.ptr(8490, 75), new foldPair.ptr(8491, 197), new foldPair.ptr(42570, 42571), new foldPair.ptr(42571, 7304)]);
-		asciiFold = $toNativeArray($kindUint16, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 91, 92, 93, 94, 95, 96, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 8490, 76, 77, 78, 79, 80, 81, 82, 383, 84, 85, 86, 87, 88, 89, 90, 123, 124, 125, 126, 127]);
-		_CaseRanges = new sliceType$3([new CaseRange.ptr(65, 90, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(97, 122, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(181, 181, $toNativeArray($kindInt32, [743, 0, 743])), new CaseRange.ptr(192, 214, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(216, 222, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(224, 246, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(248, 254, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(255, 255, $toNativeArray($kindInt32, [121, 0, 121])), new CaseRange.ptr(256, 303, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(304, 304, $toNativeArray($kindInt32, [0, -199, 0])), new CaseRange.ptr(305, 305, $toNativeArray($kindInt32, [-232, 0, -232])), new CaseRange.ptr(306, 311, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(313, 328, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(330, 375, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(376, 376, $toNativeArray($kindInt32, [0, -121, 0])), new CaseRange.ptr(377, 382, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(383, 383, $toNativeArray($kindInt32, [-300, 0, -300])), new CaseRange.ptr(384, 384, $toNativeArray($kindInt32, [195, 0, 195])), new CaseRange.ptr(385, 385, $toNativeArray($kindInt32, [0, 210, 0])), new CaseRange.ptr(386, 389, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(390, 390, $toNativeArray($kindInt32, [0, 206, 0])), new CaseRange.ptr(391, 392, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(393, 394, $toNativeArray($kindInt32, [0, 205, 0])), new CaseRange.ptr(395, 396, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(398, 398, $toNativeArray($kindInt32, [0, 79, 0])), new CaseRange.ptr(399, 399, $toNativeArray($kindInt32, [0, 202, 0])), new CaseRange.ptr(400, 400, $toNativeArray($kindInt32, [0, 203, 0])), new CaseRange.ptr(401, 402, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(403, 403, $toNativeArray($kindInt32, [0, 205, 0])), new CaseRange.ptr(404, 404, $toNativeArray($kindInt32, [0, 207, 0])), new CaseRange.ptr(405, 405, $toNativeArray($kindInt32, [97, 0, 97])), new CaseRange.ptr(406, 406, $toNativeArray($kindInt32, [0, 211, 0])), new CaseRange.ptr(407, 407, $toNativeArray($kindInt32, [0, 209, 0])), new CaseRange.ptr(408, 409, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(410, 410, $toNativeArray($kindInt32, [163, 0, 163])), new CaseRange.ptr(412, 412, $toNativeArray($kindInt32, [0, 211, 0])), new CaseRange.ptr(413, 413, $toNativeArray($kindInt32, [0, 213, 0])), new CaseRange.ptr(414, 414, $toNativeArray($kindInt32, [130, 0, 130])), new CaseRange.ptr(415, 415, $toNativeArray($kindInt32, [0, 214, 0])), new CaseRange.ptr(416, 421, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(422, 422, $toNativeArray($kindInt32, [0, 218, 0])), new CaseRange.ptr(423, 424, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(425, 425, $toNativeArray($kindInt32, [0, 218, 0])), new CaseRange.ptr(428, 429, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(430, 430, $toNativeArray($kindInt32, [0, 218, 0])), new CaseRange.ptr(431, 432, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(433, 434, $toNativeArray($kindInt32, [0, 217, 0])), new CaseRange.ptr(435, 438, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(439, 439, $toNativeArray($kindInt32, [0, 219, 0])), new CaseRange.ptr(440, 441, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(444, 445, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(447, 447, $toNativeArray($kindInt32, [56, 0, 56])), new CaseRange.ptr(452, 452, $toNativeArray($kindInt32, [0, 2, 1])), new CaseRange.ptr(453, 453, $toNativeArray($kindInt32, [-1, 1, 0])), new CaseRange.ptr(454, 454, $toNativeArray($kindInt32, [-2, 0, -1])), new CaseRange.ptr(455, 455, $toNativeArray($kindInt32, [0, 2, 1])), new CaseRange.ptr(456, 456, $toNativeArray($kindInt32, [-1, 1, 0])), new CaseRange.ptr(457, 457, $toNativeArray($kindInt32, [-2, 0, -1])), new CaseRange.ptr(458, 458, $toNativeArray($kindInt32, [0, 2, 1])), new CaseRange.ptr(459, 459, $toNativeArray($kindInt32, [-1, 1, 0])), new CaseRange.ptr(460, 460, $toNativeArray($kindInt32, [-2, 0, -1])), new CaseRange.ptr(461, 476, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(477, 477, $toNativeArray($kindInt32, [-79, 0, -79])), new CaseRange.ptr(478, 495, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(497, 497, $toNativeArray($kindInt32, [0, 2, 1])), new CaseRange.ptr(498, 498, $toNativeArray($kindInt32, [-1, 1, 0])), new CaseRange.ptr(499, 499, $toNativeArray($kindInt32, [-2, 0, -1])), new CaseRange.ptr(500, 501, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(502, 502, $toNativeArray($kindInt32, [0, -97, 0])), new CaseRange.ptr(503, 503, $toNativeArray($kindInt32, [0, -56, 0])), new CaseRange.ptr(504, 543, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(544, 544, $toNativeArray($kindInt32, [0, -130, 0])), new CaseRange.ptr(546, 563, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(570, 570, $toNativeArray($kindInt32, [0, 10795, 0])), new CaseRange.ptr(571, 572, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(573, 573, $toNativeArray($kindInt32, [0, -163, 0])), new CaseRange.ptr(574, 574, $toNativeArray($kindInt32, [0, 10792, 0])), new CaseRange.ptr(575, 576, $toNativeArray($kindInt32, [10815, 0, 10815])), new CaseRange.ptr(577, 578, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(579, 579, $toNativeArray($kindInt32, [0, -195, 0])), new CaseRange.ptr(580, 580, $toNativeArray($kindInt32, [0, 69, 0])), new CaseRange.ptr(581, 581, $toNativeArray($kindInt32, [0, 71, 0])), new CaseRange.ptr(582, 591, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(592, 592, $toNativeArray($kindInt32, [10783, 0, 10783])), new CaseRange.ptr(593, 593, $toNativeArray($kindInt32, [10780, 0, 10780])), new CaseRange.ptr(594, 594, $toNativeArray($kindInt32, [10782, 0, 10782])), new CaseRange.ptr(595, 595, $toNativeArray($kindInt32, [-210, 0, -210])), new CaseRange.ptr(596, 596, $toNativeArray($kindInt32, [-206, 0, -206])), new CaseRange.ptr(598, 599, $toNativeArray($kindInt32, [-205, 0, -205])), new CaseRange.ptr(601, 601, $toNativeArray($kindInt32, [-202, 0, -202])), new CaseRange.ptr(603, 603, $toNativeArray($kindInt32, [-203, 0, -203])), new CaseRange.ptr(604, 604, $toNativeArray($kindInt32, [42319, 0, 42319])), new CaseRange.ptr(608, 608, $toNativeArray($kindInt32, [-205, 0, -205])), new CaseRange.ptr(609, 609, $toNativeArray($kindInt32, [42315, 0, 42315])), new CaseRange.ptr(611, 611, $toNativeArray($kindInt32, [-207, 0, -207])), new CaseRange.ptr(613, 613, $toNativeArray($kindInt32, [42280, 0, 42280])), new CaseRange.ptr(614, 614, $toNativeArray($kindInt32, [42308, 0, 42308])), new CaseRange.ptr(616, 616, $toNativeArray($kindInt32, [-209, 0, -209])), new CaseRange.ptr(617, 617, $toNativeArray($kindInt32, [-211, 0, -211])), new CaseRange.ptr(618, 618, $toNativeArray($kindInt32, [42308, 0, 42308])), new CaseRange.ptr(619, 619, $toNativeArray($kindInt32, [10743, 0, 10743])), new CaseRange.ptr(620, 620, $toNativeArray($kindInt32, [42305, 0, 42305])), new CaseRange.ptr(623, 623, $toNativeArray($kindInt32, [-211, 0, -211])), new CaseRange.ptr(625, 625, $toNativeArray($kindInt32, [10749, 0, 10749])), new CaseRange.ptr(626, 626, $toNativeArray($kindInt32, [-213, 0, -213])), new CaseRange.ptr(629, 629, $toNativeArray($kindInt32, [-214, 0, -214])), new CaseRange.ptr(637, 637, $toNativeArray($kindInt32, [10727, 0, 10727])), new CaseRange.ptr(640, 640, $toNativeArray($kindInt32, [-218, 0, -218])), new CaseRange.ptr(642, 642, $toNativeArray($kindInt32, [42307, 0, 42307])), new CaseRange.ptr(643, 643, $toNativeArray($kindInt32, [-218, 0, -218])), new CaseRange.ptr(647, 647, $toNativeArray($kindInt32, [42282, 0, 42282])), new CaseRange.ptr(648, 648, $toNativeArray($kindInt32, [-218, 0, -218])), new CaseRange.ptr(649, 649, $toNativeArray($kindInt32, [-69, 0, -69])), new CaseRange.ptr(650, 651, $toNativeArray($kindInt32, [-217, 0, -217])), new CaseRange.ptr(652, 652, $toNativeArray($kindInt32, [-71, 0, -71])), new CaseRange.ptr(658, 658, $toNativeArray($kindInt32, [-219, 0, -219])), new CaseRange.ptr(669, 669, $toNativeArray($kindInt32, [42261, 0, 42261])), new CaseRange.ptr(670, 670, $toNativeArray($kindInt32, [42258, 0, 42258])), new CaseRange.ptr(837, 837, $toNativeArray($kindInt32, [84, 0, 84])), new CaseRange.ptr(880, 883, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(886, 887, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(891, 893, $toNativeArray($kindInt32, [130, 0, 130])), new CaseRange.ptr(895, 895, $toNativeArray($kindInt32, [0, 116, 0])), new CaseRange.ptr(902, 902, $toNativeArray($kindInt32, [0, 38, 0])), new CaseRange.ptr(904, 906, $toNativeArray($kindInt32, [0, 37, 0])), new CaseRange.ptr(908, 908, $toNativeArray($kindInt32, [0, 64, 0])), new CaseRange.ptr(910, 911, $toNativeArray($kindInt32, [0, 63, 0])), new CaseRange.ptr(913, 929, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(931, 939, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(940, 940, $toNativeArray($kindInt32, [-38, 0, -38])), new CaseRange.ptr(941, 943, $toNativeArray($kindInt32, [-37, 0, -37])), new CaseRange.ptr(945, 961, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(962, 962, $toNativeArray($kindInt32, [-31, 0, -31])), new CaseRange.ptr(963, 971, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(972, 972, $toNativeArray($kindInt32, [-64, 0, -64])), new CaseRange.ptr(973, 974, $toNativeArray($kindInt32, [-63, 0, -63])), new CaseRange.ptr(975, 975, $toNativeArray($kindInt32, [0, 8, 0])), new CaseRange.ptr(976, 976, $toNativeArray($kindInt32, [-62, 0, -62])), new CaseRange.ptr(977, 977, $toNativeArray($kindInt32, [-57, 0, -57])), new CaseRange.ptr(981, 981, $toNativeArray($kindInt32, [-47, 0, -47])), new CaseRange.ptr(982, 982, $toNativeArray($kindInt32, [-54, 0, -54])), new CaseRange.ptr(983, 983, $toNativeArray($kindInt32, [-8, 0, -8])), new CaseRange.ptr(984, 1007, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1008, 1008, $toNativeArray($kindInt32, [-86, 0, -86])), new CaseRange.ptr(1009, 1009, $toNativeArray($kindInt32, [-80, 0, -80])), new CaseRange.ptr(1010, 1010, $toNativeArray($kindInt32, [7, 0, 7])), new CaseRange.ptr(1011, 1011, $toNativeArray($kindInt32, [-116, 0, -116])), new CaseRange.ptr(1012, 1012, $toNativeArray($kindInt32, [0, -60, 0])), new CaseRange.ptr(1013, 1013, $toNativeArray($kindInt32, [-96, 0, -96])), new CaseRange.ptr(1015, 1016, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1017, 1017, $toNativeArray($kindInt32, [0, -7, 0])), new CaseRange.ptr(1018, 1019, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1021, 1023, $toNativeArray($kindInt32, [0, -130, 0])), new CaseRange.ptr(1024, 1039, $toNativeArray($kindInt32, [0, 80, 0])), new CaseRange.ptr(1040, 1071, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(1072, 1103, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(1104, 1119, $toNativeArray($kindInt32, [-80, 0, -80])), new CaseRange.ptr(1120, 1153, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1162, 1215, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1216, 1216, $toNativeArray($kindInt32, [0, 15, 0])), new CaseRange.ptr(1217, 1230, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1231, 1231, $toNativeArray($kindInt32, [-15, 0, -15])), new CaseRange.ptr(1232, 1327, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1329, 1366, $toNativeArray($kindInt32, [0, 48, 0])), new CaseRange.ptr(1377, 1414, $toNativeArray($kindInt32, [-48, 0, -48])), new CaseRange.ptr(4256, 4293, $toNativeArray($kindInt32, [0, 7264, 0])), new CaseRange.ptr(4295, 4295, $toNativeArray($kindInt32, [0, 7264, 0])), new CaseRange.ptr(4301, 4301, $toNativeArray($kindInt32, [0, 7264, 0])), new CaseRange.ptr(4304, 4346, $toNativeArray($kindInt32, [3008, 0, 0])), new CaseRange.ptr(4349, 4351, $toNativeArray($kindInt32, [3008, 0, 0])), new CaseRange.ptr(5024, 5103, $toNativeArray($kindInt32, [0, 38864, 0])), new CaseRange.ptr(5104, 5109, $toNativeArray($kindInt32, [0, 8, 0])), new CaseRange.ptr(5112, 5117, $toNativeArray($kindInt32, [-8, 0, -8])), new CaseRange.ptr(7296, 7296, $toNativeArray($kindInt32, [-6254, 0, -6254])), new CaseRange.ptr(7297, 7297, $toNativeArray($kindInt32, [-6253, 0, -6253])), new CaseRange.ptr(7298, 7298, $toNativeArray($kindInt32, [-6244, 0, -6244])), new CaseRange.ptr(7299, 7300, $toNativeArray($kindInt32, [-6242, 0, -6242])), new CaseRange.ptr(7301, 7301, $toNativeArray($kindInt32, [-6243, 0, -6243])), new CaseRange.ptr(7302, 7302, $toNativeArray($kindInt32, [-6236, 0, -6236])), new CaseRange.ptr(7303, 7303, $toNativeArray($kindInt32, [-6181, 0, -6181])), new CaseRange.ptr(7304, 7304, $toNativeArray($kindInt32, [35266, 0, 35266])), new CaseRange.ptr(7312, 7354, $toNativeArray($kindInt32, [0, -3008, 0])), new CaseRange.ptr(7357, 7359, $toNativeArray($kindInt32, [0, -3008, 0])), new CaseRange.ptr(7545, 7545, $toNativeArray($kindInt32, [35332, 0, 35332])), new CaseRange.ptr(7549, 7549, $toNativeArray($kindInt32, [3814, 0, 3814])), new CaseRange.ptr(7566, 7566, $toNativeArray($kindInt32, [35384, 0, 35384])), new CaseRange.ptr(7680, 7829, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(7835, 7835, $toNativeArray($kindInt32, [-59, 0, -59])), new CaseRange.ptr(7838, 7838, $toNativeArray($kindInt32, [0, -7615, 0])), new CaseRange.ptr(7840, 7935, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(7936, 7943, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(7944, 7951, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(7952, 7957, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(7960, 7965, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(7968, 7975, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(7976, 7983, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(7984, 7991, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(7992, 7999, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8000, 8005, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8008, 8013, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8017, 8017, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8019, 8019, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8021, 8021, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8023, 8023, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8025, 8025, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8027, 8027, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8029, 8029, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8031, 8031, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8032, 8039, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8040, 8047, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8048, 8049, $toNativeArray($kindInt32, [74, 0, 74])), new CaseRange.ptr(8050, 8053, $toNativeArray($kindInt32, [86, 0, 86])), new CaseRange.ptr(8054, 8055, $toNativeArray($kindInt32, [100, 0, 100])), new CaseRange.ptr(8056, 8057, $toNativeArray($kindInt32, [128, 0, 128])), new CaseRange.ptr(8058, 8059, $toNativeArray($kindInt32, [112, 0, 112])), new CaseRange.ptr(8060, 8061, $toNativeArray($kindInt32, [126, 0, 126])), new CaseRange.ptr(8064, 8071, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8072, 8079, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8080, 8087, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8088, 8095, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8096, 8103, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8104, 8111, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8112, 8113, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8115, 8115, $toNativeArray($kindInt32, [9, 0, 9])), new CaseRange.ptr(8120, 8121, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8122, 8123, $toNativeArray($kindInt32, [0, -74, 0])), new CaseRange.ptr(8124, 8124, $toNativeArray($kindInt32, [0, -9, 0])), new CaseRange.ptr(8126, 8126, $toNativeArray($kindInt32, [-7205, 0, -7205])), new CaseRange.ptr(8131, 8131, $toNativeArray($kindInt32, [9, 0, 9])), new CaseRange.ptr(8136, 8139, $toNativeArray($kindInt32, [0, -86, 0])), new CaseRange.ptr(8140, 8140, $toNativeArray($kindInt32, [0, -9, 0])), new CaseRange.ptr(8144, 8145, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8152, 8153, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8154, 8155, $toNativeArray($kindInt32, [0, -100, 0])), new CaseRange.ptr(8160, 8161, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8165, 8165, $toNativeArray($kindInt32, [7, 0, 7])), new CaseRange.ptr(8168, 8169, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8170, 8171, $toNativeArray($kindInt32, [0, -112, 0])), new CaseRange.ptr(8172, 8172, $toNativeArray($kindInt32, [0, -7, 0])), new CaseRange.ptr(8179, 8179, $toNativeArray($kindInt32, [9, 0, 9])), new CaseRange.ptr(8184, 8185, $toNativeArray($kindInt32, [0, -128, 0])), new CaseRange.ptr(8186, 8187, $toNativeArray($kindInt32, [0, -126, 0])), new CaseRange.ptr(8188, 8188, $toNativeArray($kindInt32, [0, -9, 0])), new CaseRange.ptr(8486, 8486, $toNativeArray($kindInt32, [0, -7517, 0])), new CaseRange.ptr(8490, 8490, $toNativeArray($kindInt32, [0, -8383, 0])), new CaseRange.ptr(8491, 8491, $toNativeArray($kindInt32, [0, -8262, 0])), new CaseRange.ptr(8498, 8498, $toNativeArray($kindInt32, [0, 28, 0])), new CaseRange.ptr(8526, 8526, $toNativeArray($kindInt32, [-28, 0, -28])), new CaseRange.ptr(8544, 8559, $toNativeArray($kindInt32, [0, 16, 0])), new CaseRange.ptr(8560, 8575, $toNativeArray($kindInt32, [-16, 0, -16])), new CaseRange.ptr(8579, 8580, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(9398, 9423, $toNativeArray($kindInt32, [0, 26, 0])), new CaseRange.ptr(9424, 9449, $toNativeArray($kindInt32, [-26, 0, -26])), new CaseRange.ptr(11264, 11310, $toNativeArray($kindInt32, [0, 48, 0])), new CaseRange.ptr(11312, 11358, $toNativeArray($kindInt32, [-48, 0, -48])), new CaseRange.ptr(11360, 11361, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11362, 11362, $toNativeArray($kindInt32, [0, -10743, 0])), new CaseRange.ptr(11363, 11363, $toNativeArray($kindInt32, [0, -3814, 0])), new CaseRange.ptr(11364, 11364, $toNativeArray($kindInt32, [0, -10727, 0])), new CaseRange.ptr(11365, 11365, $toNativeArray($kindInt32, [-10795, 0, -10795])), new CaseRange.ptr(11366, 11366, $toNativeArray($kindInt32, [-10792, 0, -10792])), new CaseRange.ptr(11367, 11372, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11373, 11373, $toNativeArray($kindInt32, [0, -10780, 0])), new CaseRange.ptr(11374, 11374, $toNativeArray($kindInt32, [0, -10749, 0])), new CaseRange.ptr(11375, 11375, $toNativeArray($kindInt32, [0, -10783, 0])), new CaseRange.ptr(11376, 11376, $toNativeArray($kindInt32, [0, -10782, 0])), new CaseRange.ptr(11378, 11379, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11381, 11382, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11390, 11391, $toNativeArray($kindInt32, [0, -10815, 0])), new CaseRange.ptr(11392, 11491, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11499, 11502, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11506, 11507, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11520, 11557, $toNativeArray($kindInt32, [-7264, 0, -7264])), new CaseRange.ptr(11559, 11559, $toNativeArray($kindInt32, [-7264, 0, -7264])), new CaseRange.ptr(11565, 11565, $toNativeArray($kindInt32, [-7264, 0, -7264])), new CaseRange.ptr(42560, 42605, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42624, 42651, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42786, 42799, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42802, 42863, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42873, 42876, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42877, 42877, $toNativeArray($kindInt32, [0, -35332, 0])), new CaseRange.ptr(42878, 42887, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42891, 42892, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42893, 42893, $toNativeArray($kindInt32, [0, -42280, 0])), new CaseRange.ptr(42896, 42899, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42900, 42900, $toNativeArray($kindInt32, [48, 0, 48])), new CaseRange.ptr(42902, 42921, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42922, 42922, $toNativeArray($kindInt32, [0, -42308, 0])), new CaseRange.ptr(42923, 42923, $toNativeArray($kindInt32, [0, -42319, 0])), new CaseRange.ptr(42924, 42924, $toNativeArray($kindInt32, [0, -42315, 0])), new CaseRange.ptr(42925, 42925, $toNativeArray($kindInt32, [0, -42305, 0])), new CaseRange.ptr(42926, 42926, $toNativeArray($kindInt32, [0, -42308, 0])), new CaseRange.ptr(42928, 42928, $toNativeArray($kindInt32, [0, -42258, 0])), new CaseRange.ptr(42929, 42929, $toNativeArray($kindInt32, [0, -42282, 0])), new CaseRange.ptr(42930, 42930, $toNativeArray($kindInt32, [0, -42261, 0])), new CaseRange.ptr(42931, 42931, $toNativeArray($kindInt32, [0, 928, 0])), new CaseRange.ptr(42932, 42943, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42946, 42947, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42948, 42948, $toNativeArray($kindInt32, [0, -48, 0])), new CaseRange.ptr(42949, 42949, $toNativeArray($kindInt32, [0, -42307, 0])), new CaseRange.ptr(42950, 42950, $toNativeArray($kindInt32, [0, -35384, 0])), new CaseRange.ptr(42951, 42954, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42997, 42998, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(43859, 43859, $toNativeArray($kindInt32, [-928, 0, -928])), new CaseRange.ptr(43888, 43967, $toNativeArray($kindInt32, [-38864, 0, -38864])), new CaseRange.ptr(65313, 65338, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(65345, 65370, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(66560, 66599, $toNativeArray($kindInt32, [0, 40, 0])), new CaseRange.ptr(66600, 66639, $toNativeArray($kindInt32, [-40, 0, -40])), new CaseRange.ptr(66736, 66771, $toNativeArray($kindInt32, [0, 40, 0])), new CaseRange.ptr(66776, 66811, $toNativeArray($kindInt32, [-40, 0, -40])), new CaseRange.ptr(68736, 68786, $toNativeArray($kindInt32, [0, 64, 0])), new CaseRange.ptr(68800, 68850, $toNativeArray($kindInt32, [-64, 0, -64])), new CaseRange.ptr(71840, 71871, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(71872, 71903, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(93760, 93791, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(93792, 93823, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(125184, 125217, $toNativeArray($kindInt32, [0, 34, 0])), new CaseRange.ptr(125218, 125251, $toNativeArray($kindInt32, [-34, 0, -34]))]);
+		_CaseRanges = new sliceType$2([new CaseRange.ptr(65, 90, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(97, 122, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(181, 181, $toNativeArray($kindInt32, [743, 0, 743])), new CaseRange.ptr(192, 214, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(216, 222, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(224, 246, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(248, 254, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(255, 255, $toNativeArray($kindInt32, [121, 0, 121])), new CaseRange.ptr(256, 303, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(304, 304, $toNativeArray($kindInt32, [0, -199, 0])), new CaseRange.ptr(305, 305, $toNativeArray($kindInt32, [-232, 0, -232])), new CaseRange.ptr(306, 311, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(313, 328, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(330, 375, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(376, 376, $toNativeArray($kindInt32, [0, -121, 0])), new CaseRange.ptr(377, 382, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(383, 383, $toNativeArray($kindInt32, [-300, 0, -300])), new CaseRange.ptr(384, 384, $toNativeArray($kindInt32, [195, 0, 195])), new CaseRange.ptr(385, 385, $toNativeArray($kindInt32, [0, 210, 0])), new CaseRange.ptr(386, 389, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(390, 390, $toNativeArray($kindInt32, [0, 206, 0])), new CaseRange.ptr(391, 392, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(393, 394, $toNativeArray($kindInt32, [0, 205, 0])), new CaseRange.ptr(395, 396, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(398, 398, $toNativeArray($kindInt32, [0, 79, 0])), new CaseRange.ptr(399, 399, $toNativeArray($kindInt32, [0, 202, 0])), new CaseRange.ptr(400, 400, $toNativeArray($kindInt32, [0, 203, 0])), new CaseRange.ptr(401, 402, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(403, 403, $toNativeArray($kindInt32, [0, 205, 0])), new CaseRange.ptr(404, 404, $toNativeArray($kindInt32, [0, 207, 0])), new CaseRange.ptr(405, 405, $toNativeArray($kindInt32, [97, 0, 97])), new CaseRange.ptr(406, 406, $toNativeArray($kindInt32, [0, 211, 0])), new CaseRange.ptr(407, 407, $toNativeArray($kindInt32, [0, 209, 0])), new CaseRange.ptr(408, 409, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(410, 410, $toNativeArray($kindInt32, [163, 0, 163])), new CaseRange.ptr(412, 412, $toNativeArray($kindInt32, [0, 211, 0])), new CaseRange.ptr(413, 413, $toNativeArray($kindInt32, [0, 213, 0])), new CaseRange.ptr(414, 414, $toNativeArray($kindInt32, [130, 0, 130])), new CaseRange.ptr(415, 415, $toNativeArray($kindInt32, [0, 214, 0])), new CaseRange.ptr(416, 421, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(422, 422, $toNativeArray($kindInt32, [0, 218, 0])), new CaseRange.ptr(423, 424, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(425, 425, $toNativeArray($kindInt32, [0, 218, 0])), new CaseRange.ptr(428, 429, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(430, 430, $toNativeArray($kindInt32, [0, 218, 0])), new CaseRange.ptr(431, 432, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(433, 434, $toNativeArray($kindInt32, [0, 217, 0])), new CaseRange.ptr(435, 438, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(439, 439, $toNativeArray($kindInt32, [0, 219, 0])), new CaseRange.ptr(440, 441, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(444, 445, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(447, 447, $toNativeArray($kindInt32, [56, 0, 56])), new CaseRange.ptr(452, 452, $toNativeArray($kindInt32, [0, 2, 1])), new CaseRange.ptr(453, 453, $toNativeArray($kindInt32, [-1, 1, 0])), new CaseRange.ptr(454, 454, $toNativeArray($kindInt32, [-2, 0, -1])), new CaseRange.ptr(455, 455, $toNativeArray($kindInt32, [0, 2, 1])), new CaseRange.ptr(456, 456, $toNativeArray($kindInt32, [-1, 1, 0])), new CaseRange.ptr(457, 457, $toNativeArray($kindInt32, [-2, 0, -1])), new CaseRange.ptr(458, 458, $toNativeArray($kindInt32, [0, 2, 1])), new CaseRange.ptr(459, 459, $toNativeArray($kindInt32, [-1, 1, 0])), new CaseRange.ptr(460, 460, $toNativeArray($kindInt32, [-2, 0, -1])), new CaseRange.ptr(461, 476, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(477, 477, $toNativeArray($kindInt32, [-79, 0, -79])), new CaseRange.ptr(478, 495, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(497, 497, $toNativeArray($kindInt32, [0, 2, 1])), new CaseRange.ptr(498, 498, $toNativeArray($kindInt32, [-1, 1, 0])), new CaseRange.ptr(499, 499, $toNativeArray($kindInt32, [-2, 0, -1])), new CaseRange.ptr(500, 501, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(502, 502, $toNativeArray($kindInt32, [0, -97, 0])), new CaseRange.ptr(503, 503, $toNativeArray($kindInt32, [0, -56, 0])), new CaseRange.ptr(504, 543, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(544, 544, $toNativeArray($kindInt32, [0, -130, 0])), new CaseRange.ptr(546, 563, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(570, 570, $toNativeArray($kindInt32, [0, 10795, 0])), new CaseRange.ptr(571, 572, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(573, 573, $toNativeArray($kindInt32, [0, -163, 0])), new CaseRange.ptr(574, 574, $toNativeArray($kindInt32, [0, 10792, 0])), new CaseRange.ptr(575, 576, $toNativeArray($kindInt32, [10815, 0, 10815])), new CaseRange.ptr(577, 578, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(579, 579, $toNativeArray($kindInt32, [0, -195, 0])), new CaseRange.ptr(580, 580, $toNativeArray($kindInt32, [0, 69, 0])), new CaseRange.ptr(581, 581, $toNativeArray($kindInt32, [0, 71, 0])), new CaseRange.ptr(582, 591, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(592, 592, $toNativeArray($kindInt32, [10783, 0, 10783])), new CaseRange.ptr(593, 593, $toNativeArray($kindInt32, [10780, 0, 10780])), new CaseRange.ptr(594, 594, $toNativeArray($kindInt32, [10782, 0, 10782])), new CaseRange.ptr(595, 595, $toNativeArray($kindInt32, [-210, 0, -210])), new CaseRange.ptr(596, 596, $toNativeArray($kindInt32, [-206, 0, -206])), new CaseRange.ptr(598, 599, $toNativeArray($kindInt32, [-205, 0, -205])), new CaseRange.ptr(601, 601, $toNativeArray($kindInt32, [-202, 0, -202])), new CaseRange.ptr(603, 603, $toNativeArray($kindInt32, [-203, 0, -203])), new CaseRange.ptr(604, 604, $toNativeArray($kindInt32, [42319, 0, 42319])), new CaseRange.ptr(608, 608, $toNativeArray($kindInt32, [-205, 0, -205])), new CaseRange.ptr(609, 609, $toNativeArray($kindInt32, [42315, 0, 42315])), new CaseRange.ptr(611, 611, $toNativeArray($kindInt32, [-207, 0, -207])), new CaseRange.ptr(613, 613, $toNativeArray($kindInt32, [42280, 0, 42280])), new CaseRange.ptr(614, 614, $toNativeArray($kindInt32, [42308, 0, 42308])), new CaseRange.ptr(616, 616, $toNativeArray($kindInt32, [-209, 0, -209])), new CaseRange.ptr(617, 617, $toNativeArray($kindInt32, [-211, 0, -211])), new CaseRange.ptr(618, 618, $toNativeArray($kindInt32, [42308, 0, 42308])), new CaseRange.ptr(619, 619, $toNativeArray($kindInt32, [10743, 0, 10743])), new CaseRange.ptr(620, 620, $toNativeArray($kindInt32, [42305, 0, 42305])), new CaseRange.ptr(623, 623, $toNativeArray($kindInt32, [-211, 0, -211])), new CaseRange.ptr(625, 625, $toNativeArray($kindInt32, [10749, 0, 10749])), new CaseRange.ptr(626, 626, $toNativeArray($kindInt32, [-213, 0, -213])), new CaseRange.ptr(629, 629, $toNativeArray($kindInt32, [-214, 0, -214])), new CaseRange.ptr(637, 637, $toNativeArray($kindInt32, [10727, 0, 10727])), new CaseRange.ptr(640, 640, $toNativeArray($kindInt32, [-218, 0, -218])), new CaseRange.ptr(642, 642, $toNativeArray($kindInt32, [42307, 0, 42307])), new CaseRange.ptr(643, 643, $toNativeArray($kindInt32, [-218, 0, -218])), new CaseRange.ptr(647, 647, $toNativeArray($kindInt32, [42282, 0, 42282])), new CaseRange.ptr(648, 648, $toNativeArray($kindInt32, [-218, 0, -218])), new CaseRange.ptr(649, 649, $toNativeArray($kindInt32, [-69, 0, -69])), new CaseRange.ptr(650, 651, $toNativeArray($kindInt32, [-217, 0, -217])), new CaseRange.ptr(652, 652, $toNativeArray($kindInt32, [-71, 0, -71])), new CaseRange.ptr(658, 658, $toNativeArray($kindInt32, [-219, 0, -219])), new CaseRange.ptr(669, 669, $toNativeArray($kindInt32, [42261, 0, 42261])), new CaseRange.ptr(670, 670, $toNativeArray($kindInt32, [42258, 0, 42258])), new CaseRange.ptr(837, 837, $toNativeArray($kindInt32, [84, 0, 84])), new CaseRange.ptr(880, 883, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(886, 887, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(891, 893, $toNativeArray($kindInt32, [130, 0, 130])), new CaseRange.ptr(895, 895, $toNativeArray($kindInt32, [0, 116, 0])), new CaseRange.ptr(902, 902, $toNativeArray($kindInt32, [0, 38, 0])), new CaseRange.ptr(904, 906, $toNativeArray($kindInt32, [0, 37, 0])), new CaseRange.ptr(908, 908, $toNativeArray($kindInt32, [0, 64, 0])), new CaseRange.ptr(910, 911, $toNativeArray($kindInt32, [0, 63, 0])), new CaseRange.ptr(913, 929, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(931, 939, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(940, 940, $toNativeArray($kindInt32, [-38, 0, -38])), new CaseRange.ptr(941, 943, $toNativeArray($kindInt32, [-37, 0, -37])), new CaseRange.ptr(945, 961, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(962, 962, $toNativeArray($kindInt32, [-31, 0, -31])), new CaseRange.ptr(963, 971, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(972, 972, $toNativeArray($kindInt32, [-64, 0, -64])), new CaseRange.ptr(973, 974, $toNativeArray($kindInt32, [-63, 0, -63])), new CaseRange.ptr(975, 975, $toNativeArray($kindInt32, [0, 8, 0])), new CaseRange.ptr(976, 976, $toNativeArray($kindInt32, [-62, 0, -62])), new CaseRange.ptr(977, 977, $toNativeArray($kindInt32, [-57, 0, -57])), new CaseRange.ptr(981, 981, $toNativeArray($kindInt32, [-47, 0, -47])), new CaseRange.ptr(982, 982, $toNativeArray($kindInt32, [-54, 0, -54])), new CaseRange.ptr(983, 983, $toNativeArray($kindInt32, [-8, 0, -8])), new CaseRange.ptr(984, 1007, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1008, 1008, $toNativeArray($kindInt32, [-86, 0, -86])), new CaseRange.ptr(1009, 1009, $toNativeArray($kindInt32, [-80, 0, -80])), new CaseRange.ptr(1010, 1010, $toNativeArray($kindInt32, [7, 0, 7])), new CaseRange.ptr(1011, 1011, $toNativeArray($kindInt32, [-116, 0, -116])), new CaseRange.ptr(1012, 1012, $toNativeArray($kindInt32, [0, -60, 0])), new CaseRange.ptr(1013, 1013, $toNativeArray($kindInt32, [-96, 0, -96])), new CaseRange.ptr(1015, 1016, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1017, 1017, $toNativeArray($kindInt32, [0, -7, 0])), new CaseRange.ptr(1018, 1019, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1021, 1023, $toNativeArray($kindInt32, [0, -130, 0])), new CaseRange.ptr(1024, 1039, $toNativeArray($kindInt32, [0, 80, 0])), new CaseRange.ptr(1040, 1071, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(1072, 1103, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(1104, 1119, $toNativeArray($kindInt32, [-80, 0, -80])), new CaseRange.ptr(1120, 1153, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1162, 1215, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1216, 1216, $toNativeArray($kindInt32, [0, 15, 0])), new CaseRange.ptr(1217, 1230, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1231, 1231, $toNativeArray($kindInt32, [-15, 0, -15])), new CaseRange.ptr(1232, 1327, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(1329, 1366, $toNativeArray($kindInt32, [0, 48, 0])), new CaseRange.ptr(1377, 1414, $toNativeArray($kindInt32, [-48, 0, -48])), new CaseRange.ptr(4256, 4293, $toNativeArray($kindInt32, [0, 7264, 0])), new CaseRange.ptr(4295, 4295, $toNativeArray($kindInt32, [0, 7264, 0])), new CaseRange.ptr(4301, 4301, $toNativeArray($kindInt32, [0, 7264, 0])), new CaseRange.ptr(4304, 4346, $toNativeArray($kindInt32, [3008, 0, 0])), new CaseRange.ptr(4349, 4351, $toNativeArray($kindInt32, [3008, 0, 0])), new CaseRange.ptr(5024, 5103, $toNativeArray($kindInt32, [0, 38864, 0])), new CaseRange.ptr(5104, 5109, $toNativeArray($kindInt32, [0, 8, 0])), new CaseRange.ptr(5112, 5117, $toNativeArray($kindInt32, [-8, 0, -8])), new CaseRange.ptr(7296, 7296, $toNativeArray($kindInt32, [-6254, 0, -6254])), new CaseRange.ptr(7297, 7297, $toNativeArray($kindInt32, [-6253, 0, -6253])), new CaseRange.ptr(7298, 7298, $toNativeArray($kindInt32, [-6244, 0, -6244])), new CaseRange.ptr(7299, 7300, $toNativeArray($kindInt32, [-6242, 0, -6242])), new CaseRange.ptr(7301, 7301, $toNativeArray($kindInt32, [-6243, 0, -6243])), new CaseRange.ptr(7302, 7302, $toNativeArray($kindInt32, [-6236, 0, -6236])), new CaseRange.ptr(7303, 7303, $toNativeArray($kindInt32, [-6181, 0, -6181])), new CaseRange.ptr(7304, 7304, $toNativeArray($kindInt32, [35266, 0, 35266])), new CaseRange.ptr(7312, 7354, $toNativeArray($kindInt32, [0, -3008, 0])), new CaseRange.ptr(7357, 7359, $toNativeArray($kindInt32, [0, -3008, 0])), new CaseRange.ptr(7545, 7545, $toNativeArray($kindInt32, [35332, 0, 35332])), new CaseRange.ptr(7549, 7549, $toNativeArray($kindInt32, [3814, 0, 3814])), new CaseRange.ptr(7566, 7566, $toNativeArray($kindInt32, [35384, 0, 35384])), new CaseRange.ptr(7680, 7829, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(7835, 7835, $toNativeArray($kindInt32, [-59, 0, -59])), new CaseRange.ptr(7838, 7838, $toNativeArray($kindInt32, [0, -7615, 0])), new CaseRange.ptr(7840, 7935, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(7936, 7943, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(7944, 7951, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(7952, 7957, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(7960, 7965, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(7968, 7975, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(7976, 7983, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(7984, 7991, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(7992, 7999, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8000, 8005, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8008, 8013, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8017, 8017, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8019, 8019, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8021, 8021, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8023, 8023, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8025, 8025, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8027, 8027, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8029, 8029, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8031, 8031, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8032, 8039, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8040, 8047, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8048, 8049, $toNativeArray($kindInt32, [74, 0, 74])), new CaseRange.ptr(8050, 8053, $toNativeArray($kindInt32, [86, 0, 86])), new CaseRange.ptr(8054, 8055, $toNativeArray($kindInt32, [100, 0, 100])), new CaseRange.ptr(8056, 8057, $toNativeArray($kindInt32, [128, 0, 128])), new CaseRange.ptr(8058, 8059, $toNativeArray($kindInt32, [112, 0, 112])), new CaseRange.ptr(8060, 8061, $toNativeArray($kindInt32, [126, 0, 126])), new CaseRange.ptr(8064, 8071, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8072, 8079, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8080, 8087, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8088, 8095, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8096, 8103, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8104, 8111, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8112, 8113, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8115, 8115, $toNativeArray($kindInt32, [9, 0, 9])), new CaseRange.ptr(8120, 8121, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8122, 8123, $toNativeArray($kindInt32, [0, -74, 0])), new CaseRange.ptr(8124, 8124, $toNativeArray($kindInt32, [0, -9, 0])), new CaseRange.ptr(8126, 8126, $toNativeArray($kindInt32, [-7205, 0, -7205])), new CaseRange.ptr(8131, 8131, $toNativeArray($kindInt32, [9, 0, 9])), new CaseRange.ptr(8136, 8139, $toNativeArray($kindInt32, [0, -86, 0])), new CaseRange.ptr(8140, 8140, $toNativeArray($kindInt32, [0, -9, 0])), new CaseRange.ptr(8144, 8145, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8152, 8153, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8154, 8155, $toNativeArray($kindInt32, [0, -100, 0])), new CaseRange.ptr(8160, 8161, $toNativeArray($kindInt32, [8, 0, 8])), new CaseRange.ptr(8165, 8165, $toNativeArray($kindInt32, [7, 0, 7])), new CaseRange.ptr(8168, 8169, $toNativeArray($kindInt32, [0, -8, 0])), new CaseRange.ptr(8170, 8171, $toNativeArray($kindInt32, [0, -112, 0])), new CaseRange.ptr(8172, 8172, $toNativeArray($kindInt32, [0, -7, 0])), new CaseRange.ptr(8179, 8179, $toNativeArray($kindInt32, [9, 0, 9])), new CaseRange.ptr(8184, 8185, $toNativeArray($kindInt32, [0, -128, 0])), new CaseRange.ptr(8186, 8187, $toNativeArray($kindInt32, [0, -126, 0])), new CaseRange.ptr(8188, 8188, $toNativeArray($kindInt32, [0, -9, 0])), new CaseRange.ptr(8486, 8486, $toNativeArray($kindInt32, [0, -7517, 0])), new CaseRange.ptr(8490, 8490, $toNativeArray($kindInt32, [0, -8383, 0])), new CaseRange.ptr(8491, 8491, $toNativeArray($kindInt32, [0, -8262, 0])), new CaseRange.ptr(8498, 8498, $toNativeArray($kindInt32, [0, 28, 0])), new CaseRange.ptr(8526, 8526, $toNativeArray($kindInt32, [-28, 0, -28])), new CaseRange.ptr(8544, 8559, $toNativeArray($kindInt32, [0, 16, 0])), new CaseRange.ptr(8560, 8575, $toNativeArray($kindInt32, [-16, 0, -16])), new CaseRange.ptr(8579, 8580, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(9398, 9423, $toNativeArray($kindInt32, [0, 26, 0])), new CaseRange.ptr(9424, 9449, $toNativeArray($kindInt32, [-26, 0, -26])), new CaseRange.ptr(11264, 11310, $toNativeArray($kindInt32, [0, 48, 0])), new CaseRange.ptr(11312, 11358, $toNativeArray($kindInt32, [-48, 0, -48])), new CaseRange.ptr(11360, 11361, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11362, 11362, $toNativeArray($kindInt32, [0, -10743, 0])), new CaseRange.ptr(11363, 11363, $toNativeArray($kindInt32, [0, -3814, 0])), new CaseRange.ptr(11364, 11364, $toNativeArray($kindInt32, [0, -10727, 0])), new CaseRange.ptr(11365, 11365, $toNativeArray($kindInt32, [-10795, 0, -10795])), new CaseRange.ptr(11366, 11366, $toNativeArray($kindInt32, [-10792, 0, -10792])), new CaseRange.ptr(11367, 11372, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11373, 11373, $toNativeArray($kindInt32, [0, -10780, 0])), new CaseRange.ptr(11374, 11374, $toNativeArray($kindInt32, [0, -10749, 0])), new CaseRange.ptr(11375, 11375, $toNativeArray($kindInt32, [0, -10783, 0])), new CaseRange.ptr(11376, 11376, $toNativeArray($kindInt32, [0, -10782, 0])), new CaseRange.ptr(11378, 11379, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11381, 11382, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11390, 11391, $toNativeArray($kindInt32, [0, -10815, 0])), new CaseRange.ptr(11392, 11491, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11499, 11502, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11506, 11507, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(11520, 11557, $toNativeArray($kindInt32, [-7264, 0, -7264])), new CaseRange.ptr(11559, 11559, $toNativeArray($kindInt32, [-7264, 0, -7264])), new CaseRange.ptr(11565, 11565, $toNativeArray($kindInt32, [-7264, 0, -7264])), new CaseRange.ptr(42560, 42605, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42624, 42651, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42786, 42799, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42802, 42863, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42873, 42876, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42877, 42877, $toNativeArray($kindInt32, [0, -35332, 0])), new CaseRange.ptr(42878, 42887, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42891, 42892, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42893, 42893, $toNativeArray($kindInt32, [0, -42280, 0])), new CaseRange.ptr(42896, 42899, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42900, 42900, $toNativeArray($kindInt32, [48, 0, 48])), new CaseRange.ptr(42902, 42921, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42922, 42922, $toNativeArray($kindInt32, [0, -42308, 0])), new CaseRange.ptr(42923, 42923, $toNativeArray($kindInt32, [0, -42319, 0])), new CaseRange.ptr(42924, 42924, $toNativeArray($kindInt32, [0, -42315, 0])), new CaseRange.ptr(42925, 42925, $toNativeArray($kindInt32, [0, -42305, 0])), new CaseRange.ptr(42926, 42926, $toNativeArray($kindInt32, [0, -42308, 0])), new CaseRange.ptr(42928, 42928, $toNativeArray($kindInt32, [0, -42258, 0])), new CaseRange.ptr(42929, 42929, $toNativeArray($kindInt32, [0, -42282, 0])), new CaseRange.ptr(42930, 42930, $toNativeArray($kindInt32, [0, -42261, 0])), new CaseRange.ptr(42931, 42931, $toNativeArray($kindInt32, [0, 928, 0])), new CaseRange.ptr(42932, 42943, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42946, 42947, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42948, 42948, $toNativeArray($kindInt32, [0, -48, 0])), new CaseRange.ptr(42949, 42949, $toNativeArray($kindInt32, [0, -42307, 0])), new CaseRange.ptr(42950, 42950, $toNativeArray($kindInt32, [0, -35384, 0])), new CaseRange.ptr(42951, 42954, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(42997, 42998, $toNativeArray($kindInt32, [1114112, 1114112, 1114112])), new CaseRange.ptr(43859, 43859, $toNativeArray($kindInt32, [-928, 0, -928])), new CaseRange.ptr(43888, 43967, $toNativeArray($kindInt32, [-38864, 0, -38864])), new CaseRange.ptr(65313, 65338, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(65345, 65370, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(66560, 66599, $toNativeArray($kindInt32, [0, 40, 0])), new CaseRange.ptr(66600, 66639, $toNativeArray($kindInt32, [-40, 0, -40])), new CaseRange.ptr(66736, 66771, $toNativeArray($kindInt32, [0, 40, 0])), new CaseRange.ptr(66776, 66811, $toNativeArray($kindInt32, [-40, 0, -40])), new CaseRange.ptr(68736, 68786, $toNativeArray($kindInt32, [0, 64, 0])), new CaseRange.ptr(68800, 68850, $toNativeArray($kindInt32, [-64, 0, -64])), new CaseRange.ptr(71840, 71871, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(71872, 71903, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(93760, 93791, $toNativeArray($kindInt32, [0, 32, 0])), new CaseRange.ptr(93792, 93823, $toNativeArray($kindInt32, [-32, 0, -32])), new CaseRange.ptr(125184, 125217, $toNativeArray($kindInt32, [0, 34, 0])), new CaseRange.ptr(125218, 125251, $toNativeArray($kindInt32, [-34, 0, -34]))]);
 		$pkg.CaseRanges = _CaseRanges;
 		properties = $toNativeArray($kindUint8, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 144, 130, 130, 130, 136, 130, 130, 130, 130, 130, 130, 136, 130, 130, 130, 130, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 130, 130, 136, 136, 136, 130, 130, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 130, 130, 130, 136, 130, 136, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 130, 136, 130, 136, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 16, 130, 136, 136, 136, 136, 136, 130, 136, 136, 224, 130, 136, 0, 136, 136, 136, 136, 132, 132, 136, 192, 130, 130, 136, 132, 224, 130, 132, 132, 132, 130, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160, 136, 160, 160, 160, 160, 160, 160, 160, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 136, 192, 192, 192, 192, 192, 192, 192, 192]);
+		asciiFold = $toNativeArray($kindUint16, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 91, 92, 93, 94, 95, 96, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 8490, 76, 77, 78, 79, 80, 81, 82, 383, 84, 85, 86, 87, 88, 89, 90, 123, 124, 125, 126, 127]);
+		caseOrbit = new sliceType$3([new foldPair.ptr(75, 107), new foldPair.ptr(83, 115), new foldPair.ptr(107, 8490), new foldPair.ptr(115, 383), new foldPair.ptr(181, 924), new foldPair.ptr(197, 229), new foldPair.ptr(223, 7838), new foldPair.ptr(229, 8491), new foldPair.ptr(304, 304), new foldPair.ptr(305, 305), new foldPair.ptr(383, 83), new foldPair.ptr(452, 453), new foldPair.ptr(453, 454), new foldPair.ptr(454, 452), new foldPair.ptr(455, 456), new foldPair.ptr(456, 457), new foldPair.ptr(457, 455), new foldPair.ptr(458, 459), new foldPair.ptr(459, 460), new foldPair.ptr(460, 458), new foldPair.ptr(497, 498), new foldPair.ptr(498, 499), new foldPair.ptr(499, 497), new foldPair.ptr(837, 921), new foldPair.ptr(914, 946), new foldPair.ptr(917, 949), new foldPair.ptr(920, 952), new foldPair.ptr(921, 953), new foldPair.ptr(922, 954), new foldPair.ptr(924, 956), new foldPair.ptr(928, 960), new foldPair.ptr(929, 961), new foldPair.ptr(931, 962), new foldPair.ptr(934, 966), new foldPair.ptr(937, 969), new foldPair.ptr(946, 976), new foldPair.ptr(949, 1013), new foldPair.ptr(952, 977), new foldPair.ptr(953, 8126), new foldPair.ptr(954, 1008), new foldPair.ptr(956, 181), new foldPair.ptr(960, 982), new foldPair.ptr(961, 1009), new foldPair.ptr(962, 963), new foldPair.ptr(963, 931), new foldPair.ptr(966, 981), new foldPair.ptr(969, 8486), new foldPair.ptr(976, 914), new foldPair.ptr(977, 1012), new foldPair.ptr(981, 934), new foldPair.ptr(982, 928), new foldPair.ptr(1008, 922), new foldPair.ptr(1009, 929), new foldPair.ptr(1012, 920), new foldPair.ptr(1013, 917), new foldPair.ptr(1042, 1074), new foldPair.ptr(1044, 1076), new foldPair.ptr(1054, 1086), new foldPair.ptr(1057, 1089), new foldPair.ptr(1058, 1090), new foldPair.ptr(1066, 1098), new foldPair.ptr(1074, 7296), new foldPair.ptr(1076, 7297), new foldPair.ptr(1086, 7298), new foldPair.ptr(1089, 7299), new foldPair.ptr(1090, 7300), new foldPair.ptr(1098, 7302), new foldPair.ptr(1122, 1123), new foldPair.ptr(1123, 7303), new foldPair.ptr(7296, 1042), new foldPair.ptr(7297, 1044), new foldPair.ptr(7298, 1054), new foldPair.ptr(7299, 1057), new foldPair.ptr(7300, 7301), new foldPair.ptr(7301, 1058), new foldPair.ptr(7302, 1066), new foldPair.ptr(7303, 1122), new foldPair.ptr(7304, 42570), new foldPair.ptr(7776, 7777), new foldPair.ptr(7777, 7835), new foldPair.ptr(7835, 7776), new foldPair.ptr(7838, 223), new foldPair.ptr(8126, 837), new foldPair.ptr(8486, 937), new foldPair.ptr(8490, 75), new foldPair.ptr(8491, 197), new foldPair.ptr(42570, 42571), new foldPair.ptr(42571, 7304)]);
 		/* */ } return; } if ($f === undefined) { $f = { $blk: $init }; } $f.$s = $s; $f.$r = $r; return $f;
 	};
 	$pkg.$init = $init;
@@ -41776,38 +41776,6 @@ $packages["encoding/json"] = (function() {
 	$pkg.$init = $init;
 	return $pkg;
 })();
-$packages["io/ioutil"] = (function() {
-	var $pkg = {}, $init, io, fs, os, sort, ReadAll, NopCloser;
-	io = $packages["io"];
-	fs = $packages["io/fs"];
-	os = $packages["os"];
-	sort = $packages["sort"];
-	ReadAll = function(r) {
-		var $24r, _r, r, $s, $r;
-		/* */ $s = 0; var $f, $c = false; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; $24r = $f.$24r; _r = $f._r; r = $f.r; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
-		_r = io.ReadAll(r); /* */ $s = 1; case 1: if($c) { $c = false; _r = _r.$blk(); } if (_r && _r.$blk !== undefined) { break s; }
-		$24r = _r;
-		$s = 2; case 2: return $24r;
-		/* */ } return; } if ($f === undefined) { $f = { $blk: ReadAll }; } $f.$24r = $24r; $f._r = _r; $f.r = r; $f.$s = $s; $f.$r = $r; return $f;
-	};
-	$pkg.ReadAll = ReadAll;
-	NopCloser = function(r) {
-		var r;
-		return io.NopCloser(r);
-	};
-	$pkg.NopCloser = NopCloser;
-	$init = function() {
-		$pkg.$init = function() {};
-		/* */ var $f, $c = false, $s = 0, $r; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
-		$r = io.$init(); /* */ $s = 1; case 1: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$r = fs.$init(); /* */ $s = 2; case 2: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$r = os.$init(); /* */ $s = 3; case 3: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$r = sort.$init(); /* */ $s = 4; case 4: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		/* */ } return; } if ($f === undefined) { $f = { $blk: $init }; } $f.$s = $s; $f.$r = $r; return $f;
-	};
-	$pkg.$init = $init;
-	return $pkg;
-})();
 $packages["context"] = (function() {
 	var $pkg = {}, $init, errors, reflectlite, sync, atomic, time, Context, deadlineExceededError, emptyCtx, CancelFunc, canceler, cancelCtx, stringer, timerCtx, valueCtx, ptrType, structType, ptrType$1, ptrType$2, ptrType$3, ptrType$4, chanType, ptrType$5, chanType$1, mapType, ptrType$6, ptrType$7, background, todo, goroutines, goroutines$24ptr, cancelCtxKey, cancelCtxKey$24ptr, closedchan, x, Background, WithCancel, newCancelCtx, propagateCancel, parentCancelCtx, removeChild, init, contextName, WithDeadline, WithTimeout, WithValue, stringify;
 	errors = $packages["errors"];
@@ -56467,25 +56435,23 @@ $packages["net"] = (function() {
 	$pkg.$init = $init;
 	return $pkg;
 })();
-$packages["github.com/StackExchange/dnscontrol/v4/pkg/spflib"] = (function() {
-	var $pkg = {}, $init, bytes, json, fmt, io, ioutil, net, os, strings, SPFRecord, SPFPart, sliceType, sliceType$1, ptrType$2, ptrType$3, sliceType$3, sliceType$4, sliceType$5, mapType$1, qualifiers, Parse, dump, Chunks, matchesFlatSpec;
-	bytes = $packages["bytes"];
+$packages["github.com/DNSControl/dnscontrol/v4/pkg/spflib"] = (function() {
+	var $pkg = {}, $init, json, errors, fmt, net, os, strings, SPFRecord, SPFPart, sliceType, sliceType$2, ptrType$2, ptrType$3, sliceType$4, sliceType$5, mapType$1, qualifiers, Parse, Chunks, matchesFlatSpec;
 	json = $packages["encoding/json"];
+	errors = $packages["errors"];
 	fmt = $packages["fmt"];
-	io = $packages["io"];
-	ioutil = $packages["io/ioutil"];
 	net = $packages["net"];
 	os = $packages["os"];
 	strings = $packages["strings"];
-	SPFRecord = $pkg.SPFRecord = $newType(0, $kindStruct, "spflib.SPFRecord", true, "github.com/StackExchange/dnscontrol/v4/pkg/spflib", true, function(Parts_) {
+	SPFRecord = $pkg.SPFRecord = $newType(0, $kindStruct, "spflib.SPFRecord", true, "github.com/DNSControl/dnscontrol/v4/pkg/spflib", true, function(Parts_) {
 		this.$val = this;
 		if (arguments.length === 0) {
-			this.Parts = sliceType$3.nil;
+			this.Parts = sliceType$4.nil;
 			return;
 		}
 		this.Parts = Parts_;
 	});
-	SPFPart = $pkg.SPFPart = $newType(0, $kindStruct, "spflib.SPFPart", true, "github.com/StackExchange/dnscontrol/v4/pkg/spflib", true, function(Text_, IsLookup_, IncludeRecord_, IncludeDomain_) {
+	SPFPart = $pkg.SPFPart = $newType(0, $kindStruct, "spflib.SPFPart", true, "github.com/DNSControl/dnscontrol/v4/pkg/spflib", true, function(Text_, IsLookup_, IncludeRecord_, IncludeDomain_) {
 		this.$val = this;
 		if (arguments.length === 0) {
 			this.Text = "";
@@ -56500,13 +56466,12 @@ $packages["github.com/StackExchange/dnscontrol/v4/pkg/spflib"] = (function() {
 		this.IncludeDomain = IncludeDomain_;
 	});
 	sliceType = $sliceType($emptyInterface);
-	sliceType$1 = $sliceType($String);
+	sliceType$2 = $sliceType($String);
 	ptrType$2 = $ptrType(SPFRecord);
 	ptrType$3 = $ptrType(SPFPart);
-	sliceType$3 = $sliceType(ptrType$3);
-	sliceType$4 = $sliceType($Uint8);
+	sliceType$4 = $sliceType(ptrType$3);
 	sliceType$5 = $sliceType($Int32);
-	mapType$1 = $mapType($String, sliceType$1);
+	mapType$1 = $mapType($String, sliceType$2);
 	SPFRecord.ptr.prototype.Lookups = function() {
 		var _i, _ref, count, p, s;
 		s = this;
@@ -56528,179 +56493,123 @@ $packages["github.com/StackExchange/dnscontrol/v4/pkg/spflib"] = (function() {
 	};
 	SPFRecord.prototype.Lookups = function() { return this.$val.Lookups(); };
 	Parse = function(text, dnsres) {
-		var $24r, $24r$1, $24r$2, $24r$3, _entry, _i, _r, _r$1, _r$2, _r$3, _r$4, _r$5, _ref, _tuple, _tuple$1, dnsres, err, p, part, parts, pi, rec, subRecord, text, $s, $r;
-		/* */ $s = 0; var $f, $c = false; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; $24r = $f.$24r; $24r$1 = $f.$24r$1; $24r$2 = $f.$24r$2; $24r$3 = $f.$24r$3; _entry = $f._entry; _i = $f._i; _r = $f._r; _r$1 = $f._r$1; _r$2 = $f._r$2; _r$3 = $f._r$3; _r$4 = $f._r$4; _r$5 = $f._r$5; _ref = $f._ref; _tuple = $f._tuple; _tuple$1 = $f._tuple$1; dnsres = $f.dnsres; err = $f.err; p = $f.p; part = $f.part; parts = $f.parts; pi = $f.pi; rec = $f.rec; subRecord = $f.subRecord; text = $f.text; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
-		/* */ if (!strings.HasPrefix(text, "v=spf1 ")) { $s = 1; continue; }
-		/* */ $s = 2; continue;
-		/* if (!strings.HasPrefix(text, "v=spf1 ")) { */ case 1:
-			_r = fmt.Errorf("not an SPF record", new sliceType([])); /* */ $s = 3; case 3: if($c) { $c = false; _r = _r.$blk(); } if (_r && _r.$blk !== undefined) { break s; }
-			$24r = [ptrType$2.nil, _r];
-			$s = 4; case 4: return $24r;
-		/* } */ case 2:
+		var $24r, $24r$1, $24r$2, _entry, _i, _r, _r$1, _r$2, _r$3, _r$4, _ref, _tuple, _tuple$1, dnsres, err, p, part, parts, pi, rec, subRecord, text, $s, $r;
+		/* */ $s = 0; var $f, $c = false; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; $24r = $f.$24r; $24r$1 = $f.$24r$1; $24r$2 = $f.$24r$2; _entry = $f._entry; _i = $f._i; _r = $f._r; _r$1 = $f._r$1; _r$2 = $f._r$2; _r$3 = $f._r$3; _r$4 = $f._r$4; _ref = $f._ref; _tuple = $f._tuple; _tuple$1 = $f._tuple$1; dnsres = $f.dnsres; err = $f.err; p = $f.p; part = $f.part; parts = $f.parts; pi = $f.pi; rec = $f.rec; subRecord = $f.subRecord; text = $f.text; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
+		if (!strings.HasPrefix(text, "v=spf1 ")) {
+			$s = -1; return [ptrType$2.nil, errors.New("not an SPF record")];
+		}
 		parts = strings.Split(text, " ");
-		rec = new SPFRecord.ptr(sliceType$3.nil);
+		rec = new SPFRecord.ptr(sliceType$4.nil);
 		_ref = $subslice(parts, 1);
 		_i = 0;
-		/* while (true) { */ case 5:
-			/* if (!(_i < _ref.$length)) { break; } */ if(!(_i < _ref.$length)) { $s = 6; continue; }
+		/* while (true) { */ case 1:
+			/* if (!(_i < _ref.$length)) { break; } */ if(!(_i < _ref.$length)) { $s = 2; continue; }
 			pi = _i;
 			part = ((_i < 0 || _i >= _ref.$length) ? ($throwRuntimeError("index out of range"), undefined) : _ref.$array[_ref.$offset + _i]);
 			if (part === "") {
 				_i++;
-				/* continue; */ $s = 5; continue;
+				/* continue; */ $s = 1; continue;
 			}
 			p = new SPFPart.ptr(part, false, ptrType$2.nil, "");
 			if ((_entry = qualifiers[$Uint8.keyFor(part.charCodeAt(0))], _entry !== undefined ? _entry.v : false)) {
 				part = $substring(part, 1);
 			}
 			rec.Parts = $append(rec.Parts, p);
-			/* */ if (part === "all") { $s = 7; continue; }
-			/* */ if (strings.HasPrefix(part, "a") || strings.HasPrefix(part, "mx")) { $s = 8; continue; }
-			/* */ if (strings.HasPrefix(part, "ip4:") || strings.HasPrefix(part, "ip6:")) { $s = 9; continue; }
-			/* */ if (strings.HasPrefix(part, "include:") || strings.HasPrefix(part, "redirect=")) { $s = 10; continue; }
-			/* */ if (strings.HasPrefix(part, "exists:") || strings.HasPrefix(part, "ptr:")) { $s = 11; continue; }
-			/* */ $s = 12; continue;
-			/* if (part === "all") { */ case 7:
-				/* break; */ $s = 6; continue;
-				$s = 13; continue;
-			/* } else if (strings.HasPrefix(part, "a") || strings.HasPrefix(part, "mx")) { */ case 8:
+			/* */ if (part === "all") { $s = 3; continue; }
+			/* */ if (strings.HasPrefix(part, "a") || strings.HasPrefix(part, "mx")) { $s = 4; continue; }
+			/* */ if (strings.HasPrefix(part, "ip4:") || strings.HasPrefix(part, "ip6:")) { $s = 5; continue; }
+			/* */ if (strings.HasPrefix(part, "include:") || strings.HasPrefix(part, "redirect=")) { $s = 6; continue; }
+			/* */ if (strings.HasPrefix(part, "exists:") || strings.HasPrefix(part, "ptr:")) { $s = 7; continue; }
+			/* */ $s = 8; continue;
+			/* if (part === "all") { */ case 3:
+				/* break; */ $s = 2; continue;
+				$s = 9; continue;
+			/* } else if (strings.HasPrefix(part, "a") || strings.HasPrefix(part, "mx")) { */ case 4:
 				p.IsLookup = true;
-				$s = 13; continue;
-			/* } else if (strings.HasPrefix(part, "ip4:") || strings.HasPrefix(part, "ip6:")) { */ case 9:
+				$s = 9; continue;
+			/* } else if (strings.HasPrefix(part, "ip4:") || strings.HasPrefix(part, "ip6:")) { */ case 5:
 				_i++;
-				/* continue; */ $s = 5; continue;
-				$s = 13; continue;
-			/* } else if (strings.HasPrefix(part, "include:") || strings.HasPrefix(part, "redirect=")) { */ case 10:
-				/* */ if (strings.HasPrefix(part, "redirect=")) { $s = 14; continue; }
-				/* */ $s = 15; continue;
-				/* if (strings.HasPrefix(part, "redirect=")) { */ case 14:
-					/* */ if (!((((pi + 2 >> 0)) === parts.$length))) { $s = 17; continue; }
-					/* */ $s = 18; continue;
-					/* if (!((((pi + 2 >> 0)) === parts.$length))) { */ case 17:
-						_r$1 = fmt.Errorf("%s must be last item", new sliceType([new $String(part)])); /* */ $s = 19; case 19: if($c) { $c = false; _r$1 = _r$1.$blk(); } if (_r$1 && _r$1.$blk !== undefined) { break s; }
-						$24r$1 = [ptrType$2.nil, _r$1];
-						$s = 20; case 20: return $24r$1;
-					/* } */ case 18:
+				/* continue; */ $s = 1; continue;
+				$s = 9; continue;
+			/* } else if (strings.HasPrefix(part, "include:") || strings.HasPrefix(part, "redirect=")) { */ case 6:
+				/* */ if (strings.HasPrefix(part, "redirect=")) { $s = 10; continue; }
+				/* */ $s = 11; continue;
+				/* if (strings.HasPrefix(part, "redirect=")) { */ case 10:
+					/* */ if (!((((pi + 2 >> 0)) === parts.$length))) { $s = 13; continue; }
+					/* */ $s = 14; continue;
+					/* if (!((((pi + 2 >> 0)) === parts.$length))) { */ case 13:
+						_r = fmt.Errorf("%s must be last item", new sliceType([new $String(part)])); /* */ $s = 15; case 15: if($c) { $c = false; _r = _r.$blk(); } if (_r && _r.$blk !== undefined) { break s; }
+						$24r = [ptrType$2.nil, _r];
+						$s = 16; case 16: return $24r;
+					/* } */ case 14:
 					p.IncludeDomain = strings.TrimPrefix(part, "redirect=");
-					$s = 16; continue;
-				/* } else { */ case 15:
+					$s = 12; continue;
+				/* } else { */ case 11:
 					p.IncludeDomain = strings.TrimPrefix(part, "include:");
-				/* } */ case 16:
+				/* } */ case 12:
 				p.IsLookup = true;
-				/* */ if (!($interfaceIsEqual(dnsres, $ifaceNil))) { $s = 21; continue; }
-				/* */ $s = 22; continue;
-				/* if (!($interfaceIsEqual(dnsres, $ifaceNil))) { */ case 21:
-					_r$2 = dnsres.GetSPF(p.IncludeDomain); /* */ $s = 23; case 23: if($c) { $c = false; _r$2 = _r$2.$blk(); } if (_r$2 && _r$2.$blk !== undefined) { break s; }
-					_tuple = _r$2;
+				/* */ if (!($interfaceIsEqual(dnsres, $ifaceNil))) { $s = 17; continue; }
+				/* */ $s = 18; continue;
+				/* if (!($interfaceIsEqual(dnsres, $ifaceNil))) { */ case 17:
+					_r$1 = dnsres.GetSPF(p.IncludeDomain); /* */ $s = 19; case 19: if($c) { $c = false; _r$1 = _r$1.$blk(); } if (_r$1 && _r$1.$blk !== undefined) { break s; }
+					_tuple = _r$1;
 					subRecord = _tuple[0];
 					err = _tuple[1];
 					if (!($interfaceIsEqual(err, $ifaceNil))) {
 						$s = -1; return [ptrType$2.nil, err];
 					}
-					_r$3 = Parse(subRecord, dnsres); /* */ $s = 24; case 24: if($c) { $c = false; _r$3 = _r$3.$blk(); } if (_r$3 && _r$3.$blk !== undefined) { break s; }
-					_tuple$1 = _r$3;
+					_r$2 = Parse(subRecord, dnsres); /* */ $s = 20; case 20: if($c) { $c = false; _r$2 = _r$2.$blk(); } if (_r$2 && _r$2.$blk !== undefined) { break s; }
+					_tuple$1 = _r$2;
 					p.IncludeRecord = _tuple$1[0];
 					err = _tuple$1[1];
-					/* */ if (!($interfaceIsEqual(err, $ifaceNil))) { $s = 25; continue; }
-					/* */ $s = 26; continue;
-					/* if (!($interfaceIsEqual(err, $ifaceNil))) { */ case 25:
-						_r$4 = fmt.Errorf("in included SPF: %s", new sliceType([err])); /* */ $s = 27; case 27: if($c) { $c = false; _r$4 = _r$4.$blk(); } if (_r$4 && _r$4.$blk !== undefined) { break s; }
-						$24r$2 = [ptrType$2.nil, _r$4];
-						$s = 28; case 28: return $24r$2;
-					/* } */ case 26:
-				/* } */ case 22:
-				$s = 13; continue;
-			/* } else if (strings.HasPrefix(part, "exists:") || strings.HasPrefix(part, "ptr:")) { */ case 11:
+					/* */ if (!($interfaceIsEqual(err, $ifaceNil))) { $s = 21; continue; }
+					/* */ $s = 22; continue;
+					/* if (!($interfaceIsEqual(err, $ifaceNil))) { */ case 21:
+						_r$3 = fmt.Errorf("in included SPF: %w", new sliceType([err])); /* */ $s = 23; case 23: if($c) { $c = false; _r$3 = _r$3.$blk(); } if (_r$3 && _r$3.$blk !== undefined) { break s; }
+						$24r$1 = [ptrType$2.nil, _r$3];
+						$s = 24; case 24: return $24r$1;
+					/* } */ case 22:
+				/* } */ case 18:
+				$s = 9; continue;
+			/* } else if (strings.HasPrefix(part, "exists:") || strings.HasPrefix(part, "ptr:")) { */ case 7:
 				p.IsLookup = true;
-				$s = 13; continue;
-			/* } else { */ case 12:
-				_r$5 = fmt.Errorf("unsupported SPF part %s", new sliceType([new $String(part)])); /* */ $s = 29; case 29: if($c) { $c = false; _r$5 = _r$5.$blk(); } if (_r$5 && _r$5.$blk !== undefined) { break s; }
-				$24r$3 = [ptrType$2.nil, _r$5];
-				$s = 30; case 30: return $24r$3;
-			/* } */ case 13:
+				$s = 9; continue;
+			/* } else { */ case 8:
+				_r$4 = fmt.Errorf("unsupported SPF part %s", new sliceType([new $String(part)])); /* */ $s = 25; case 25: if($c) { $c = false; _r$4 = _r$4.$blk(); } if (_r$4 && _r$4.$blk !== undefined) { break s; }
+				$24r$2 = [ptrType$2.nil, _r$4];
+				$s = 26; case 26: return $24r$2;
+			/* } */ case 9:
 			_i++;
-		$s = 5; continue;
-		case 6:
+		$s = 1; continue;
+		case 2:
 		$s = -1; return [rec, $ifaceNil];
-		/* */ } return; } if ($f === undefined) { $f = { $blk: Parse }; } $f.$24r = $24r; $f.$24r$1 = $24r$1; $f.$24r$2 = $24r$2; $f.$24r$3 = $24r$3; $f._entry = _entry; $f._i = _i; $f._r = _r; $f._r$1 = _r$1; $f._r$2 = _r$2; $f._r$3 = _r$3; $f._r$4 = _r$4; $f._r$5 = _r$5; $f._ref = _ref; $f._tuple = _tuple; $f._tuple$1 = _tuple$1; $f.dnsres = dnsres; $f.err = err; $f.p = p; $f.part = part; $f.parts = parts; $f.pi = pi; $f.rec = rec; $f.subRecord = subRecord; $f.text = text; $f.$s = $s; $f.$r = $r; return $f;
+		/* */ } return; } if ($f === undefined) { $f = { $blk: Parse }; } $f.$24r = $24r; $f.$24r$1 = $24r$1; $f.$24r$2 = $24r$2; $f._entry = _entry; $f._i = _i; $f._r = _r; $f._r$1 = _r$1; $f._r$2 = _r$2; $f._r$3 = _r$3; $f._r$4 = _r$4; $f._ref = _ref; $f._tuple = _tuple; $f._tuple$1 = _tuple$1; $f.dnsres = dnsres; $f.err = err; $f.p = p; $f.part = part; $f.parts = parts; $f.pi = pi; $f.rec = rec; $f.subRecord = subRecord; $f.text = text; $f.$s = $s; $f.$r = $r; return $f;
 	};
 	$pkg.Parse = Parse;
-	dump = function(rec, indent, w) {
-		var _i, _i$1, _r, _r$1, _r$2, _r$3, _r$4, _ref, _ref$1, indent, p, p$1, rec, w, $s, $r;
-		/* */ $s = 0; var $f, $c = false; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; _i = $f._i; _i$1 = $f._i$1; _r = $f._r; _r$1 = $f._r$1; _r$2 = $f._r$2; _r$3 = $f._r$3; _r$4 = $f._r$4; _ref = $f._ref; _ref$1 = $f._ref$1; indent = $f.indent; p = $f.p; p$1 = $f.p$1; rec = $f.rec; w = $f.w; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
-		_r = fmt.Fprintf(w, "%sTotal Lookups: %d\n", new sliceType([new $String(indent), new $Int(rec.Lookups())])); /* */ $s = 1; case 1: if($c) { $c = false; _r = _r.$blk(); } if (_r && _r.$blk !== undefined) { break s; }
-		_r;
-		_r$1 = fmt.Fprint(w, new sliceType([new $String(indent + "v=spf1")])); /* */ $s = 2; case 2: if($c) { $c = false; _r$1 = _r$1.$blk(); } if (_r$1 && _r$1.$blk !== undefined) { break s; }
-		_r$1;
-		_ref = rec.Parts;
-		_i = 0;
-		/* while (true) { */ case 3:
-			/* if (!(_i < _ref.$length)) { break; } */ if(!(_i < _ref.$length)) { $s = 4; continue; }
-			p = ((_i < 0 || _i >= _ref.$length) ? ($throwRuntimeError("index out of range"), undefined) : _ref.$array[_ref.$offset + _i]);
-			_r$2 = fmt.Fprint(w, new sliceType([new $String(" " + p.Text)])); /* */ $s = 5; case 5: if($c) { $c = false; _r$2 = _r$2.$blk(); } if (_r$2 && _r$2.$blk !== undefined) { break s; }
-			_r$2;
-			_i++;
-		$s = 3; continue;
-		case 4:
-		_r$3 = fmt.Fprintln(w, new sliceType([])); /* */ $s = 6; case 6: if($c) { $c = false; _r$3 = _r$3.$blk(); } if (_r$3 && _r$3.$blk !== undefined) { break s; }
-		_r$3;
-		indent = indent + ("\t");
-		_ref$1 = rec.Parts;
-		_i$1 = 0;
-		/* while (true) { */ case 7:
-			/* if (!(_i$1 < _ref$1.$length)) { break; } */ if(!(_i$1 < _ref$1.$length)) { $s = 8; continue; }
-			p$1 = ((_i$1 < 0 || _i$1 >= _ref$1.$length) ? ($throwRuntimeError("index out of range"), undefined) : _ref$1.$array[_ref$1.$offset + _i$1]);
-			/* */ if (p$1.IsLookup) { $s = 9; continue; }
-			/* */ $s = 10; continue;
-			/* if (p$1.IsLookup) { */ case 9:
-				_r$4 = fmt.Fprintln(w, new sliceType([new $String(indent + p$1.Text)])); /* */ $s = 11; case 11: if($c) { $c = false; _r$4 = _r$4.$blk(); } if (_r$4 && _r$4.$blk !== undefined) { break s; }
-				_r$4;
-			/* } */ case 10:
-			/* */ if (!(p$1.IncludeRecord === ptrType$2.nil)) { $s = 12; continue; }
-			/* */ $s = 13; continue;
-			/* if (!(p$1.IncludeRecord === ptrType$2.nil)) { */ case 12:
-				$r = dump(p$1.IncludeRecord, indent + "\t", w); /* */ $s = 14; case 14: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-			/* } */ case 13:
-			_i$1++;
-		$s = 7; continue;
-		case 8:
-		$s = -1; return;
-		/* */ } return; } if ($f === undefined) { $f = { $blk: dump }; } $f._i = _i; $f._i$1 = _i$1; $f._r = _r; $f._r$1 = _r$1; $f._r$2 = _r$2; $f._r$3 = _r$3; $f._r$4 = _r$4; $f._ref = _ref; $f._ref$1 = _ref$1; $f.indent = indent; $f.p = p; $f.p$1 = p$1; $f.rec = rec; $f.w = w; $f.$s = $s; $f.$r = $r; return $f;
-	};
-	SPFRecord.ptr.prototype.Print = function() {
-		var s, w, $s, $r;
-		/* */ $s = 0; var $f, $c = false; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; s = $f.s; w = $f.w; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
-		s = this;
-		w = new bytes.Buffer.ptr(sliceType$4.nil, 0, 0);
-		$r = dump(s, "", w); /* */ $s = 1; case 1: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$s = -1; return w.String();
-		/* */ } return; } if ($f === undefined) { $f = { $blk: SPFRecord.ptr.prototype.Print }; } $f.s = s; $f.w = w; $f.$s = $s; $f.$r = $r; return $f;
-	};
-	SPFRecord.prototype.Print = function() { return this.$val.Print(); };
 	Chunks = function(s, chunkSize) {
-		var _i, _ref, _rune, chunk, chunkSize, chunks, len, r, s;
+		var _i, _ref, _rune, chunk, chunkSize, chunks, lngth, r, s;
 		if (chunkSize >= s.length) {
-			return new sliceType$1([s]);
+			return new sliceType$2([s]);
 		}
-		chunks = sliceType$1.nil;
+		chunks = sliceType$2.nil;
 		chunk = $makeSlice(sliceType$5, chunkSize);
-		len = 0;
+		lngth = 0;
 		_ref = s;
 		_i = 0;
 		while (true) {
 			if (!(_i < _ref.length)) { break; }
 			_rune = $decodeRune(_ref, _i);
 			r = _rune[0];
-			((len < 0 || len >= chunk.$length) ? ($throwRuntimeError("index out of range"), undefined) : chunk.$array[chunk.$offset + len] = r);
-			len = len + (1) >> 0;
-			if (len === chunkSize) {
+			((lngth < 0 || lngth >= chunk.$length) ? ($throwRuntimeError("index out of range"), undefined) : chunk.$array[chunk.$offset + lngth] = r);
+			lngth = lngth + (1) >> 0;
+			if (lngth === chunkSize) {
 				chunks = $append(chunks, ($runesToString(chunk)));
-				len = 0;
+				lngth = 0;
 			}
 			_i += _rune[1];
 		}
-		if (len > 0) {
-			chunks = $append(chunks, ($runesToString($subslice(chunk, 0, len))));
+		if (lngth > 0) {
+			chunks = $append(chunks, ($runesToString($subslice(chunk, 0, lngth))));
 		}
 		return chunks;
 	};
@@ -56745,7 +56654,7 @@ $packages["github.com/StackExchange/dnscontrol/v4/pkg/spflib"] = (function() {
 		lastPart = (x = s.Parts, x$1 = s.Parts.$length - 1 >> 0, ((x$1 < 0 || x$1 >= x.$length) ? ($throwRuntimeError("index out of range"), undefined) : x.$array[x.$offset + x$1]));
 		tail = " include:" + nextFQDN + " " + lastPart.Text;
 		thisText = "v=spf1";
-		newRec = new SPFRecord.ptr(sliceType$3.nil);
+		newRec = new SPFRecord.ptr(sliceType$4.nil);
 		over = false;
 		addedCount = 0;
 		_ref = s.Parts;
@@ -56760,7 +56669,7 @@ $packages["github.com/StackExchange/dnscontrol/v4/pkg/spflib"] = (function() {
 				} else {
 					over = true;
 					if (addedCount === 0) {
-						_key$1 = thisfqdn; (m || $throwRuntimeError("assignment to entry in nil map"))[$String.keyFor(_key$1)] = { k: _key$1, v: new sliceType$1([base]) };
+						_key$1 = thisfqdn; (m || $throwRuntimeError("assignment to entry in nil map"))[$String.keyFor(_key$1)] = { k: _key$1, v: new sliceType$2([base]) };
 						$s = -1; return;
 					}
 				}
@@ -56779,7 +56688,7 @@ $packages["github.com/StackExchange/dnscontrol/v4/pkg/spflib"] = (function() {
 	SPFRecord.ptr.prototype.Flatten = function(spec) {
 		var _i, _ref, flattenedChild, newRec, p, s, spec;
 		s = this;
-		newRec = new SPFRecord.ptr(sliceType$3.nil);
+		newRec = new SPFRecord.ptr(sliceType$4.nil);
 		_ref = s.Parts;
 		_i = 0;
 		while (true) {
@@ -56815,20 +56724,18 @@ $packages["github.com/StackExchange/dnscontrol/v4/pkg/spflib"] = (function() {
 		}
 		return false;
 	};
-	ptrType$2.methods = [{prop: "Lookups", name: "Lookups", pkg: "", typ: $funcType([], [$Int], false)}, {prop: "Print", name: "Print", pkg: "", typ: $funcType([], [$String], false)}, {prop: "TXT", name: "TXT", pkg: "", typ: $funcType([], [$String], false)}, {prop: "TXTSplit", name: "TXTSplit", pkg: "", typ: $funcType([$String, $Int, $Int], [mapType$1], false)}, {prop: "split", name: "split", pkg: "github.com/StackExchange/dnscontrol/v4/pkg/spflib", typ: $funcType([$String, $String, $Int, mapType$1, $Int, $Int], [], false)}, {prop: "Flatten", name: "Flatten", pkg: "", typ: $funcType([$String], [ptrType$2], false)}];
-	SPFRecord.init("", [{prop: "Parts", name: "Parts", embedded: false, exported: true, typ: sliceType$3, tag: ""}]);
+	ptrType$2.methods = [{prop: "Lookups", name: "Lookups", pkg: "", typ: $funcType([], [$Int], false)}, {prop: "TXT", name: "TXT", pkg: "", typ: $funcType([], [$String], false)}, {prop: "TXTSplit", name: "TXTSplit", pkg: "", typ: $funcType([$String, $Int, $Int], [mapType$1], false)}, {prop: "split", name: "split", pkg: "github.com/DNSControl/dnscontrol/v4/pkg/spflib", typ: $funcType([$String, $String, $Int, mapType$1, $Int, $Int], [], false)}, {prop: "Flatten", name: "Flatten", pkg: "", typ: $funcType([$String], [ptrType$2], false)}];
+	SPFRecord.init("", [{prop: "Parts", name: "Parts", embedded: false, exported: true, typ: sliceType$4, tag: ""}]);
 	SPFPart.init("", [{prop: "Text", name: "Text", embedded: false, exported: true, typ: $String, tag: ""}, {prop: "IsLookup", name: "IsLookup", embedded: false, exported: true, typ: $Bool, tag: ""}, {prop: "IncludeRecord", name: "IncludeRecord", embedded: false, exported: true, typ: ptrType$2, tag: ""}, {prop: "IncludeDomain", name: "IncludeDomain", embedded: false, exported: true, typ: $String, tag: ""}]);
 	$init = function() {
 		$pkg.$init = function() {};
 		/* */ var $f, $c = false, $s = 0, $r; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
-		$r = bytes.$init(); /* */ $s = 1; case 1: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$r = json.$init(); /* */ $s = 2; case 2: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
+		$r = json.$init(); /* */ $s = 1; case 1: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
+		$r = errors.$init(); /* */ $s = 2; case 2: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
 		$r = fmt.$init(); /* */ $s = 3; case 3: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$r = io.$init(); /* */ $s = 4; case 4: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$r = ioutil.$init(); /* */ $s = 5; case 5: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$r = net.$init(); /* */ $s = 6; case 6: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$r = os.$init(); /* */ $s = 7; case 7: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
-		$r = strings.$init(); /* */ $s = 8; case 8: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
+		$r = net.$init(); /* */ $s = 4; case 4: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
+		$r = os.$init(); /* */ $s = 5; case 5: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
+		$r = strings.$init(); /* */ $s = 6; case 6: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
 		qualifiers = $makeMap($Uint8.keyFor, [{ k: 63, v: true }, { k: 126, v: true }, { k: 45, v: true }, { k: 43, v: true }]);
 		/* */ } return; } if ($f === undefined) { $f = { $blk: $init }; } $f.$s = $s; $f.$r = $r; return $f;
 	};
@@ -73681,8 +73588,8 @@ $packages["crypto/elliptic"] = (function() {
 		p384 = ptrType.nil;
 		p256One = $toNativeArray($kindUint32, [2, 0, 0, 268433408, 536870911, 268435455, 532676607, 33554431, 0]);
 		p256Precomputed = $toNativeArray($kindUint32, [290596984, 242421057, 230031737, 78635775, 310917853, 212721032, 295599836, 222981803, 51514350, 489335829, 254096764, 434396381, 96936400, 429049253, 170095751, 22329889, 21696699, 11419619, 222406006, 153287761, 37001551, 101408979, 373655214, 216620824, 535072883, 66729676, 99339564, 188755759, 22835391, 358715996, 94529284, 229187216, 215751807, 513877062, 236641822, 248061730, 40859512, 90604670, 168553630, 37024851, 439480858, 226879324, 90992905, 170293760, 190300240, 10025815, 178796492, 101451666, 217734681, 102476702, 92922779, 10691781, 131522279, 43478603, 532943434, 176956491, 484992866, 215358590, 405915872, 123172065, 496412073, 138651209, 205172986, 115533781, 124205610, 395011560, 67124891, 438243778, 7870186, 258227729, 93078495, 255999938, 425934842, 143782578, 305931036, 74112396, 88539357, 94251799, 388871183, 138291069, 185456137, 265411090, 56389202, 435020300, 219799744, 159190848, 184638233, 71951349, 14748830, 54179201, 90859435, 91714381, 501071970, 207073549, 21607325, 40541819, 204857247, 75982029, 124632266, 212120422, 244515755, 443842791, 92184193, 504621904, 256273651, 116484896, 79311219, 202804275, 365646905, 111382033, 121002173, 187258447, 66509915, 5486974, 321045696, 106813439, 60941558, 350622890, 153379607, 466107082, 182025965, 221826634, 260222982, 54653047, 174775689, 76106445, 166814421, 260313327, 455502422, 14152227, 65063826, 238663282, 111317018, 110789974, 518080, 163043539, 3185280, 449863551, 204453341, 213898269, 164542008, 273777244, 228642651, 135456897, 116610665, 111505196, 502845828, 3430432, 343397495, 23354801, 199756881, 203603518, 238413402, 451639968, 204952341, 258456729, 134076345, 421511614, 6366045, 46236905, 29730873, 75111974, 192722006, 155066973, 351520493, 214702793, 402536435, 77105545, 445695234, 49487938, 169309851, 184388732, 135863406, 500019767, 23199936, 276509345, 107743451, 282094082, 261267, 90308643, 376580903, 109796441, 40959228, 262999756, 241033666, 246105707, 50090300, 67630940, 195735859, 158359529, 193509607, 120899987, 31588239, 420833648, 180162304, 273063591, 53033664, 215783594, 30950397, 236240872, 364806751, 9130514, 246676327, 136101161, 197537558, 45546695, 257576489, 324406118, 202074818, 85649040, 222421617, 255761364, 30870187, 16949106, 121510965, 250023868, 181935023, 166511770, 141325342, 266780208, 392647399, 2348054, 528735877, 41804168, 107966648, 404542751, 158035532, 412033845, 173930329, 396852918, 267062899, 357230868, 49540177, 58878809, 194113917, 29829449, 325238538, 237239775, 173413552, 1015183, 495713, 136567250, 136396601, 287878667, 218717445, 193315010, 32289519, 38657156, 238414081, 406919754, 257809469, 58222217, 86139112, 95303012, 88256781, 148453957, 429206180, 160877633, 273786665, 79574169, 86713258, 278868094, 116766395, 528802279, 125439226, 281337663, 39453418, 184844341, 238149222, 208587427, 42902325, 42491940, 326299680, 16080181, 367290444, 254451223, 441087273, 213368497, 187332769, 447880991, 104209615, 113842077, 185816615, 308787572, 71338925, 482342488, 238904593, 13096815, 30177897, 243196699, 89107279, 2855247, 450001456, 215177118, 206574156, 84781712, 11616114, 184986229, 118447302, 373941674, 139088658, 53019708, 68960273, 332604433, 184854584, 225840429, 387167538, 195693571, 138420907, 113046977, 49566585, 25878640, 415883550, 34327194, 107956587, 65991316, 108331218, 226451772, 2997227, 192155704, 235148095, 360879757, 199853559, 28097562, 443192223, 54415606, 224812756, 189496278, 509228953, 112408647, 402282239, 106887472, 2219082, 45315673, 72416791, 188054373, 234221484, 356088815, 164846207, 288014687, 103081518, 177253935, 276753618, 32938942, 125660110, 91493268, 331777276, 156289296, 119886379, 231179651, 68086459, 534655626, 198581654, 220775303, 166165897, 307563584, 123325309, 57143092, 182626656, 152800220, 154428073, 16017903, 187603695, 221030257, 89005890, 8038985, 103901883, 37829774, 88235001, 468532794, 254222964, 526283558, 104949015, 245526642, 164552359, 7239219, 130619730, 226520526, 149071841, 239214106, 68733409, 31180944, 456743990, 169722229, 499445619, 144011060, 239820018, 453851672, 51989046, 113402911, 239342156, 170872490, 176956858, 261258967, 103265812, 121052362, 195126932, 68664323, 130066403, 163798041, 292069893, 146190349, 283373001, 163683314, 92807721, 455819618, 173862682, 356737579, 163398462, 56942669, 122161042, 97105331, 243662629, 67694423, 404017060, 18986011, 220498447, 61887010, 60535146, 209032813, 168001811, 172627817, 18857068, 152560910, 250363304, 379416236, 17569433, 172056915, 259148050, 365781175, 78428889, 99599866, 253038295, 1190737, 285520906, 213382210, 263923967, 111956938, 425804492, 129961897, 9795153, 81850901, 248789496, 66350037, 95217711, 285808310, 7188600, 268270935, 254724780, 212364780, 366392026, 157674697, 479376578, 2045969, 481329397, 47757316, 433176877, 253803846, 26550183, 171333315, 86221861, 265094802, 222617032, 320802651, 184028746, 215612532, 161199640, 47944780, 174534800, 29495521, 395087139, 21447555, 280523837, 159753563, 48711545, 5726520, 156793127, 321990906, 199251222, 167040537, 196486512, 161400209, 227830014, 487028781, 264711691, 117551768, 409175611, 140072120, 303696950, 166199007, 258257961, 163174174, 350418392, 260410682, 155381416, 228964197, 116240383, 178067660, 208004282, 477396614, 240036117, 427939745, 137975385, 86955234, 142427063, 58372379, 433230542, 260916882, 415434047, 143015443, 79775424, 113112410, 82068861, 370483849, 180850370, 442090914, 33721239, 119287041, 43353375, 67400827, 142103949, 131242660, 332936223, 148565975, 329029421, 112716405, 222993886, 267477976, 136140247, 173797224, 192622808, 199703919, 178815297, 228027521, 132622796, 415151985, 225918141, 334829905, 164675959, 29661816]);
-		p224P = $toNativeArray($kindUint32, [1, 0, 0, 268431360, 268435455, 268435455, 268435455, 268435455]);
 		p256Zero31 = $toNativeArray($kindUint32, [2147483640, 1073741820, 2147483644, 1073750012, 2147483644, 1073741820, 2164260860, 939524092, 2147483644]);
+		p224P = $toNativeArray($kindUint32, [1, 0, 0, 268431360, 268435455, 268435455, 268435455, 268435455]);
 		p224ZeroModP31 = new sliceType([2147483656, 2147483640, 2147483640, 2147450872, 2147483640, 2147483640, 2147483640, 2147483640]);
 		p224ZeroModP63 = $toNativeArray($kindUint64, [new $Uint64(2147483656, 0), new $Uint64(2147483640, 0), new $Uint64(2147483640, 0), new $Uint64(2147483640, 0), new $Uint64(2147483639, 4294443008), new $Uint64(2147483640, 0), new $Uint64(2147483640, 0), new $Uint64(2147483640, 0)]);
 		mask = new sliceType$1([255, 1, 3, 7, 15, 31, 63, 127]);
@@ -92720,7 +92627,7 @@ $packages["crypto/tls"] = (function() {
 			this.hello = ptrType$30.nil;
 			this.sentDummyCCS = false;
 			this.usingPSK = false;
-			this.suite = ptrType$2.nil;
+			this.suite = ptrType$3.nil;
 			this.cert = ptrType$31.nil;
 			this.sigAlg = 0;
 			this.earlySecret = sliceType$5.nil;
@@ -92756,7 +92663,7 @@ $packages["crypto/tls"] = (function() {
 			this.ctx = $ifaceNil;
 			this.clientHello = ptrType$26.nil;
 			this.hello = ptrType$30.nil;
-			this.suite = ptrType$3.nil;
+			this.suite = ptrType$2.nil;
 			this.ecdheOk = false;
 			this.ecSignOk = false;
 			this.rsaDecryptOk = false;
@@ -93074,7 +92981,7 @@ $packages["crypto/tls"] = (function() {
 			this.certReq = ptrType$39.nil;
 			this.usingPSK = false;
 			this.sentDummyCCS = false;
-			this.suite = ptrType$2.nil;
+			this.suite = ptrType$3.nil;
 			this.transcript = $ifaceNil;
 			this.masterSecret = sliceType$5.nil;
 			this.trafficSecret = sliceType$5.nil;
@@ -93103,7 +93010,7 @@ $packages["crypto/tls"] = (function() {
 			this.ctx = $ifaceNil;
 			this.serverHello = ptrType$30.nil;
 			this.hello = ptrType$26.nil;
-			this.suite = ptrType$3.nil;
+			this.suite = ptrType$2.nil;
 			this.finishedHash = new finishedHash.ptr($ifaceNil, $ifaceNil, $ifaceNil, $ifaceNil, sliceType$5.nil, 0, $throwNilPointerError);
 			this.masterSecret = sliceType$5.nil;
 			this.session = ptrType$37.nil;
@@ -93564,9 +93471,9 @@ $packages["crypto/tls"] = (function() {
 	sliceType$6 = $sliceType($emptyInterface);
 	ptrType$1 = $ptrType(sliceType$5);
 	sliceType$7 = $sliceType(SignatureScheme);
-	ptrType$2 = $ptrType(cipherSuiteTLS13);
+	ptrType$2 = $ptrType(cipherSuite);
 	sliceType$8 = $sliceType(ptrType$2);
-	ptrType$3 = $ptrType(cipherSuite);
+	ptrType$3 = $ptrType(cipherSuiteTLS13);
 	sliceType$9 = $sliceType(ptrType$3);
 	structType = $structType("crypto/tls", [{prop: "scheme", name: "scheme", embedded: false, exported: false, typ: SignatureScheme, tag: ""}, {prop: "minModulusBytes", name: "minModulusBytes", embedded: false, exported: false, typ: $Int, tag: ""}, {prop: "maxVersion", name: "maxVersion", embedded: false, exported: false, typ: $Uint16, tag: ""}]);
 	sliceType$10 = $sliceType(structType);
@@ -95387,14 +95294,14 @@ $packages["crypto/tls"] = (function() {
 			if (!(_i$1 < _ref$1.$length)) { break; }
 			suiteID = ((_i$1 < 0 || _i$1 >= _ref$1.$length) ? ($throwRuntimeError("index out of range"), undefined) : _ref$1.$array[_ref$1.$offset + _i$1]);
 			hs.suite = mutualCipherSuiteTLS13(hs.clientHello.cipherSuites, suiteID);
-			if (!(hs.suite === ptrType$2.nil)) {
+			if (!(hs.suite === ptrType$3.nil)) {
 				break;
 			}
 			_i$1++;
 		}
-		/* */ if (hs.suite === ptrType$2.nil) { $s = 24; continue; }
+		/* */ if (hs.suite === ptrType$3.nil) { $s = 24; continue; }
 		/* */ $s = 25; continue;
-		/* if (hs.suite === ptrType$2.nil) { */ case 24:
+		/* if (hs.suite === ptrType$3.nil) { */ case 24:
 			_r$7 = c.sendAlert(40); /* */ $s = 26; case 26: if($c) { $c = false; _r$7 = _r$7.$blk(); } if (_r$7 && _r$7.$blk !== undefined) { break s; }
 			_r$7;
 			$s = -1; return errors.New("tls: no cipher suite supported by both client and server");
@@ -95560,7 +95467,7 @@ $packages["crypto/tls"] = (function() {
 				/* continue; */ $s = 4; continue;
 			/* } */ case 8:
 			pskSuite = cipherSuiteTLS13ByID(sessionState$1.cipherSuite);
-			if (pskSuite === ptrType$2.nil || !((pskSuite.hash === hs.suite.hash))) {
+			if (pskSuite === ptrType$3.nil || !((pskSuite.hash === hs.suite.hash))) {
 				_i$1++;
 				/* continue; */ $s = 4; continue;
 			}
@@ -96380,12 +96287,12 @@ $packages["crypto/tls"] = (function() {
 		/* */ if (c.vers === 772) { $s = 2; continue; }
 		/* */ $s = 3; continue;
 		/* if (c.vers === 772) { */ case 2:
-			hs = new serverHandshakeStateTLS13.ptr(c, ctx, clientHello, ptrType$30.nil, false, false, ptrType$2.nil, ptrType$31.nil, 0, sliceType$5.nil, sliceType$5.nil, sliceType$5.nil, sliceType$5.nil, sliceType$5.nil, $ifaceNil, sliceType$5.nil);
+			hs = new serverHandshakeStateTLS13.ptr(c, ctx, clientHello, ptrType$30.nil, false, false, ptrType$3.nil, ptrType$31.nil, 0, sliceType$5.nil, sliceType$5.nil, sliceType$5.nil, sliceType$5.nil, sliceType$5.nil, $ifaceNil, sliceType$5.nil);
 			_r$1 = hs.handshake(); /* */ $s = 4; case 4: if($c) { $c = false; _r$1 = _r$1.$blk(); } if (_r$1 && _r$1.$blk !== undefined) { break s; }
 			$24r = _r$1;
 			$s = 5; case 5: return $24r;
 		/* } */ case 3:
-		hs$1 = new serverHandshakeState.ptr(c, ctx, clientHello, ptrType$30.nil, ptrType$3.nil, false, false, false, false, ptrType$32.nil, new finishedHash.ptr($ifaceNil, $ifaceNil, $ifaceNil, $ifaceNil, sliceType$5.nil, 0, $throwNilPointerError), sliceType$5.nil, ptrType$31.nil);
+		hs$1 = new serverHandshakeState.ptr(c, ctx, clientHello, ptrType$30.nil, ptrType$2.nil, false, false, false, false, ptrType$32.nil, new finishedHash.ptr($ifaceNil, $ifaceNil, $ifaceNil, $ifaceNil, sliceType$5.nil, 0, $throwNilPointerError), sliceType$5.nil, ptrType$31.nil);
 		_r$2 = hs$1.handshake(); /* */ $s = 6; case 6: if($c) { $c = false; _r$2 = _r$2.$blk(); } if (_r$2 && _r$2.$blk !== undefined) { break s; }
 		$24r$1 = _r$2;
 		$s = 7; case 7: return $24r$1;
@@ -96806,9 +96713,9 @@ $packages["crypto/tls"] = (function() {
 		}
 		_r = selectCipherSuite(preferenceList, hs.clientHello.cipherSuites, $methodVal(hs, "cipherSuiteOk")); /* */ $s = 1; case 1: if($c) { $c = false; _r = _r.$blk(); } if (_r && _r.$blk !== undefined) { break s; }
 		hs.suite = _r;
-		/* */ if (hs.suite === ptrType$3.nil) { $s = 2; continue; }
+		/* */ if (hs.suite === ptrType$2.nil) { $s = 2; continue; }
 		/* */ $s = 3; continue;
-		/* if (hs.suite === ptrType$3.nil) { */ case 2:
+		/* if (hs.suite === ptrType$2.nil) { */ case 2:
 			_r$1 = c.sendAlert(40); /* */ $s = 4; case 4: if($c) { $c = false; _r$1 = _r$1.$blk(); } if (_r$1 && _r$1.$blk !== undefined) { break s; }
 			_r$1;
 			$s = -1; return errors.New("tls: no cipher suite supported by both client and server");
@@ -96909,7 +96816,7 @@ $packages["crypto/tls"] = (function() {
 		}
 		_r$3 = selectCipherSuite(new sliceType$2([hs.sessionState.cipherSuite]), c.config.cipherSuites(), $methodVal(hs, "cipherSuiteOk")); /* */ $s = 6; case 6: if($c) { $c = false; _r$3 = _r$3.$blk(); } if (_r$3 && _r$3.$blk !== undefined) { break s; }
 		hs.suite = _r$3;
-		if (hs.suite === ptrType$3.nil) {
+		if (hs.suite === ptrType$2.nil) {
 			$s = -1; return false;
 		}
 		sessionHasClientCerts = !((hs.sessionState.certificates.$length === 0));
@@ -99768,16 +99675,16 @@ $packages["crypto/tls"] = (function() {
 			$s = -1; return errors.New("tls: server selected unsupported compression format");
 		/* } */ case 17:
 		selectedSuite = mutualCipherSuiteTLS13(hs.hello.cipherSuites, hs.serverHello.cipherSuite);
-		/* */ if (!(hs.suite === ptrType$2.nil) && !(selectedSuite === hs.suite)) { $s = 19; continue; }
+		/* */ if (!(hs.suite === ptrType$3.nil) && !(selectedSuite === hs.suite)) { $s = 19; continue; }
 		/* */ $s = 20; continue;
-		/* if (!(hs.suite === ptrType$2.nil) && !(selectedSuite === hs.suite)) { */ case 19:
+		/* if (!(hs.suite === ptrType$3.nil) && !(selectedSuite === hs.suite)) { */ case 19:
 			_r$6 = c.sendAlert(47); /* */ $s = 21; case 21: if($c) { $c = false; _r$6 = _r$6.$blk(); } if (_r$6 && _r$6.$blk !== undefined) { break s; }
 			_r$6;
 			$s = -1; return errors.New("tls: server changed cipher suite after a HelloRetryRequest");
 		/* } */ case 20:
-		/* */ if (selectedSuite === ptrType$2.nil) { $s = 22; continue; }
+		/* */ if (selectedSuite === ptrType$3.nil) { $s = 22; continue; }
 		/* */ $s = 23; continue;
-		/* if (selectedSuite === ptrType$2.nil) { */ case 22:
+		/* if (selectedSuite === ptrType$3.nil) { */ case 22:
 			_r$7 = c.sendAlert(47); /* */ $s = 24; case 24: if($c) { $c = false; _r$7 = _r$7.$blk(); } if (_r$7 && _r$7.$blk !== undefined) { break s; }
 			_r$7;
 			$s = -1; return errors.New("tls: server chose an unconfigured cipher suite");
@@ -99896,9 +99803,9 @@ $packages["crypto/tls"] = (function() {
 		/* */ $s = 32; continue;
 		/* if (hs.hello.pskIdentities.$length > 0) { */ case 31:
 			pskSuite = cipherSuiteTLS13ByID(hs.session.cipherSuite);
-			/* */ if (pskSuite === ptrType$2.nil) { $s = 33; continue; }
+			/* */ if (pskSuite === ptrType$3.nil) { $s = 33; continue; }
 			/* */ $s = 34; continue;
-			/* if (pskSuite === ptrType$2.nil) { */ case 33:
+			/* if (pskSuite === ptrType$3.nil) { */ case 33:
 				_r$15 = c.sendAlert(80); /* */ $s = 35; case 35: if($c) { $c = false; _r$15 = _r$15.$blk(); } if (_r$15 && _r$15.$blk !== undefined) { break s; }
 				$24r = _r$15;
 				$s = 36; case 36: return $24r;
@@ -100030,9 +99937,9 @@ $packages["crypto/tls"] = (function() {
 			$s = 23; case 23: return $24r;
 		/* } */ case 21:
 		pskSuite = cipherSuiteTLS13ByID(hs.session.cipherSuite);
-		/* */ if (pskSuite === ptrType$2.nil) { $s = 24; continue; }
+		/* */ if (pskSuite === ptrType$3.nil) { $s = 24; continue; }
 		/* */ $s = 25; continue;
-		/* if (pskSuite === ptrType$2.nil) { */ case 24:
+		/* if (pskSuite === ptrType$3.nil) { */ case 24:
 			_r$8 = c.sendAlert(80); /* */ $s = 26; case 26: if($c) { $c = false; _r$8 = _r$8.$blk(); } if (_r$8 && _r$8.$blk !== undefined) { break s; }
 			$24r$1 = _r$8;
 			$s = 27; case 27: return $24r$1;
@@ -100510,9 +100417,9 @@ $packages["crypto/tls"] = (function() {
 			$s = -1; return errors.New("tls: received a session ticket with invalid lifetime");
 		/* } */ case 5:
 		cipherSuite$1 = cipherSuiteTLS13ByID(c.cipherSuite);
-		/* */ if (cipherSuite$1 === ptrType$2.nil || c.resumptionSecret === sliceType$5.nil) { $s = 7; continue; }
+		/* */ if (cipherSuite$1 === ptrType$3.nil || c.resumptionSecret === sliceType$5.nil) { $s = 7; continue; }
 		/* */ $s = 8; continue;
-		/* if (cipherSuite$1 === ptrType$2.nil || c.resumptionSecret === sliceType$5.nil) { */ case 7:
+		/* if (cipherSuite$1 === ptrType$3.nil || c.resumptionSecret === sliceType$5.nil) { */ case 7:
 			_r$2 = c.sendAlert(80); /* */ $s = 9; case 9: if($c) { $c = false; _r$2 = _r$2.$blk(); } if (_r$2 && _r$2.$blk !== undefined) { break s; }
 			$24r = _r$2;
 			$s = 10; case 10: return $24r;
@@ -100578,7 +100485,7 @@ $packages["crypto/tls"] = (function() {
 			if (!(_i$1 < _ref$1.$length)) { break; }
 			suiteId = ((_i$1 < 0 || _i$1 >= _ref$1.$length) ? ($throwRuntimeError("index out of range"), undefined) : _ref$1.$array[_ref$1.$offset + _i$1]);
 			suite = mutualCipherSuite(configCipherSuites, suiteId);
-			if (suite === ptrType$3.nil) {
+			if (suite === ptrType$2.nil) {
 				_i$1++;
 				continue;
 			}
@@ -100750,13 +100657,13 @@ $packages["crypto/tls"] = (function() {
 		/* */ if (c[0].vers === 772) { $s = 30; continue; }
 		/* */ $s = 31; continue;
 		/* if (c[0].vers === 772) { */ case 30:
-			hs = new clientHandshakeStateTLS13.ptr(c[0], ctx, serverHello, hello, ecdheParams, session, earlySecret, binderKey, ptrType$39.nil, false, false, ptrType$2.nil, $ifaceNil, sliceType$5.nil, sliceType$5.nil);
+			hs = new clientHandshakeStateTLS13.ptr(c[0], ctx, serverHello, hello, ecdheParams, session, earlySecret, binderKey, ptrType$39.nil, false, false, ptrType$3.nil, $ifaceNil, sliceType$5.nil, sliceType$5.nil);
 			_r$9 = hs.handshake(); /* */ $s = 32; case 32: if($c) { $c = false; _r$9 = _r$9.$blk(); } if (_r$9 && _r$9.$blk !== undefined) { break s; }
 			err[0] = _r$9;
 			$24r$6 = err[0];
 			$s = 33; case 33: return $24r$6;
 		/* } */ case 31:
-		hs$1 = new clientHandshakeState.ptr(c[0], ctx, serverHello, hello, ptrType$3.nil, new finishedHash.ptr($ifaceNil, $ifaceNil, $ifaceNil, $ifaceNil, sliceType$5.nil, 0, $throwNilPointerError), sliceType$5.nil, session);
+		hs$1 = new clientHandshakeState.ptr(c[0], ctx, serverHello, hello, ptrType$2.nil, new finishedHash.ptr($ifaceNil, $ifaceNil, $ifaceNil, $ifaceNil, sliceType$5.nil, 0, $throwNilPointerError), sliceType$5.nil, session);
 		_r$10 = hs$1.handshake(); /* */ $s = 34; case 34: if($c) { $c = false; _r$10 = _r$10.$blk(); } if (_r$10 && _r$10.$blk !== undefined) { break s; }
 		err$3 = _r$10;
 		/* */ if (!($interfaceIsEqual(err$3, $ifaceNil))) { $s = 35; continue; }
@@ -100897,7 +100804,7 @@ $packages["crypto/tls"] = (function() {
 			}
 		/* } */ case 5:
 		if (!((session.vers === 772))) {
-			if (mutualCipherSuite(hello.cipherSuites, session.cipherSuite) === ptrType$3.nil) {
+			if (mutualCipherSuite(hello.cipherSuites, session.cipherSuite) === ptrType$2.nil) {
 				_tmp$28 = cacheKey;
 				_tmp$29 = ptrType$37.nil;
 				_tmp$30 = sliceType$5.nil;
@@ -100928,7 +100835,7 @@ $packages["crypto/tls"] = (function() {
 			$s = -1; return [cacheKey, session, earlySecret, binderKey];
 		/* } */ case 12:
 		cipherSuite$1 = cipherSuiteTLS13ByID(session.cipherSuite);
-		if (cipherSuite$1 === ptrType$2.nil) {
+		if (cipherSuite$1 === ptrType$3.nil) {
 			_tmp$36 = cacheKey;
 			_tmp$37 = ptrType$37.nil;
 			_tmp$38 = sliceType$5.nil;
@@ -100946,7 +100853,7 @@ $packages["crypto/tls"] = (function() {
 			if (!(_i$1 < _ref$1.$length)) { break; }
 			offeredID = ((_i$1 < 0 || _i$1 >= _ref$1.$length) ? ($throwRuntimeError("index out of range"), undefined) : _ref$1.$array[_ref$1.$offset + _i$1]);
 			offeredSuite = cipherSuiteTLS13ByID(offeredID);
-			if (!(offeredSuite === ptrType$2.nil) && (offeredSuite.hash === cipherSuite$1.hash)) {
+			if (!(offeredSuite === ptrType$3.nil) && (offeredSuite.hash === cipherSuite$1.hash)) {
 				cipherSuiteOk = true;
 				break;
 			}
@@ -101129,9 +101036,9 @@ $packages["crypto/tls"] = (function() {
 		/* */ $s = 0; var $f, $c = false; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; _r = $f._r; hs = $f.hs; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
 		hs = this;
 		hs.suite = mutualCipherSuite(hs.hello.cipherSuites, hs.serverHello.cipherSuite);
-		/* */ if (hs.suite === ptrType$3.nil) { $s = 1; continue; }
+		/* */ if (hs.suite === ptrType$2.nil) { $s = 1; continue; }
 		/* */ $s = 2; continue;
-		/* if (hs.suite === ptrType$3.nil) { */ case 1:
+		/* if (hs.suite === ptrType$2.nil) { */ case 1:
 			_r = hs.c.sendAlert(40); /* */ $s = 3; case 3: if($c) { $c = false; _r = _r.$blk(); } if (_r && _r.$blk !== undefined) { break s; }
 			_r;
 			$s = -1; return errors.New("tls: server chose an unconfigured cipher suite");
@@ -103325,9 +103232,9 @@ $packages["crypto/tls"] = (function() {
 		/* */ $s = 0; var $f, $c = false; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; $24r = $f.$24r; $24r$1 = $f.$24r$1; $24r$2 = $f.$24r$2; _arg = $f._arg; _r = $f._r; _r$1 = $f._r$1; _r$2 = $f._r$2; _r$3 = $f._r$3; _r$4 = $f._r$4; _r$5 = $f._r$5; _tuple = $f._tuple; c = $f.c; cipherSuite$1 = $f.cipherSuite$1; err = $f.err; keyUpdate = $f.keyUpdate; msg = $f.msg; newSecret = $f.newSecret; newSecret$1 = $f.newSecret$1; $s = $f.$s; $deferred = $f.$deferred; $r = $f.$r; } var $err = null; try { s: while (true) { switch ($s) { case 0: $deferred = []; $curGoroutine.deferStack.push($deferred);
 		c = this;
 		cipherSuite$1 = cipherSuiteTLS13ByID(c.cipherSuite);
-		/* */ if (cipherSuite$1 === ptrType$2.nil) { $s = 1; continue; }
+		/* */ if (cipherSuite$1 === ptrType$3.nil) { $s = 1; continue; }
 		/* */ $s = 2; continue;
-		/* if (cipherSuite$1 === ptrType$2.nil) { */ case 1:
+		/* if (cipherSuite$1 === ptrType$3.nil) { */ case 1:
 			_r = c.sendAlert(80); /* */ $s = 3; case 3: if($c) { $c = false; _r = _r.$blk(); } if (_r && _r.$blk !== undefined) { break s; }
 			_r$1 = c.in$27.setErrorLocked(_r); /* */ $s = 4; case 4: if($c) { $c = false; _r$1 = _r$1.$blk(); } if (_r$1 && _r$1.$blk !== undefined) { break s; }
 			$24r = _r$1;
@@ -104248,7 +104155,7 @@ $packages["crypto/tls"] = (function() {
 				return true;
 			}; })(c, chi, config, ecdsaCipherSuite, vers)); /* */ $s = 5; case 5: if($c) { $c = false; _r$4 = _r$4.$blk(); } if (_r$4 && _r$4.$blk !== undefined) { break s; }
 			rsaCipherSuite = _r$4;
-			if (rsaCipherSuite === ptrType$3.nil) {
+			if (rsaCipherSuite === ptrType$2.nil) {
 				$s = -1; return unsupported;
 			}
 			$s = -1; return $ifaceNil;
@@ -104379,9 +104286,9 @@ $packages["crypto/tls"] = (function() {
 			return true;
 		}; })(c, chi, config, ecdsaCipherSuite, vers)); /* */ $s = 50; case 50: if($c) { $c = false; _r$16 = _r$16.$blk(); } if (_r$16 && _r$16.$blk !== undefined) { break s; }
 		cipherSuite$1 = _r$16;
-		/* */ if (cipherSuite$1 === ptrType$3.nil) { $s = 51; continue; }
+		/* */ if (cipherSuite$1 === ptrType$2.nil) { $s = 51; continue; }
 		/* */ $s = 52; continue;
-		/* if (cipherSuite$1 === ptrType$3.nil) { */ case 51:
+		/* if (cipherSuite$1 === ptrType$2.nil) { */ case 51:
 			_r$17 = supportsRSAFallback(errors.New("client doesn't support any cipher suites compatible with the certificate")); /* */ $s = 53; case 53: if($c) { $c = false; _r$17 = _r$17.$blk(); } if (_r$17 && _r$17.$blk !== undefined) { break s; }
 			$24r$7 = _r$17;
 			$s = 54; case 54: return $24r$7;
@@ -104545,7 +104452,7 @@ $packages["crypto/tls"] = (function() {
 			/* if (!(_i < _ref.$length)) { break; } */ if(!(_i < _ref.$length)) { $s = 2; continue; }
 			id = ((_i < 0 || _i >= _ref.$length) ? ($throwRuntimeError("index out of range"), undefined) : _ref.$array[_ref.$offset + _i]);
 			candidate = cipherSuiteByID(id);
-			if (candidate === ptrType$3.nil) { _v = true; $s = 5; continue s; }
+			if (candidate === ptrType$2.nil) { _v = true; $s = 5; continue s; }
 			_r = ok(candidate); /* */ $s = 6; case 6: if($c) { $c = false; _r = _r.$blk(); } if (_r && _r.$blk !== undefined) { break s; }
 			_v = !_r; case 5:
 			/* */ if (_v) { $s = 3; continue; }
@@ -104567,7 +104474,7 @@ $packages["crypto/tls"] = (function() {
 			_i++;
 		$s = 1; continue;
 		case 2:
-		$s = -1; return ptrType$3.nil;
+		$s = -1; return ptrType$2.nil;
 		/* */ } return; } if ($f === undefined) { $f = { $blk: selectCipherSuite }; } $f._i = _i; $f._i$1 = _i$1; $f._r = _r; $f._ref = _ref; $f._ref$1 = _ref$1; $f._v = _v; $f.candidate = candidate; $f.id = id; $f.ids = ids; $f.ok = ok; $f.suppID = suppID; $f.supportedIDs = supportedIDs; $f.$s = $s; $f.$r = $r; return $f;
 	};
 	aesgcmPreferred = function(ciphers) {
@@ -104578,11 +104485,11 @@ $packages["crypto/tls"] = (function() {
 			if (!(_i < _ref.$length)) { break; }
 			cID = ((_i < 0 || _i >= _ref.$length) ? ($throwRuntimeError("index out of range"), undefined) : _ref.$array[_ref.$offset + _i]);
 			c = cipherSuiteByID(cID);
-			if (!(c === ptrType$3.nil)) {
+			if (!(c === ptrType$2.nil)) {
 				return (_entry = aesgcmCiphers[$Uint16.keyFor(cID)], _entry !== undefined ? _entry.v : false);
 			}
 			c$1 = cipherSuiteTLS13ByID(cID);
-			if (!(c$1 === ptrType$2.nil)) {
+			if (!(c$1 === ptrType$3.nil)) {
 				return (_entry$1 = aesgcmCiphers[$Uint16.keyFor(cID)], _entry$1 !== undefined ? _entry$1.v : false);
 			}
 			_i++;
@@ -104942,7 +104849,7 @@ $packages["crypto/tls"] = (function() {
 			}
 			_i++;
 		}
-		return ptrType$3.nil;
+		return ptrType$2.nil;
 	};
 	cipherSuiteByID = function(id) {
 		var _i, _ref, cipherSuite$1, id;
@@ -104956,7 +104863,7 @@ $packages["crypto/tls"] = (function() {
 			}
 			_i++;
 		}
-		return ptrType$3.nil;
+		return ptrType$2.nil;
 	};
 	mutualCipherSuiteTLS13 = function(have, want) {
 		var _i, _ref, have, id, want;
@@ -104970,7 +104877,7 @@ $packages["crypto/tls"] = (function() {
 			}
 			_i++;
 		}
-		return ptrType$2.nil;
+		return ptrType$3.nil;
 	};
 	cipherSuiteTLS13ByID = function(id) {
 		var _i, _ref, cipherSuite$1, id;
@@ -104984,7 +104891,7 @@ $packages["crypto/tls"] = (function() {
 			}
 			_i++;
 		}
-		return ptrType$2.nil;
+		return ptrType$3.nil;
 	};
 	verifyHandshakeSignature = function(sigType, pubkey, hashFunc, signed, sig) {
 		var $24r, $24r$1, $24r$2, $24r$3, _1, _r, _r$1, _r$2, _r$3, _r$4, _r$5, _r$6, _r$7, _tuple, _tuple$1, _tuple$2, _tuple$3, err, err$1, hashFunc, ok, ok$1, ok$2, ok$3, pubKey, pubKey$1, pubKey$2, pubKey$3, pubkey, sig, sigType, signOpts, signed, $s, $r;
@@ -105457,7 +105364,7 @@ $packages["crypto/tls"] = (function() {
 	rsaKeyAgreement.methods = [{prop: "generateServerKeyExchange", name: "generateServerKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$31, ptrType$26, ptrType$30], [ptrType$22, $error], false)}, {prop: "processClientKeyExchange", name: "processClientKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$31, ptrType$23, $Uint16], [sliceType$5, $error], false)}, {prop: "processServerKeyExchange", name: "processServerKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$26, ptrType$30, ptrType$5, ptrType$22], [$error], false)}, {prop: "generateClientKeyExchange", name: "generateClientKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$26, ptrType$5], [sliceType$5, ptrType$23, $error], false)}];
 	ptrType$58.methods = [{prop: "generateServerKeyExchange", name: "generateServerKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$31, ptrType$26, ptrType$30], [ptrType$22, $error], false)}, {prop: "processClientKeyExchange", name: "processClientKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$31, ptrType$23, $Uint16], [sliceType$5, $error], false)}, {prop: "processServerKeyExchange", name: "processServerKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$26, ptrType$30, ptrType$5, ptrType$22], [$error], false)}, {prop: "generateClientKeyExchange", name: "generateClientKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$26, ptrType$5], [sliceType$5, ptrType$23, $error], false)}];
 	ptrType$59.methods = [{prop: "handshake", name: "handshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "processClientHello", name: "processClientHello", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "checkForResumption", name: "checkForResumption", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "pickCertificate", name: "pickCertificate", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "sendDummyChangeCipherSpec", name: "sendDummyChangeCipherSpec", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "doHelloRetryRequest", name: "doHelloRetryRequest", pkg: "crypto/tls", typ: $funcType([CurveID], [$error], false)}, {prop: "sendServerParameters", name: "sendServerParameters", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "requestClientCert", name: "requestClientCert", pkg: "crypto/tls", typ: $funcType([], [$Bool], false)}, {prop: "sendServerCertificate", name: "sendServerCertificate", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "sendServerFinished", name: "sendServerFinished", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "shouldSendSessionTickets", name: "shouldSendSessionTickets", pkg: "crypto/tls", typ: $funcType([], [$Bool], false)}, {prop: "sendSessionTickets", name: "sendSessionTickets", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "readClientCertificate", name: "readClientCertificate", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "readClientFinished", name: "readClientFinished", pkg: "crypto/tls", typ: $funcType([], [$error], false)}];
-	ptrType$60.methods = [{prop: "handshake", name: "handshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "processClientHello", name: "processClientHello", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "pickCipherSuite", name: "pickCipherSuite", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "cipherSuiteOk", name: "cipherSuiteOk", pkg: "crypto/tls", typ: $funcType([ptrType$3], [$Bool], false)}, {prop: "checkForResumption", name: "checkForResumption", pkg: "crypto/tls", typ: $funcType([], [$Bool], false)}, {prop: "doResumeHandshake", name: "doResumeHandshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "doFullHandshake", name: "doFullHandshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "establishKeys", name: "establishKeys", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "readFinished", name: "readFinished", pkg: "crypto/tls", typ: $funcType([sliceType$5], [$error], false)}, {prop: "sendSessionTicket", name: "sendSessionTicket", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "sendFinished", name: "sendFinished", pkg: "crypto/tls", typ: $funcType([sliceType$5], [$error], false)}];
+	ptrType$60.methods = [{prop: "handshake", name: "handshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "processClientHello", name: "processClientHello", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "pickCipherSuite", name: "pickCipherSuite", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "cipherSuiteOk", name: "cipherSuiteOk", pkg: "crypto/tls", typ: $funcType([ptrType$2], [$Bool], false)}, {prop: "checkForResumption", name: "checkForResumption", pkg: "crypto/tls", typ: $funcType([], [$Bool], false)}, {prop: "doResumeHandshake", name: "doResumeHandshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "doFullHandshake", name: "doFullHandshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "establishKeys", name: "establishKeys", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "readFinished", name: "readFinished", pkg: "crypto/tls", typ: $funcType([sliceType$5], [$error], false)}, {prop: "sendSessionTicket", name: "sendSessionTicket", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "sendFinished", name: "sendFinished", pkg: "crypto/tls", typ: $funcType([sliceType$5], [$error], false)}];
 	marshalingFunction.methods = [{prop: "Marshal", name: "Marshal", pkg: "", typ: $funcType([ptrType$15], [$error], false)}];
 	ptrType$26.methods = [{prop: "marshal", name: "marshal", pkg: "crypto/tls", typ: $funcType([], [sliceType$5], false)}, {prop: "marshalWithoutBinders", name: "marshalWithoutBinders", pkg: "crypto/tls", typ: $funcType([], [sliceType$5], false)}, {prop: "updateBinders", name: "updateBinders", pkg: "crypto/tls", typ: $funcType([sliceType$11], [], false)}, {prop: "unmarshal", name: "unmarshal", pkg: "crypto/tls", typ: $funcType([sliceType$5], [$Bool], false)}];
 	ptrType$30.methods = [{prop: "marshal", name: "marshal", pkg: "crypto/tls", typ: $funcType([], [sliceType$5], false)}, {prop: "unmarshal", name: "unmarshal", pkg: "crypto/tls", typ: $funcType([sliceType$5], [$Bool], false)}];
@@ -105480,7 +105387,7 @@ $packages["crypto/tls"] = (function() {
 	ptrType$62.methods = [{prop: "handshake", name: "handshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "checkServerHelloOrHRR", name: "checkServerHelloOrHRR", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "sendDummyChangeCipherSpec", name: "sendDummyChangeCipherSpec", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "processHelloRetryRequest", name: "processHelloRetryRequest", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "processServerHello", name: "processServerHello", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "establishHandshakeKeys", name: "establishHandshakeKeys", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "readServerParameters", name: "readServerParameters", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "readServerCertificate", name: "readServerCertificate", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "readServerFinished", name: "readServerFinished", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "sendClientCertificate", name: "sendClientCertificate", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "sendClientFinished", name: "sendClientFinished", pkg: "crypto/tls", typ: $funcType([], [$error], false)}];
 	ptrType$63.methods = [{prop: "handshake", name: "handshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "pickCipherSuite", name: "pickCipherSuite", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "doFullHandshake", name: "doFullHandshake", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "establishKeys", name: "establishKeys", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "serverResumedSession", name: "serverResumedSession", pkg: "crypto/tls", typ: $funcType([], [$Bool], false)}, {prop: "processServerHello", name: "processServerHello", pkg: "crypto/tls", typ: $funcType([], [$Bool, $error], false)}, {prop: "readFinished", name: "readFinished", pkg: "crypto/tls", typ: $funcType([sliceType$5], [$error], false)}, {prop: "readSessionTicket", name: "readSessionTicket", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "sendFinished", name: "sendFinished", pkg: "crypto/tls", typ: $funcType([sliceType$5], [$error], false)}];
 	ptrType$6.methods = [{prop: "encryptTicket", name: "encryptTicket", pkg: "crypto/tls", typ: $funcType([sliceType$5], [sliceType$5, $error], false)}, {prop: "decryptTicket", name: "decryptTicket", pkg: "crypto/tls", typ: $funcType([sliceType$5], [sliceType$5, $Bool], false)}, {prop: "serverHandshake", name: "serverHandshake", pkg: "crypto/tls", typ: $funcType([context.Context], [$error], false)}, {prop: "readClientHello", name: "readClientHello", pkg: "crypto/tls", typ: $funcType([context.Context], [ptrType$26, $error], false)}, {prop: "processCertsFromClient", name: "processCertsFromClient", pkg: "crypto/tls", typ: $funcType([Certificate], [$error], false)}, {prop: "handleNewSessionTicket", name: "handleNewSessionTicket", pkg: "crypto/tls", typ: $funcType([ptrType$45], [$error], false)}, {prop: "makeClientHello", name: "makeClientHello", pkg: "crypto/tls", typ: $funcType([], [ptrType$26, ecdheParameters, $error], false)}, {prop: "clientHandshake", name: "clientHandshake", pkg: "crypto/tls", typ: $funcType([context.Context], [$error], false)}, {prop: "loadSession", name: "loadSession", pkg: "crypto/tls", typ: $funcType([ptrType$26], [$String, ptrType$37, sliceType$5, sliceType$5], false)}, {prop: "pickTLSVersion", name: "pickTLSVersion", pkg: "crypto/tls", typ: $funcType([ptrType$30], [$error], false)}, {prop: "verifyServerCertificate", name: "verifyServerCertificate", pkg: "crypto/tls", typ: $funcType([sliceType$11], [$error], false)}, {prop: "getClientCertificate", name: "getClientCertificate", pkg: "crypto/tls", typ: $funcType([ptrType$64], [ptrType$31, $error], false)}, {prop: "LocalAddr", name: "LocalAddr", pkg: "", typ: $funcType([], [net.Addr], false)}, {prop: "RemoteAddr", name: "RemoteAddr", pkg: "", typ: $funcType([], [net.Addr], false)}, {prop: "SetDeadline", name: "SetDeadline", pkg: "", typ: $funcType([time.Time], [$error], false)}, {prop: "SetReadDeadline", name: "SetReadDeadline", pkg: "", typ: $funcType([time.Time], [$error], false)}, {prop: "SetWriteDeadline", name: "SetWriteDeadline", pkg: "", typ: $funcType([time.Time], [$error], false)}, {prop: "newRecordHeaderError", name: "newRecordHeaderError", pkg: "crypto/tls", typ: $funcType([net.Conn, $String], [RecordHeaderError], false)}, {prop: "readRecord", name: "readRecord", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "readChangeCipherSpec", name: "readChangeCipherSpec", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "readRecordOrCCS", name: "readRecordOrCCS", pkg: "crypto/tls", typ: $funcType([$Bool], [$error], false)}, {prop: "retryReadRecord", name: "retryReadRecord", pkg: "crypto/tls", typ: $funcType([$Bool], [$error], false)}, {prop: "readFromUntil", name: "readFromUntil", pkg: "crypto/tls", typ: $funcType([io.Reader, $Int], [$error], false)}, {prop: "sendAlertLocked", name: "sendAlertLocked", pkg: "crypto/tls", typ: $funcType([alert], [$error], false)}, {prop: "sendAlert", name: "sendAlert", pkg: "crypto/tls", typ: $funcType([alert], [$error], false)}, {prop: "maxPayloadSizeForWrite", name: "maxPayloadSizeForWrite", pkg: "crypto/tls", typ: $funcType([recordType], [$Int], false)}, {prop: "write", name: "write", pkg: "crypto/tls", typ: $funcType([sliceType$5], [$Int, $error], false)}, {prop: "flush", name: "flush", pkg: "crypto/tls", typ: $funcType([], [$Int, $error], false)}, {prop: "writeRecordLocked", name: "writeRecordLocked", pkg: "crypto/tls", typ: $funcType([recordType, sliceType$5], [$Int, $error], false)}, {prop: "writeRecord", name: "writeRecord", pkg: "crypto/tls", typ: $funcType([recordType, sliceType$5], [$Int, $error], false)}, {prop: "readHandshake", name: "readHandshake", pkg: "crypto/tls", typ: $funcType([], [$emptyInterface, $error], false)}, {prop: "Write", name: "Write", pkg: "", typ: $funcType([sliceType$5], [$Int, $error], false)}, {prop: "handleRenegotiation", name: "handleRenegotiation", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "handlePostHandshakeMessage", name: "handlePostHandshakeMessage", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "handleKeyUpdate", name: "handleKeyUpdate", pkg: "crypto/tls", typ: $funcType([ptrType$46], [$error], false)}, {prop: "Read", name: "Read", pkg: "", typ: $funcType([sliceType$5], [$Int, $error], false)}, {prop: "Close", name: "Close", pkg: "", typ: $funcType([], [$error], false)}, {prop: "CloseWrite", name: "CloseWrite", pkg: "", typ: $funcType([], [$error], false)}, {prop: "closeNotify", name: "closeNotify", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "Handshake", name: "Handshake", pkg: "", typ: $funcType([], [$error], false)}, {prop: "HandshakeContext", name: "HandshakeContext", pkg: "", typ: $funcType([context.Context], [$error], false)}, {prop: "handshakeContext", name: "handshakeContext", pkg: "crypto/tls", typ: $funcType([context.Context], [$error], false)}, {prop: "ConnectionState", name: "ConnectionState", pkg: "", typ: $funcType([], [ConnectionState], false)}, {prop: "connectionStateLocked", name: "connectionStateLocked", pkg: "crypto/tls", typ: $funcType([], [ConnectionState], false)}, {prop: "OCSPResponse", name: "OCSPResponse", pkg: "", typ: $funcType([], [sliceType$5], false)}, {prop: "VerifyHostname", name: "VerifyHostname", pkg: "", typ: $funcType([$String], [$error], false)}, {prop: "handshakeComplete", name: "handshakeComplete", pkg: "crypto/tls", typ: $funcType([], [$Bool], false)}];
-	ptrType$65.methods = [{prop: "setErrorLocked", name: "setErrorLocked", pkg: "crypto/tls", typ: $funcType([$error], [$error], false)}, {prop: "prepareCipherSpec", name: "prepareCipherSpec", pkg: "crypto/tls", typ: $funcType([$Uint16, $emptyInterface, hash.Hash], [], false)}, {prop: "changeCipherSpec", name: "changeCipherSpec", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "setTrafficSecret", name: "setTrafficSecret", pkg: "crypto/tls", typ: $funcType([ptrType$2, sliceType$5], [], false)}, {prop: "incSeq", name: "incSeq", pkg: "crypto/tls", typ: $funcType([], [], false)}, {prop: "explicitNonceLen", name: "explicitNonceLen", pkg: "crypto/tls", typ: $funcType([], [$Int], false)}, {prop: "decrypt", name: "decrypt", pkg: "crypto/tls", typ: $funcType([sliceType$5], [sliceType$5, recordType, $error], false)}, {prop: "encrypt", name: "encrypt", pkg: "crypto/tls", typ: $funcType([sliceType$5, sliceType$5, io.Reader], [sliceType$5, $error], false)}];
+	ptrType$65.methods = [{prop: "setErrorLocked", name: "setErrorLocked", pkg: "crypto/tls", typ: $funcType([$error], [$error], false)}, {prop: "prepareCipherSpec", name: "prepareCipherSpec", pkg: "crypto/tls", typ: $funcType([$Uint16, $emptyInterface, hash.Hash], [], false)}, {prop: "changeCipherSpec", name: "changeCipherSpec", pkg: "crypto/tls", typ: $funcType([], [$error], false)}, {prop: "setTrafficSecret", name: "setTrafficSecret", pkg: "crypto/tls", typ: $funcType([ptrType$3, sliceType$5], [], false)}, {prop: "incSeq", name: "incSeq", pkg: "crypto/tls", typ: $funcType([], [], false)}, {prop: "explicitNonceLen", name: "explicitNonceLen", pkg: "crypto/tls", typ: $funcType([], [$Int], false)}, {prop: "decrypt", name: "decrypt", pkg: "crypto/tls", typ: $funcType([sliceType$5], [sliceType$5, recordType, $error], false)}, {prop: "encrypt", name: "encrypt", pkg: "crypto/tls", typ: $funcType([sliceType$5, sliceType$5, io.Reader], [sliceType$5, $error], false)}];
 	ptrType$66.methods = [{prop: "Error", name: "Error", pkg: "", typ: $funcType([], [$String], false)}, {prop: "Unwrap", name: "Unwrap", pkg: "", typ: $funcType([], [$error], false)}, {prop: "Timeout", name: "Timeout", pkg: "", typ: $funcType([], [$Bool], false)}, {prop: "Temporary", name: "Temporary", pkg: "", typ: $funcType([], [$Bool], false)}];
 	RecordHeaderError.methods = [{prop: "Error", name: "Error", pkg: "", typ: $funcType([], [$String], false)}];
 	ptrType$67.methods = [{prop: "Read", name: "Read", pkg: "", typ: $funcType([sliceType$5], [$Int, $error], false)}];
@@ -105492,7 +105399,7 @@ $packages["crypto/tls"] = (function() {
 	ptrType$64.methods = [{prop: "Context", name: "Context", pkg: "", typ: $funcType([], [context.Context], false)}, {prop: "SupportsCertificate", name: "SupportsCertificate", pkg: "", typ: $funcType([ptrType$31], [$error], false)}];
 	ptrType$4.methods = [{prop: "ticketKeyFromBytes", name: "ticketKeyFromBytes", pkg: "crypto/tls", typ: $funcType([arrayType], [ticketKey], false)}, {prop: "Clone", name: "Clone", pkg: "", typ: $funcType([], [ptrType$4], false)}, {prop: "initLegacySessionTicketKeyRLocked", name: "initLegacySessionTicketKeyRLocked", pkg: "crypto/tls", typ: $funcType([], [], false)}, {prop: "ticketKeys", name: "ticketKeys", pkg: "crypto/tls", typ: $funcType([ptrType$4], [sliceType$4], false)}, {prop: "SetSessionTicketKeys", name: "SetSessionTicketKeys", pkg: "", typ: $funcType([sliceType$18], [], false)}, {prop: "rand", name: "rand", pkg: "crypto/tls", typ: $funcType([], [io.Reader], false)}, {prop: "time", name: "time", pkg: "crypto/tls", typ: $funcType([], [time.Time], false)}, {prop: "cipherSuites", name: "cipherSuites", pkg: "crypto/tls", typ: $funcType([], [sliceType$2], false)}, {prop: "supportedVersions", name: "supportedVersions", pkg: "crypto/tls", typ: $funcType([], [sliceType$2], false)}, {prop: "maxSupportedVersion", name: "maxSupportedVersion", pkg: "crypto/tls", typ: $funcType([], [$Uint16], false)}, {prop: "curvePreferences", name: "curvePreferences", pkg: "crypto/tls", typ: $funcType([], [sliceType$3], false)}, {prop: "supportsCurve", name: "supportsCurve", pkg: "crypto/tls", typ: $funcType([CurveID], [$Bool], false)}, {prop: "mutualVersion", name: "mutualVersion", pkg: "crypto/tls", typ: $funcType([sliceType$2], [$Uint16, $Bool], false)}, {prop: "getCertificate", name: "getCertificate", pkg: "crypto/tls", typ: $funcType([ptrType$69], [ptrType$31, $error], false)}, {prop: "BuildNameToCertificate", name: "BuildNameToCertificate", pkg: "", typ: $funcType([], [], false)}, {prop: "writeKeyLog", name: "writeKeyLog", pkg: "crypto/tls", typ: $funcType([$String, sliceType$5, sliceType$5], [$error], false)}];
 	ptrType$31.methods = [{prop: "leaf", name: "leaf", pkg: "crypto/tls", typ: $funcType([], [ptrType$5, $error], false)}];
-	ptrType$2.methods = [{prop: "expandLabel", name: "expandLabel", pkg: "crypto/tls", typ: $funcType([sliceType$5, $String, sliceType$5, $Int], [sliceType$5], false)}, {prop: "deriveSecret", name: "deriveSecret", pkg: "crypto/tls", typ: $funcType([sliceType$5, $String, hash.Hash], [sliceType$5], false)}, {prop: "extract", name: "extract", pkg: "crypto/tls", typ: $funcType([sliceType$5, sliceType$5], [sliceType$5], false)}, {prop: "nextTrafficSecret", name: "nextTrafficSecret", pkg: "crypto/tls", typ: $funcType([sliceType$5], [sliceType$5], false)}, {prop: "trafficKey", name: "trafficKey", pkg: "crypto/tls", typ: $funcType([sliceType$5], [sliceType$5, sliceType$5], false)}, {prop: "finishedHash", name: "finishedHash", pkg: "crypto/tls", typ: $funcType([sliceType$5, hash.Hash], [sliceType$5], false)}, {prop: "exportKeyingMaterial", name: "exportKeyingMaterial", pkg: "crypto/tls", typ: $funcType([sliceType$5, hash.Hash], [funcType$2], false)}];
+	ptrType$3.methods = [{prop: "expandLabel", name: "expandLabel", pkg: "crypto/tls", typ: $funcType([sliceType$5, $String, sliceType$5, $Int], [sliceType$5], false)}, {prop: "deriveSecret", name: "deriveSecret", pkg: "crypto/tls", typ: $funcType([sliceType$5, $String, hash.Hash], [sliceType$5], false)}, {prop: "extract", name: "extract", pkg: "crypto/tls", typ: $funcType([sliceType$5, sliceType$5], [sliceType$5], false)}, {prop: "nextTrafficSecret", name: "nextTrafficSecret", pkg: "crypto/tls", typ: $funcType([sliceType$5], [sliceType$5], false)}, {prop: "trafficKey", name: "trafficKey", pkg: "crypto/tls", typ: $funcType([sliceType$5], [sliceType$5, sliceType$5], false)}, {prop: "finishedHash", name: "finishedHash", pkg: "crypto/tls", typ: $funcType([sliceType$5, hash.Hash], [sliceType$5], false)}, {prop: "exportKeyingMaterial", name: "exportKeyingMaterial", pkg: "crypto/tls", typ: $funcType([sliceType$5, hash.Hash], [funcType$2], false)}];
 	ptrType$71.methods = [{prop: "NonceSize", name: "NonceSize", pkg: "", typ: $funcType([], [$Int], false)}, {prop: "Overhead", name: "Overhead", pkg: "", typ: $funcType([], [$Int], false)}, {prop: "explicitNonceLen", name: "explicitNonceLen", pkg: "crypto/tls", typ: $funcType([], [$Int], false)}, {prop: "Seal", name: "Seal", pkg: "", typ: $funcType([sliceType$5, sliceType$5, sliceType$5, sliceType$5], [sliceType$5], false)}, {prop: "Open", name: "Open", pkg: "", typ: $funcType([sliceType$5, sliceType$5, sliceType$5, sliceType$5], [sliceType$5, $error], false)}];
 	ptrType$72.methods = [{prop: "NonceSize", name: "NonceSize", pkg: "", typ: $funcType([], [$Int], false)}, {prop: "Overhead", name: "Overhead", pkg: "", typ: $funcType([], [$Int], false)}, {prop: "explicitNonceLen", name: "explicitNonceLen", pkg: "crypto/tls", typ: $funcType([], [$Int], false)}, {prop: "Seal", name: "Seal", pkg: "", typ: $funcType([sliceType$5, sliceType$5, sliceType$5, sliceType$5], [sliceType$5], false)}, {prop: "Open", name: "Open", pkg: "", typ: $funcType([sliceType$5, sliceType$5, sliceType$5, sliceType$5], [sliceType$5, $error], false)}];
 	ptrType$73.methods = [{prop: "Size", name: "Size", pkg: "", typ: $funcType([], [$Int], false)}, {prop: "BlockSize", name: "BlockSize", pkg: "", typ: $funcType([], [$Int], false)}, {prop: "Reset", name: "Reset", pkg: "", typ: $funcType([], [], false)}, {prop: "Write", name: "Write", pkg: "", typ: $funcType([sliceType$5], [$Int, $error], false)}, {prop: "Sum", name: "Sum", pkg: "", typ: $funcType([sliceType$5], [sliceType$5], false)}];
@@ -105508,8 +105415,8 @@ $packages["crypto/tls"] = (function() {
 	keyAgreement.init([{prop: "generateClientKeyExchange", name: "generateClientKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$26, ptrType$5], [sliceType$5, ptrType$23, $error], false)}, {prop: "generateServerKeyExchange", name: "generateServerKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$31, ptrType$26, ptrType$30], [ptrType$22, $error], false)}, {prop: "processClientKeyExchange", name: "processClientKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$31, ptrType$23, $Uint16], [sliceType$5, $error], false)}, {prop: "processServerKeyExchange", name: "processServerKeyExchange", pkg: "crypto/tls", typ: $funcType([ptrType$4, ptrType$26, ptrType$30, ptrType$5, ptrType$22], [$error], false)}]);
 	rsaKeyAgreement.init("", []);
 	ecdheKeyAgreement.init("crypto/tls", [{prop: "version", name: "version", embedded: false, exported: false, typ: $Uint16, tag: ""}, {prop: "isRSA", name: "isRSA", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "params", name: "params", embedded: false, exported: false, typ: ecdheParameters, tag: ""}, {prop: "ckx", name: "ckx", embedded: false, exported: false, typ: ptrType$23, tag: ""}, {prop: "preMasterSecret", name: "preMasterSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}]);
-	serverHandshakeStateTLS13.init("crypto/tls", [{prop: "c", name: "c", embedded: false, exported: false, typ: ptrType$6, tag: ""}, {prop: "ctx", name: "ctx", embedded: false, exported: false, typ: context.Context, tag: ""}, {prop: "clientHello", name: "clientHello", embedded: false, exported: false, typ: ptrType$26, tag: ""}, {prop: "hello", name: "hello", embedded: false, exported: false, typ: ptrType$30, tag: ""}, {prop: "sentDummyCCS", name: "sentDummyCCS", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "usingPSK", name: "usingPSK", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "suite", name: "suite", embedded: false, exported: false, typ: ptrType$2, tag: ""}, {prop: "cert", name: "cert", embedded: false, exported: false, typ: ptrType$31, tag: ""}, {prop: "sigAlg", name: "sigAlg", embedded: false, exported: false, typ: SignatureScheme, tag: ""}, {prop: "earlySecret", name: "earlySecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "sharedKey", name: "sharedKey", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "handshakeSecret", name: "handshakeSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "masterSecret", name: "masterSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "trafficSecret", name: "trafficSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "transcript", name: "transcript", embedded: false, exported: false, typ: hash.Hash, tag: ""}, {prop: "clientFinished", name: "clientFinished", embedded: false, exported: false, typ: sliceType$5, tag: ""}]);
-	serverHandshakeState.init("crypto/tls", [{prop: "c", name: "c", embedded: false, exported: false, typ: ptrType$6, tag: ""}, {prop: "ctx", name: "ctx", embedded: false, exported: false, typ: context.Context, tag: ""}, {prop: "clientHello", name: "clientHello", embedded: false, exported: false, typ: ptrType$26, tag: ""}, {prop: "hello", name: "hello", embedded: false, exported: false, typ: ptrType$30, tag: ""}, {prop: "suite", name: "suite", embedded: false, exported: false, typ: ptrType$3, tag: ""}, {prop: "ecdheOk", name: "ecdheOk", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "ecSignOk", name: "ecSignOk", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "rsaDecryptOk", name: "rsaDecryptOk", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "rsaSignOk", name: "rsaSignOk", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "sessionState", name: "sessionState", embedded: false, exported: false, typ: ptrType$32, tag: ""}, {prop: "finishedHash", name: "finishedHash", embedded: false, exported: false, typ: finishedHash, tag: ""}, {prop: "masterSecret", name: "masterSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "cert", name: "cert", embedded: false, exported: false, typ: ptrType$31, tag: ""}]);
+	serverHandshakeStateTLS13.init("crypto/tls", [{prop: "c", name: "c", embedded: false, exported: false, typ: ptrType$6, tag: ""}, {prop: "ctx", name: "ctx", embedded: false, exported: false, typ: context.Context, tag: ""}, {prop: "clientHello", name: "clientHello", embedded: false, exported: false, typ: ptrType$26, tag: ""}, {prop: "hello", name: "hello", embedded: false, exported: false, typ: ptrType$30, tag: ""}, {prop: "sentDummyCCS", name: "sentDummyCCS", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "usingPSK", name: "usingPSK", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "suite", name: "suite", embedded: false, exported: false, typ: ptrType$3, tag: ""}, {prop: "cert", name: "cert", embedded: false, exported: false, typ: ptrType$31, tag: ""}, {prop: "sigAlg", name: "sigAlg", embedded: false, exported: false, typ: SignatureScheme, tag: ""}, {prop: "earlySecret", name: "earlySecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "sharedKey", name: "sharedKey", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "handshakeSecret", name: "handshakeSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "masterSecret", name: "masterSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "trafficSecret", name: "trafficSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "transcript", name: "transcript", embedded: false, exported: false, typ: hash.Hash, tag: ""}, {prop: "clientFinished", name: "clientFinished", embedded: false, exported: false, typ: sliceType$5, tag: ""}]);
+	serverHandshakeState.init("crypto/tls", [{prop: "c", name: "c", embedded: false, exported: false, typ: ptrType$6, tag: ""}, {prop: "ctx", name: "ctx", embedded: false, exported: false, typ: context.Context, tag: ""}, {prop: "clientHello", name: "clientHello", embedded: false, exported: false, typ: ptrType$26, tag: ""}, {prop: "hello", name: "hello", embedded: false, exported: false, typ: ptrType$30, tag: ""}, {prop: "suite", name: "suite", embedded: false, exported: false, typ: ptrType$2, tag: ""}, {prop: "ecdheOk", name: "ecdheOk", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "ecSignOk", name: "ecSignOk", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "rsaDecryptOk", name: "rsaDecryptOk", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "rsaSignOk", name: "rsaSignOk", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "sessionState", name: "sessionState", embedded: false, exported: false, typ: ptrType$32, tag: ""}, {prop: "finishedHash", name: "finishedHash", embedded: false, exported: false, typ: finishedHash, tag: ""}, {prop: "masterSecret", name: "masterSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "cert", name: "cert", embedded: false, exported: false, typ: ptrType$31, tag: ""}]);
 	marshalingFunction.init([ptrType$15], [$error], false);
 	clientHelloMsg.init("crypto/tls", [{prop: "raw", name: "raw", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "vers", name: "vers", embedded: false, exported: false, typ: $Uint16, tag: ""}, {prop: "random", name: "random", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "sessionId", name: "sessionId", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "cipherSuites", name: "cipherSuites", embedded: false, exported: false, typ: sliceType$2, tag: ""}, {prop: "compressionMethods", name: "compressionMethods", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "serverName", name: "serverName", embedded: false, exported: false, typ: $String, tag: ""}, {prop: "ocspStapling", name: "ocspStapling", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "supportedCurves", name: "supportedCurves", embedded: false, exported: false, typ: sliceType$3, tag: ""}, {prop: "supportedPoints", name: "supportedPoints", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "ticketSupported", name: "ticketSupported", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "sessionTicket", name: "sessionTicket", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "supportedSignatureAlgorithms", name: "supportedSignatureAlgorithms", embedded: false, exported: false, typ: sliceType$7, tag: ""}, {prop: "supportedSignatureAlgorithmsCert", name: "supportedSignatureAlgorithmsCert", embedded: false, exported: false, typ: sliceType$7, tag: ""}, {prop: "secureRenegotiationSupported", name: "secureRenegotiationSupported", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "secureRenegotiation", name: "secureRenegotiation", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "alpnProtocols", name: "alpnProtocols", embedded: false, exported: false, typ: sliceType$1, tag: ""}, {prop: "scts", name: "scts", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "supportedVersions", name: "supportedVersions", embedded: false, exported: false, typ: sliceType$2, tag: ""}, {prop: "cookie", name: "cookie", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "keyShares", name: "keyShares", embedded: false, exported: false, typ: sliceType$15, tag: ""}, {prop: "earlyData", name: "earlyData", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "pskModes", name: "pskModes", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "pskIdentities", name: "pskIdentities", embedded: false, exported: false, typ: sliceType$16, tag: ""}, {prop: "pskBinders", name: "pskBinders", embedded: false, exported: false, typ: sliceType$11, tag: ""}]);
 	serverHelloMsg.init("crypto/tls", [{prop: "raw", name: "raw", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "vers", name: "vers", embedded: false, exported: false, typ: $Uint16, tag: ""}, {prop: "random", name: "random", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "sessionId", name: "sessionId", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "cipherSuite", name: "cipherSuite", embedded: false, exported: false, typ: $Uint16, tag: ""}, {prop: "compressionMethod", name: "compressionMethod", embedded: false, exported: false, typ: $Uint8, tag: ""}, {prop: "ocspStapling", name: "ocspStapling", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "ticketSupported", name: "ticketSupported", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "secureRenegotiationSupported", name: "secureRenegotiationSupported", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "secureRenegotiation", name: "secureRenegotiation", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "alpnProtocol", name: "alpnProtocol", embedded: false, exported: false, typ: $String, tag: ""}, {prop: "scts", name: "scts", embedded: false, exported: false, typ: sliceType$11, tag: ""}, {prop: "supportedVersion", name: "supportedVersion", embedded: false, exported: false, typ: $Uint16, tag: ""}, {prop: "serverShare", name: "serverShare", embedded: false, exported: false, typ: keyShare, tag: ""}, {prop: "selectedIdentityPresent", name: "selectedIdentityPresent", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "selectedIdentity", name: "selectedIdentity", embedded: false, exported: false, typ: $Uint16, tag: ""}, {prop: "supportedPoints", name: "supportedPoints", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "cookie", name: "cookie", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "selectedGroup", name: "selectedGroup", embedded: false, exported: false, typ: CurveID, tag: ""}]);
@@ -105529,8 +105436,8 @@ $packages["crypto/tls"] = (function() {
 	certificateVerifyMsg.init("crypto/tls", [{prop: "raw", name: "raw", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "hasSignatureAlgorithm", name: "hasSignatureAlgorithm", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "signatureAlgorithm", name: "signatureAlgorithm", embedded: false, exported: false, typ: SignatureScheme, tag: ""}, {prop: "signature", name: "signature", embedded: false, exported: false, typ: sliceType$5, tag: ""}]);
 	newSessionTicketMsg.init("crypto/tls", [{prop: "raw", name: "raw", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "ticket", name: "ticket", embedded: false, exported: false, typ: sliceType$5, tag: ""}]);
 	helloRequestMsg.init("", []);
-	clientHandshakeStateTLS13.init("crypto/tls", [{prop: "c", name: "c", embedded: false, exported: false, typ: ptrType$6, tag: ""}, {prop: "ctx", name: "ctx", embedded: false, exported: false, typ: context.Context, tag: ""}, {prop: "serverHello", name: "serverHello", embedded: false, exported: false, typ: ptrType$30, tag: ""}, {prop: "hello", name: "hello", embedded: false, exported: false, typ: ptrType$26, tag: ""}, {prop: "ecdheParams", name: "ecdheParams", embedded: false, exported: false, typ: ecdheParameters, tag: ""}, {prop: "session", name: "session", embedded: false, exported: false, typ: ptrType$37, tag: ""}, {prop: "earlySecret", name: "earlySecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "binderKey", name: "binderKey", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "certReq", name: "certReq", embedded: false, exported: false, typ: ptrType$39, tag: ""}, {prop: "usingPSK", name: "usingPSK", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "sentDummyCCS", name: "sentDummyCCS", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "suite", name: "suite", embedded: false, exported: false, typ: ptrType$2, tag: ""}, {prop: "transcript", name: "transcript", embedded: false, exported: false, typ: hash.Hash, tag: ""}, {prop: "masterSecret", name: "masterSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "trafficSecret", name: "trafficSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}]);
-	clientHandshakeState.init("crypto/tls", [{prop: "c", name: "c", embedded: false, exported: false, typ: ptrType$6, tag: ""}, {prop: "ctx", name: "ctx", embedded: false, exported: false, typ: context.Context, tag: ""}, {prop: "serverHello", name: "serverHello", embedded: false, exported: false, typ: ptrType$30, tag: ""}, {prop: "hello", name: "hello", embedded: false, exported: false, typ: ptrType$26, tag: ""}, {prop: "suite", name: "suite", embedded: false, exported: false, typ: ptrType$3, tag: ""}, {prop: "finishedHash", name: "finishedHash", embedded: false, exported: false, typ: finishedHash, tag: ""}, {prop: "masterSecret", name: "masterSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "session", name: "session", embedded: false, exported: false, typ: ptrType$37, tag: ""}]);
+	clientHandshakeStateTLS13.init("crypto/tls", [{prop: "c", name: "c", embedded: false, exported: false, typ: ptrType$6, tag: ""}, {prop: "ctx", name: "ctx", embedded: false, exported: false, typ: context.Context, tag: ""}, {prop: "serverHello", name: "serverHello", embedded: false, exported: false, typ: ptrType$30, tag: ""}, {prop: "hello", name: "hello", embedded: false, exported: false, typ: ptrType$26, tag: ""}, {prop: "ecdheParams", name: "ecdheParams", embedded: false, exported: false, typ: ecdheParameters, tag: ""}, {prop: "session", name: "session", embedded: false, exported: false, typ: ptrType$37, tag: ""}, {prop: "earlySecret", name: "earlySecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "binderKey", name: "binderKey", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "certReq", name: "certReq", embedded: false, exported: false, typ: ptrType$39, tag: ""}, {prop: "usingPSK", name: "usingPSK", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "sentDummyCCS", name: "sentDummyCCS", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "suite", name: "suite", embedded: false, exported: false, typ: ptrType$3, tag: ""}, {prop: "transcript", name: "transcript", embedded: false, exported: false, typ: hash.Hash, tag: ""}, {prop: "masterSecret", name: "masterSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "trafficSecret", name: "trafficSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}]);
+	clientHandshakeState.init("crypto/tls", [{prop: "c", name: "c", embedded: false, exported: false, typ: ptrType$6, tag: ""}, {prop: "ctx", name: "ctx", embedded: false, exported: false, typ: context.Context, tag: ""}, {prop: "serverHello", name: "serverHello", embedded: false, exported: false, typ: ptrType$30, tag: ""}, {prop: "hello", name: "hello", embedded: false, exported: false, typ: ptrType$26, tag: ""}, {prop: "suite", name: "suite", embedded: false, exported: false, typ: ptrType$2, tag: ""}, {prop: "finishedHash", name: "finishedHash", embedded: false, exported: false, typ: finishedHash, tag: ""}, {prop: "masterSecret", name: "masterSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "session", name: "session", embedded: false, exported: false, typ: ptrType$37, tag: ""}]);
 	Conn.init("crypto/tls", [{prop: "conn", name: "conn", embedded: false, exported: false, typ: net.Conn, tag: ""}, {prop: "isClient", name: "isClient", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "handshakeFn", name: "handshakeFn", embedded: false, exported: false, typ: funcType$1, tag: ""}, {prop: "handshakeStatus", name: "handshakeStatus", embedded: false, exported: false, typ: $Uint32, tag: ""}, {prop: "handshakeMutex", name: "handshakeMutex", embedded: false, exported: false, typ: sync.Mutex, tag: ""}, {prop: "handshakeErr", name: "handshakeErr", embedded: false, exported: false, typ: $error, tag: ""}, {prop: "vers", name: "vers", embedded: false, exported: false, typ: $Uint16, tag: ""}, {prop: "haveVers", name: "haveVers", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "config", name: "config", embedded: false, exported: false, typ: ptrType$4, tag: ""}, {prop: "handshakes", name: "handshakes", embedded: false, exported: false, typ: $Int, tag: ""}, {prop: "didResume", name: "didResume", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "cipherSuite", name: "cipherSuite", embedded: false, exported: false, typ: $Uint16, tag: ""}, {prop: "ocspResponse", name: "ocspResponse", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "scts", name: "scts", embedded: false, exported: false, typ: sliceType$11, tag: ""}, {prop: "peerCertificates", name: "peerCertificates", embedded: false, exported: false, typ: sliceType$12, tag: ""}, {prop: "verifiedChains", name: "verifiedChains", embedded: false, exported: false, typ: sliceType$13, tag: ""}, {prop: "serverName", name: "serverName", embedded: false, exported: false, typ: $String, tag: ""}, {prop: "secureRenegotiation", name: "secureRenegotiation", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "ekm", name: "ekm", embedded: false, exported: false, typ: funcType$2, tag: ""}, {prop: "resumptionSecret", name: "resumptionSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "ticketKeys", name: "ticketKeys", embedded: false, exported: false, typ: sliceType$4, tag: ""}, {prop: "clientFinishedIsFirst", name: "clientFinishedIsFirst", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "closeNotifyErr", name: "closeNotifyErr", embedded: false, exported: false, typ: $error, tag: ""}, {prop: "closeNotifySent", name: "closeNotifySent", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "clientFinished", name: "clientFinished", embedded: false, exported: false, typ: arrayType$1, tag: ""}, {prop: "serverFinished", name: "serverFinished", embedded: false, exported: false, typ: arrayType$1, tag: ""}, {prop: "clientProtocol", name: "clientProtocol", embedded: false, exported: false, typ: $String, tag: ""}, {prop: "in$27", name: "in", embedded: false, exported: false, typ: halfConn, tag: ""}, {prop: "out", name: "out", embedded: false, exported: false, typ: halfConn, tag: ""}, {prop: "rawInput", name: "rawInput", embedded: false, exported: false, typ: bytes.Buffer, tag: ""}, {prop: "input", name: "input", embedded: false, exported: false, typ: bytes.Reader, tag: ""}, {prop: "hand", name: "hand", embedded: false, exported: false, typ: bytes.Buffer, tag: ""}, {prop: "buffering", name: "buffering", embedded: false, exported: false, typ: $Bool, tag: ""}, {prop: "sendBuf", name: "sendBuf", embedded: false, exported: false, typ: sliceType$5, tag: ""}, {prop: "bytesSent", name: "bytesSent", embedded: false, exported: false, typ: $Int64, tag: ""}, {prop: "packetsSent", name: "packetsSent", embedded: false, exported: false, typ: $Int64, tag: ""}, {prop: "retryCount", name: "retryCount", embedded: false, exported: false, typ: $Int, tag: ""}, {prop: "activeCall", name: "activeCall", embedded: false, exported: false, typ: $Int32, tag: ""}, {prop: "tmp", name: "tmp", embedded: false, exported: false, typ: arrayType$4, tag: ""}]);
 	halfConn.init("crypto/tls", [{prop: "Mutex", name: "Mutex", embedded: true, exported: true, typ: sync.Mutex, tag: ""}, {prop: "err", name: "err", embedded: false, exported: false, typ: $error, tag: ""}, {prop: "version", name: "version", embedded: false, exported: false, typ: $Uint16, tag: ""}, {prop: "cipher", name: "cipher", embedded: false, exported: false, typ: $emptyInterface, tag: ""}, {prop: "mac", name: "mac", embedded: false, exported: false, typ: hash.Hash, tag: ""}, {prop: "seq", name: "seq", embedded: false, exported: false, typ: arrayType$2, tag: ""}, {prop: "scratchBuf", name: "scratchBuf", embedded: false, exported: false, typ: arrayType$3, tag: ""}, {prop: "nextCipher", name: "nextCipher", embedded: false, exported: false, typ: $emptyInterface, tag: ""}, {prop: "nextMac", name: "nextMac", embedded: false, exported: false, typ: hash.Hash, tag: ""}, {prop: "trafficSecret", name: "trafficSecret", embedded: false, exported: false, typ: sliceType$5, tag: ""}]);
 	permanentError.init("crypto/tls", [{prop: "err", name: "err", embedded: false, exported: false, typ: net.Error, tag: ""}]);
@@ -105615,29 +105522,61 @@ $packages["crypto/tls"] = (function() {
 		_CurveID_index_0 = $toNativeArray($kindUint8, [0, 9, 18, 27]);
 		_ClientAuthType_index = $toNativeArray($kindUint8, [0, 12, 29, 49, 72, 98]);
 		directSigning = 0;
-		helloRetryRequestRandom = new sliceType$5([207, 33, 173, 116, 229, 154, 97, 17, 190, 29, 140, 2, 30, 101, 184, 145, 194, 162, 17, 22, 122, 187, 140, 94, 7, 158, 9, 226, 200, 168, 51, 156]);
 		supportedSignatureAlgorithms = new sliceType$7([2052, 1027, 2055, 2053, 2054, 1025, 1281, 1537, 1283, 1539, 513, 515]);
+		helloRetryRequestRandom = new sliceType$5([207, 33, 173, 116, 229, 154, 97, 17, 190, 29, 140, 2, 30, 101, 184, 145, 194, 162, 17, 22, 122, 187, 140, 94, 7, 158, 9, 226, 200, 168, 51, 156]);
 		deprecatedSessionTicketKey = (new sliceType$5($stringToBytes("DEPRECATED")));
 		supportedVersions = new sliceType$2([772, 771, 770, 769]);
 		defaultCurvePreferences = new sliceType$3([29, 23, 24, 25]);
 		errNoCertificates = errors.New("tls: no certificates configured");
+		cipherSuites = new sliceType$8([new cipherSuite.ptr(52392, 32, 0, 12, ecdheRSAKA, 5, $throwNilPointerError, $throwNilPointerError, aeadChaCha20Poly1305), new cipherSuite.ptr(52393, 32, 0, 12, ecdheECDSAKA, 7, $throwNilPointerError, $throwNilPointerError, aeadChaCha20Poly1305), new cipherSuite.ptr(49199, 16, 0, 4, ecdheRSAKA, 5, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(49195, 16, 0, 4, ecdheECDSAKA, 7, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(49200, 32, 0, 4, ecdheRSAKA, 13, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(49196, 32, 0, 4, ecdheECDSAKA, 15, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(49191, 16, 32, 16, ecdheRSAKA, 5, cipherAES, macSHA256, $throwNilPointerError), new cipherSuite.ptr(49171, 16, 20, 16, ecdheRSAKA, 1, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49187, 16, 32, 16, ecdheECDSAKA, 7, cipherAES, macSHA256, $throwNilPointerError), new cipherSuite.ptr(49161, 16, 20, 16, ecdheECDSAKA, 3, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49172, 32, 20, 16, ecdheRSAKA, 1, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49162, 32, 20, 16, ecdheECDSAKA, 3, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(156, 16, 0, 4, rsaKA, 4, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(157, 32, 0, 4, rsaKA, 12, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(60, 16, 32, 16, rsaKA, 4, cipherAES, macSHA256, $throwNilPointerError), new cipherSuite.ptr(47, 16, 20, 16, rsaKA, 0, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(53, 32, 20, 16, rsaKA, 0, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49170, 24, 20, 8, ecdheRSAKA, 1, cipher3DES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(10, 24, 20, 8, rsaKA, 0, cipher3DES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(5, 16, 20, 0, rsaKA, 0, cipherRC4, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49169, 16, 20, 0, ecdheRSAKA, 1, cipherRC4, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49159, 16, 20, 0, ecdheECDSAKA, 3, cipherRC4, macSHA1, $throwNilPointerError)]);
+		cipherSuitesTLS13 = new sliceType$9([new cipherSuiteTLS13.ptr(4865, 16, aeadAESGCMTLS13, 5), new cipherSuiteTLS13.ptr(4867, 32, aeadChaCha20Poly1305, 5), new cipherSuiteTLS13.ptr(4866, 32, aeadAESGCMTLS13, 6)]);
+		cipherSuitesPreferenceOrder = new sliceType$2([49195, 49199, 49196, 49200, 52393, 52392, 49161, 49171, 49162, 49172, 156, 157, 47, 53, 49170, 10, 49187, 49191, 60, 49159, 49169, 5]);
+		cipherSuitesPreferenceOrderNoAES = new sliceType$2([52393, 52392, 49195, 49199, 49196, 49200, 49161, 49171, 49162, 49172, 156, 157, 47, 53, 49170, 10, 49187, 49191, 60, 49159, 49169, 5]);
+		disabledCipherSuites = new sliceType$2([49187, 49191, 60, 49159, 49169, 5]);
+		defaultCipherSuitesLen = cipherSuitesPreferenceOrder.$length - disabledCipherSuites.$length >> 0;
+		defaultCipherSuites = $subslice(cipherSuitesPreferenceOrder, 0, defaultCipherSuitesLen);
+		defaultCipherSuitesTLS13 = new sliceType$2([4865, 4866, 4867]);
+		defaultCipherSuitesTLS13NoAES = new sliceType$2([4867, 4865, 4866]);
 		hasGCMAsmAMD64 = cpu.X86.HasAES && cpu.X86.HasPCLMULQDQ;
 		hasGCMAsmARM64 = cpu.ARM64.HasAES && cpu.ARM64.HasPMULL;
 		hasGCMAsmS390X = cpu.S390X.HasAES && cpu.S390X.HasAESCBC && cpu.S390X.HasAESCTR && (cpu.S390X.HasGHASH || cpu.S390X.HasAESGCM);
 		hasAESGCMHardwareSupport = false && hasGCMAsmAMD64 || false && hasGCMAsmARM64 || false && hasGCMAsmS390X;
-		disabledCipherSuites = new sliceType$2([49187, 49191, 60, 49159, 49169, 5]);
 		aesgcmCiphers = $makeMap($Uint16.keyFor, [{ k: 49199, v: true }, { k: 49200, v: true }, { k: 49195, v: true }, { k: 49196, v: true }, { k: 4865, v: true }, { k: 4866, v: true }]);
-		cipherSuitesTLS13 = new sliceType$8([new cipherSuiteTLS13.ptr(4865, 16, aeadAESGCMTLS13, 5), new cipherSuiteTLS13.ptr(4867, 32, aeadChaCha20Poly1305, 5), new cipherSuiteTLS13.ptr(4866, 32, aeadAESGCMTLS13, 6)]);
-		defaultCipherSuitesTLS13 = new sliceType$2([4865, 4866, 4867]);
-		defaultCipherSuitesTLS13NoAES = new sliceType$2([4867, 4865, 4866]);
-		cipherSuites = new sliceType$9([new cipherSuite.ptr(52392, 32, 0, 12, ecdheRSAKA, 5, $throwNilPointerError, $throwNilPointerError, aeadChaCha20Poly1305), new cipherSuite.ptr(52393, 32, 0, 12, ecdheECDSAKA, 7, $throwNilPointerError, $throwNilPointerError, aeadChaCha20Poly1305), new cipherSuite.ptr(49199, 16, 0, 4, ecdheRSAKA, 5, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(49195, 16, 0, 4, ecdheECDSAKA, 7, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(49200, 32, 0, 4, ecdheRSAKA, 13, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(49196, 32, 0, 4, ecdheECDSAKA, 15, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(49191, 16, 32, 16, ecdheRSAKA, 5, cipherAES, macSHA256, $throwNilPointerError), new cipherSuite.ptr(49171, 16, 20, 16, ecdheRSAKA, 1, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49187, 16, 32, 16, ecdheECDSAKA, 7, cipherAES, macSHA256, $throwNilPointerError), new cipherSuite.ptr(49161, 16, 20, 16, ecdheECDSAKA, 3, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49172, 32, 20, 16, ecdheRSAKA, 1, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49162, 32, 20, 16, ecdheECDSAKA, 3, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(156, 16, 0, 4, rsaKA, 4, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(157, 32, 0, 4, rsaKA, 12, $throwNilPointerError, $throwNilPointerError, aeadAESGCM), new cipherSuite.ptr(60, 16, 32, 16, rsaKA, 4, cipherAES, macSHA256, $throwNilPointerError), new cipherSuite.ptr(47, 16, 20, 16, rsaKA, 0, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(53, 32, 20, 16, rsaKA, 0, cipherAES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49170, 24, 20, 8, ecdheRSAKA, 1, cipher3DES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(10, 24, 20, 8, rsaKA, 0, cipher3DES, macSHA1, $throwNilPointerError), new cipherSuite.ptr(5, 16, 20, 0, rsaKA, 0, cipherRC4, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49169, 16, 20, 0, ecdheRSAKA, 1, cipherRC4, macSHA1, $throwNilPointerError), new cipherSuite.ptr(49159, 16, 20, 0, ecdheECDSAKA, 3, cipherRC4, macSHA1, $throwNilPointerError)]);
-		cipherSuitesPreferenceOrder = new sliceType$2([49195, 49199, 49196, 49200, 52393, 52392, 49161, 49171, 49162, 49172, 156, 157, 47, 53, 49170, 10, 49187, 49191, 60, 49159, 49169, 5]);
-		cipherSuitesPreferenceOrderNoAES = new sliceType$2([52393, 52392, 49195, 49199, 49196, 49200, 49161, 49171, 49162, 49172, 156, 157, 47, 53, 49170, 10, 49187, 49191, 60, 49159, 49169, 5]);
-		defaultCipherSuitesLen = cipherSuitesPreferenceOrder.$length - disabledCipherSuites.$length >> 0;
-		defaultCipherSuites = $subslice(cipherSuitesPreferenceOrder, 0, defaultCipherSuitesLen);
 		signaturePadding = new sliceType$5([32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32]);
 		rsaSignatureSchemes = new sliceType$10([new structType.ptr(2052, ($imul(new crypto.Hash(5).Size(), 2)) + 2 >> 0, 772), new structType.ptr(2053, ($imul(new crypto.Hash(6).Size(), 2)) + 2 >> 0, 772), new structType.ptr(2054, ($imul(new crypto.Hash(7).Size(), 2)) + 2 >> 0, 772), new structType.ptr(1025, (19 + new crypto.Hash(5).Size() >> 0) + 11 >> 0, 771), new structType.ptr(1281, (19 + new crypto.Hash(6).Size() >> 0) + 11 >> 0, 771), new structType.ptr(1537, (19 + new crypto.Hash(7).Size() >> 0) + 11 >> 0, 771), new structType.ptr(513, (15 + new crypto.Hash(3).Size() >> 0) + 11 >> 0, 771)]);
 		alertText = $makeMap(alert.keyFor, [{ k: 0, v: "close notify" }, { k: 10, v: "unexpected message" }, { k: 20, v: "bad record MAC" }, { k: 21, v: "decryption failed" }, { k: 22, v: "record overflow" }, { k: 30, v: "decompression failure" }, { k: 40, v: "handshake failure" }, { k: 42, v: "bad certificate" }, { k: 43, v: "unsupported certificate" }, { k: 44, v: "revoked certificate" }, { k: 45, v: "expired certificate" }, { k: 46, v: "unknown certificate" }, { k: 47, v: "illegal parameter" }, { k: 48, v: "unknown certificate authority" }, { k: 49, v: "access denied" }, { k: 50, v: "error decoding message" }, { k: 51, v: "error decrypting message" }, { k: 60, v: "export restriction" }, { k: 70, v: "protocol version not supported" }, { k: 71, v: "insufficient security level" }, { k: 80, v: "internal error" }, { k: 86, v: "inappropriate fallback" }, { k: 90, v: "user canceled" }, { k: 100, v: "no renegotiation" }, { k: 109, v: "missing extension" }, { k: 110, v: "unsupported extension" }, { k: 111, v: "certificate unobtainable" }, { k: 112, v: "unrecognized name" }, { k: 113, v: "bad certificate status response" }, { k: 114, v: "bad certificate hash value" }, { k: 115, v: "unknown PSK identity" }, { k: 116, v: "certificate required" }, { k: 120, v: "no application protocol" }]);
+		/* */ } return; } if ($f === undefined) { $f = { $blk: $init }; } $f.$s = $s; $f.$r = $r; return $f;
+	};
+	$pkg.$init = $init;
+	return $pkg;
+})();
+$packages["io/ioutil"] = (function() {
+	var $pkg = {}, $init, io, fs, os, sort, ReadAll, NopCloser;
+	io = $packages["io"];
+	fs = $packages["io/fs"];
+	os = $packages["os"];
+	sort = $packages["sort"];
+	ReadAll = function(r) {
+		var $24r, _r, r, $s, $r;
+		/* */ $s = 0; var $f, $c = false; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; $24r = $f.$24r; _r = $f._r; r = $f.r; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
+		_r = io.ReadAll(r); /* */ $s = 1; case 1: if($c) { $c = false; _r = _r.$blk(); } if (_r && _r.$blk !== undefined) { break s; }
+		$24r = _r;
+		$s = 2; case 2: return $24r;
+		/* */ } return; } if ($f === undefined) { $f = { $blk: ReadAll }; } $f.$24r = $24r; $f._r = _r; $f.r = r; $f.$s = $s; $f.$r = $r; return $f;
+	};
+	$pkg.ReadAll = ReadAll;
+	NopCloser = function(r) {
+		var r;
+		return io.NopCloser(r);
+	};
+	$pkg.NopCloser = NopCloser;
+	$init = function() {
+		$pkg.$init = function() {};
+		/* */ var $f, $c = false, $s = 0, $r; if (this !== undefined && this.$blk !== undefined) { $f = this; $c = true; $s = $f.$s; $r = $f.$r; } s: while (true) { switch ($s) { case 0:
+		$r = io.$init(); /* */ $s = 1; case 1: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
+		$r = fs.$init(); /* */ $s = 2; case 2: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
+		$r = os.$init(); /* */ $s = 3; case 3: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
+		$r = sort.$init(); /* */ $s = 4; case 4: if($c) { $c = false; $r = $r.$blk(); } if ($r && $r.$blk !== undefined) { break s; }
 		/* */ } return; } if ($f === undefined) { $f = { $blk: $init }; } $f.$s = $s; $f.$r = $r; return $f;
 	};
 	$pkg.$init = $init;
@@ -142706,6 +142645,7 @@ $packages["net/http"] = (function() {
 		http2padZeros = $makeSlice(sliceType$3, 255);
 		http2frameName = $makeMap(http2FrameType.keyFor, [{ k: 0, v: "DATA" }, { k: 1, v: "HEADERS" }, { k: 2, v: "PRIORITY" }, { k: 3, v: "RST_STREAM" }, { k: 4, v: "SETTINGS" }, { k: 5, v: "PUSH_PROMISE" }, { k: 6, v: "PING" }, { k: 7, v: "GOAWAY" }, { k: 8, v: "WINDOW_UPDATE" }, { k: 9, v: "CONTINUATION" }]);
 		http2flagName = $makeMap(http2FrameType.keyFor, [{ k: 0, v: $makeMap(http2Flags.keyFor, [{ k: 1, v: "END_STREAM" }, { k: 8, v: "PADDED" }]) }, { k: 1, v: $makeMap(http2Flags.keyFor, [{ k: 1, v: "END_STREAM" }, { k: 4, v: "END_HEADERS" }, { k: 8, v: "PADDED" }, { k: 32, v: "PRIORITY" }]) }, { k: 4, v: $makeMap(http2Flags.keyFor, [{ k: 1, v: "ACK" }]) }, { k: 6, v: $makeMap(http2Flags.keyFor, [{ k: 1, v: "ACK" }]) }, { k: 9, v: $makeMap(http2Flags.keyFor, [{ k: 4, v: "END_HEADERS" }]) }, { k: 5, v: $makeMap(http2Flags.keyFor, [{ k: 4, v: "END_HEADERS" }, { k: 8, v: "PADDED" }]) }]);
+		http2frameParsers = $makeMap(http2FrameType.keyFor, [{ k: 0, v: http2parseDataFrame }, { k: 1, v: http2parseHeadersFrame }, { k: 2, v: http2parsePriorityFrame }, { k: 3, v: http2parseRSTStreamFrame }, { k: 4, v: http2parseSettingsFrame }, { k: 5, v: http2parsePushPromise }, { k: 6, v: http2parsePingFrame }, { k: 7, v: http2parseGoAwayFrame }, { k: 8, v: http2parseWindowUpdateFrame }, { k: 9, v: http2parseContinuationFrame }]);
 		http2fhBytes = new sync.Pool.ptr(sliceType.nil, (function() {
 			var buf, buf$24ptr;
 			buf = $makeSlice(sliceType$3, 9);
@@ -142726,7 +142666,6 @@ $packages["net/http"] = (function() {
 		}));
 		http2clientPreface = (new sliceType$3($stringToBytes("PRI * HTTP/2.0\r\n\r\nSM\r\n\r\n")));
 		http2stateName = $toNativeArray($kindString, ["Idle", "Open", "HalfClosedLocal", "HalfClosedRemote", "Closed"]);
-		http2frameParsers = $makeMap(http2FrameType.keyFor, [{ k: 0, v: http2parseDataFrame }, { k: 1, v: http2parseHeadersFrame }, { k: 2, v: http2parsePriorityFrame }, { k: 3, v: http2parseRSTStreamFrame }, { k: 4, v: http2parseSettingsFrame }, { k: 5, v: http2parsePushPromise }, { k: 6, v: http2parsePingFrame }, { k: 7, v: http2parseGoAwayFrame }, { k: 8, v: http2parseWindowUpdateFrame }, { k: 9, v: http2parseContinuationFrame }]);
 		http2settingName = $makeMap(http2SettingID.keyFor, [{ k: 1, v: "HEADER_TABLE_SIZE" }, { k: 2, v: "ENABLE_PUSH" }, { k: 3, v: "MAX_CONCURRENT_STREAMS" }, { k: 4, v: "INITIAL_WINDOW_SIZE" }, { k: 5, v: "MAX_FRAME_SIZE" }, { k: 6, v: "MAX_HEADER_LIST_SIZE" }]);
 		http2bufWriterPool = new sync.Pool.ptr(sliceType.nil, (function() {
 			return bufio.NewWriterSize($ifaceNil, 4096);
@@ -142801,21 +142740,21 @@ $packages["net/http"] = (function() {
 	$pkg.$init = $init;
 	return $pkg;
 })();
-$packages["github.com/StackExchange/dnscontrol/v4/docs/flattener"] = (function() {
+$packages["github.com/DNSControl/dnscontrol/v4/docs/flattener"] = (function() {
 	var $pkg = {}, $init, json, fmt, spflib, jquery, http, strings, gResolver, gResp, ptrType, structType, sliceType, sliceType$1, funcType, funcType$1, sliceType$2, jq, parsed, domain, resolver, main, updateDisabledChecks, renderResults, buildHTML, genRoot, genPart;
 	json = $packages["encoding/json"];
 	fmt = $packages["fmt"];
-	spflib = $packages["github.com/StackExchange/dnscontrol/v4/pkg/spflib"];
+	spflib = $packages["github.com/DNSControl/dnscontrol/v4/pkg/spflib"];
 	jquery = $packages["github.com/gopherjs/jquery"];
 	http = $packages["net/http"];
 	strings = $packages["strings"];
-	gResolver = $pkg.gResolver = $newType(0, $kindStruct, "main.gResolver", true, "github.com/StackExchange/dnscontrol/v4/docs/flattener", false, function() {
+	gResolver = $pkg.gResolver = $newType(0, $kindStruct, "main.gResolver", true, "github.com/DNSControl/dnscontrol/v4/docs/flattener", false, function() {
 		this.$val = this;
 		if (arguments.length === 0) {
 			return;
 		}
 	});
-	gResp = $pkg.gResp = $newType(0, $kindStruct, "main.gResp", true, "github.com/StackExchange/dnscontrol/v4/docs/flattener", false, function(Status_, Answer_) {
+	gResp = $pkg.gResp = $newType(0, $kindStruct, "main.gResp", true, "github.com/DNSControl/dnscontrol/v4/docs/flattener", false, function(Status_, Answer_) {
 		this.$val = this;
 		if (arguments.length === 0) {
 			this.Status = 0;
@@ -143147,7 +143086,7 @@ $packages["github.com/StackExchange/dnscontrol/v4/docs/flattener"] = (function()
 })();
 $synthesizeMethods();
 $initAllLinknames();
-var $mainPkg = $packages["github.com/StackExchange/dnscontrol/v4/docs/flattener"];
+var $mainPkg = $packages["github.com/DNSControl/dnscontrol/v4/docs/flattener"];
 $packages["runtime"].$init();
 $go($mainPkg.$init, []);
 $flushConsole();
